@@ -1,11 +1,8 @@
-# sortingMadness
+# Sorting Madness
 ## Członkowie zespołu
 
+* Julia Chabora
+* Mateusz Chmielewski
+* Jakub Dunajko
 * Maciej Kleban
 * Marek Pietkiewicz
-* Mateusz Chmielewski
-
-## Członkinie zespołu
-
-* Julia Chabora
-* Jakub Dunajko
