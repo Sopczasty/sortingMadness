@@ -17,4 +17,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: SortingMadness.jar
-          path: target/sorting-madness-1.2.jar
+          path: target/sorting-madness-latest.jar
