@@ -7,34 +7,50 @@ public class QuickSort implements Sorter {
         arr[j] = temp;
     }
 
-    static int partition(int[] arr, int low, int high) {
+    static int partition(int[] arr, int low, int high, String direction) {
         int pivot = arr[high];
         int i = (low - 1);
 
-        for(int j = low; j <= high - 1; j++)
-        {
-            if (arr[j] < pivot)
+        // Sorting for ascending order
+        if(direction == "asc"){
+            for(int j = low; j <= high - 1; j++)
             {
-                i++;
-                swap(arr, i, j);
+                if (arr[j] < pivot)
+                {
+                    i++;
+                    swap(arr, i, j);
+                }
             }
+            swap(arr, i + 1, high);
         }
-        swap(arr, i + 1, high);
+
+        // Sorting for descending order
+        if(direction == "desc"){
+            for(int j = low; j <= high - 1; j++)
+            {
+                if (arr[j] > pivot)
+                {
+                    i++;
+                    swap(arr, i, j);
+                }
+            }
+            swap(arr, i + 1, high);
+        }
         return (i + 1);
     }
 
-    static int[] quickSort(int[] input, int low, int high) {
+    static int[] quickSort(int[] input, int low, int high, String direction) {
         int pi;
         if (low < high) {
-            pi = partition(input, low, high);
-            quickSort(input, low, pi - 1);
-            quickSort(input, pi + 1, high);
+            pi = partition(input, low, high, direction);
+            quickSort(input, low, pi - 1, direction);
+            quickSort(input, pi + 1, high, direction);
         }
         return input;
     }
 
-    public int[] sort(int[] input) {
-        input = quickSort(input, 0, input.length - 1);
+    public int[] sort(int[] input, String direction) {
+        input = quickSort(input, 0, input.length - 1, direction);
         return input;
     }
 }
