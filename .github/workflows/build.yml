@@ -19,7 +19,7 @@ jobs:
           name: SortingMadness
   gen-javadoc:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/javadoc'
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
