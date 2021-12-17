@@ -58,6 +58,7 @@ public class HeapSort implements Sorter {
 
     public void heapSort(int arr[], String direction)
     {
+
         int n = arr.length;
 
         // Build heap (rearrange array)
@@ -77,8 +78,24 @@ public class HeapSort implements Sorter {
     }
 
     public int[] sort(int[] input, String direction) {
+
+        // Exception for empty input data
+        if(input.length == 0){
+            throw new IllegalArgumentException("Input data is empty.");
+        }
+
+        // Exception for incorrect order
+        if(direction != "asc" && direction != "desc"){
+            throw new IllegalArgumentException("Input order is incorrect.");
+        }
+
         int[] temp_arr = input;
         heapSort(temp_arr, direction);
         return temp_arr;
+    }
+
+    public int[] sort(int[] input) {
+        input = sort(input, "asc");
+        return input;
     }
 }

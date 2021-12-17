@@ -5,6 +5,17 @@ package pl.put.poznan.sorting.logic;
  */
 public class BubbleSort implements Sorter {
     public int[] sort(int[] input, String direction){
+
+        // Exception for empty input data
+        if(input.length == 0){
+            throw new IllegalArgumentException("Input data is empty.");
+        }
+
+        // Exception for incorrect order
+        if(direction != "asc" && direction != "desc"){
+            throw new IllegalArgumentException("Input order is incorrect.");
+        }
+
         int temp;
 
         //Sorting for ascending order
@@ -32,6 +43,12 @@ public class BubbleSort implements Sorter {
                 }
             }
         }
+        return input;
+    }
+
+    public int[] sort(int[] input) {
+        System.out.println("Direction undefined - assumed ascending order.");
+        input = sort(input, "asc");
         return input;
     }
 }
