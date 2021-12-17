@@ -60,4 +60,45 @@ class QuickSortTest {
         assertArrayEquals(output, sorter.sort(input, direction));
     }
 
+    // Test for list without specified order
+    @Test
+    public void testNullDirection() {
+        int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
+        int[] output = {0, 1, 3, 4, 9, 10, 12, 32, 43, 53};
+        assertArrayEquals(output, sorter.sort(input));
+
+    }
+
+    // Test for incorrect input data
+    @Test
+    public void testIncorrectInput(){
+        int[] input = {};
+        String direction = "asc";
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            sorter.sort(input, direction);
+        });
+
+        String expectedMessage = "Input data is empty.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    // Test for incorrect input data
+    @Test
+    public void testIncorrectDirection(){
+        int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
+        String direction = "error";
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            sorter.sort(input, direction);
+        });
+
+        String expectedMessage = "Input order is incorrect.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
 }
