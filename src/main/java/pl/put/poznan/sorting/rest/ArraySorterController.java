@@ -1,5 +1,7 @@
 package pl.put.poznan.sorting.rest;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.sorting.logic.Sorter;
 import pl.put.poznan.sorting.logic.SortingWrapper;
@@ -57,6 +59,11 @@ public class ArraySorterController {
             output.put("time", timer.getLastMeasure());
             return output;
         } else throw new InvalidParameterException();
+    }
+
+    @ExceptionHandler({InvalidParameterException.class})
+    public ResponseEntity invalidParameterExceptionHandler() {
+        return new ResponseEntity<>("Wrong payload content\n", HttpStatus.EXPECTATION_FAILED);
     }
 }
 

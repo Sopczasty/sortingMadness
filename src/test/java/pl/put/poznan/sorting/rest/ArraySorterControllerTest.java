@@ -1,0 +1,71 @@
+package pl.put.poznan.sorting.rest;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
+import pl.put.poznan.sorting.logic.SortingWrapper;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class ArraySorterControllerTest {
+    private int[] data;
+    private String url;
+    private URI uri;
+    private HttpEntity<Map<String, Object>> request;
+
+    @LocalServerPort
+    private int port;
+
+    @Autowired
+    private TestRestTemplate restTemplate;
+
+    @BeforeEach
+    public void setup() throws URISyntaxException {
+        url = "http://localhost:"+port+"/api/array";
+        uri = new URI(url);
+        data = new int[]{-30, 219, 3, -8, -1, 10, 30, 20, -3, -1231231, 12314, 40, 50, -12, 123, 32, 23};
+    }
+
+    @Test
+    public void restArraySorted() {
+        Map<String, Object> payload = new HashMap<String, Object>();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        request = new HttpEntity<Map<String, Object>>(payload, headers);
+        payload.put("array", data);
+        payload.put("sort", "quick");
+        Map<String, Object> result = restTemplate.postForObject(
+                uri,
+                request,
+                Map.class
+        );
+        assertNotNull(result.get("array"));
+        assertArrayEquals(
+                Arrays.stream(
+                        result.get("array").toString()
+                                .replace("[", "")
+                                .replace("]", "")
+                                .replace(" ", "")
+                                .split(",")
+                ).mapToInt(Integer::parseInt).toArray(),
+                new SortingWrapper().getSorter("quick").sort(data)
+        );
+    }
+}

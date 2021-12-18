@@ -1,12 +1,11 @@
 package pl.put.poznan.sorting.rest;
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-
 //Rest imports
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.security.InvalidParameterException;
 
 @SpringBootApplication
 public class SorterAPI {
