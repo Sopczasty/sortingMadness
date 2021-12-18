@@ -1,6 +1,11 @@
 package pl.put.poznan.sorting.logic;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import pl.put.poznan.sorting.app.SortingMadness;
+
 public class HeapSort implements Sorter {
+    static Logger logger = LoggerFactory.getLogger(SortingMadness.class);
     // To heapify a subtree rooted with node i which is
     // an index in arr[]. n is size of heap
     void heapify(int arr[], int n, int i, String direction)
@@ -61,6 +66,7 @@ public class HeapSort implements Sorter {
 
         int n = arr.length;
 
+        logger.debug("Sorting for " + direction + "ending order");
         // Build heap (rearrange array)
         for (int i = n / 2 - 1; i >= 0; i--)
             heapify(arr, n, i, direction);
@@ -95,6 +101,7 @@ public class HeapSort implements Sorter {
     }
 
     public int[] sort(int[] input) {
+        logger.info("Direction undefined - assumed ascending");
         input = sort(input, "asc");
         return input;
     }

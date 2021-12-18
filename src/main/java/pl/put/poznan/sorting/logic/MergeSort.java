@@ -1,6 +1,11 @@
 package pl.put.poznan.sorting.logic;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import pl.put.poznan.sorting.app.SortingMadness;
+
 public class MergeSort implements Sorter {
+    static Logger logger = LoggerFactory.getLogger(SortingMadness.class);
     static void merge(
             int[] a, int[] l, int[] r, int left, int right, String direction) {
 
@@ -26,7 +31,6 @@ public class MergeSort implements Sorter {
 
         // Sorting for descending order
         if(direction == "desc"){
-
             while (i < left && j < right) {
                 if (l[i] >= r[j]) {
                     a[k++] = l[i++];
@@ -68,20 +72,25 @@ public class MergeSort implements Sorter {
 
         // Exception for empty input data
         if(input.length == 0){
+            logger.debug("Input data is empty. Throwing exception");
             throw new IllegalArgumentException("Input data is empty.");
         }
 
         // Exception for incorrect order
         if(direction != "asc" && direction != "desc"){
+            logger.debug("Input order is incorrect. Throwing exception");
             throw new IllegalArgumentException("Input order is incorrect.");
         }
 
+
         int[] temp_input = input;
+        logger.debug("Sorting for " + direction + "ending order");
         mergeSort(temp_input, temp_input.length, direction);
         return temp_input;
     }
 
     public int[] sort(int[] input) {
+        logger.info("Direction undefined - assumed ascending");
         input = sort(input, "asc");
         return input;
     }
