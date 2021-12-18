@@ -12,3 +12,12 @@ Aplikacja służąca do sortowania zbiorów danych różnymi algorytmami. Ma pom
 * Jakub Dunajko (Proxy Product Owner)
 * Maciej Kleban (Scrum Master)
 * Marek Pietkiewicz
+
+### Dobór algorytmu sortującego
+Algorytm jest dobierany na podstawie poniższych kryteriów:
+1. **Bubble Sort** - najszybszy algorytm jeżeli zestaw danych jest bardzo mały lub niemalże posortowany (niezależnie od rozmiaru)
+2. **Insertion Sort** - szybki dla prawie posortowanego zestawu danych, małe zużycie pamięci : O(1)
+3. **Selection Sort** - szybki dla małych zestawów danych bez względu na uszeregowanie, nie wymaga dodatkowej pamięci na dane
+4. **Heap Sort** - bardzo dobry jeżeli użytkownikowi zależy na tym, aby najgorszy scenariusz nie był złożony (zawsze O(nlogn))
+5. **Quick Sort** - ma złożoność pamięciową O(logn), ale w średnim przypadku jest najszybszy, w najbardziej pesymistycznym O(n^2)
+6. **Merge Sort** - zawsze złożoność obliczeniowa O(nlogn), lecz bardzo duża złożoność pamięciowa O(n), co sprawia że nie jest dobry dla bardzo dużych zestawów danych
