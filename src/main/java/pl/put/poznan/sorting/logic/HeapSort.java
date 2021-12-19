@@ -74,7 +74,7 @@ public class HeapSort implements Sorter {
 
     /**
      * Function converting input array of objects into a heap.
-     * @param arr input array to be converted into a heap
+     * @param temp_arr input array to be converted into a heap
      * @param n size of the heap
      * @param i root of the heap
      * @param direction direction of the heap (descending or ascending)
@@ -162,7 +162,7 @@ public class HeapSort implements Sorter {
 
     /**
      * Main heap sort sorting function for objects.
-     * @param arr input array of objects to be sorted
+     * @param temp_arr input array of objects to be sorted
      * @param direction direction of the sort (ascending or descending)
      * @param attribute object attribute to sort by
      */
