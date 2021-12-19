@@ -9,7 +9,7 @@ public class InsertionSort implements Sorter {
         }
 
         // Exception for incorrect order
-        if(direction != "asc" && direction != "desc"){
+        if(!direction.equals("asc") && !direction.equals("desc")){
             throw new IllegalArgumentException("Input order is incorrect.");
         }
 
@@ -17,7 +17,7 @@ public class InsertionSort implements Sorter {
         int j;
 
         // Sorting for ascending order
-        if(direction == "asc") {
+        if(direction.equals("asc")) {
             for (int i = 1; i < input.length; i++) {
                 temp = input[i];
                 j = i - 1;
@@ -31,7 +31,7 @@ public class InsertionSort implements Sorter {
         }
 
         // Sorting for descending order
-        if(direction == "desc") {
+        if(direction.equals("desc")) {
             for (int i = 1; i < input.length; i++) {
                 temp = input[i];
                 j = i - 1;

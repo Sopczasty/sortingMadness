@@ -33,6 +33,7 @@ public class ArraySorterController {
     Map<String, Object> getSortedArray(@RequestBody Map<String, Object> payload)
     throws InvalidParameterException {
         if (!payload.isEmpty()) {
+            String direction;
             if(payload.containsKey("sort"))
                 algorithm = payload.get("sort").toString();
             else throw new InvalidParameterException();
@@ -45,6 +46,9 @@ public class ArraySorterController {
                                 .split(",")
                 ).mapToInt(Integer::parseInt).toArray();
             } else throw new InvalidParameterException();
+            if(payload.containsKey("order"))
+                direction = payload.get("order").toString();
+            else direction = "asc";
             timer = new Timer();
             wrapper = new SortingWrapper();
             sorter = wrapper.getSorter(algorithm);

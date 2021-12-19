@@ -12,7 +12,7 @@ public class QuickSort implements Sorter {
         int i = (low - 1);
 
         // Sorting for ascending order
-        if(direction == "asc"){
+        if(direction.equals("asc")){
             for(int j = low; j <= high - 1; j++)
             {
                 if (arr[j] < pivot)
@@ -25,7 +25,7 @@ public class QuickSort implements Sorter {
         }
 
         // Sorting for descending order
-        if(direction == "desc"){
+        if(direction.equals("desc")){
             for(int j = low; j <= high - 1; j++)
             {
                 if (arr[j] > pivot)
@@ -57,7 +57,7 @@ public class QuickSort implements Sorter {
         }
 
         // Exception for incorrect order
-        if(direction != "asc" && direction != "desc"){
+        if(!direction.equals("asc") && !direction.equals("desc")){
             throw new IllegalArgumentException("Input order is incorrect.");
         }
 

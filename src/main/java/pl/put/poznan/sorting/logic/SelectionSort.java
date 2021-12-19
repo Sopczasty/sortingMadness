@@ -9,7 +9,7 @@ public class SelectionSort implements Sorter {
         }
 
         // Exception for incorrect order
-        if(direction != "asc" && direction != "desc"){
+        if(!direction.equals("asc") && !direction.equals("desc")){
             throw new IllegalArgumentException("Input order is incorrect.");
         }
 
@@ -17,7 +17,7 @@ public class SelectionSort implements Sorter {
         int temp;
 
         // Sorting for ascending order
-        if(direction == "asc") {
+        if(direction.equals("asc")) {
             for (int i = 0; i < input.length - 1; i++) {
                 min_idx = i;
                 for (int j = i + 1; j < input.length; j++)
@@ -31,7 +31,7 @@ public class SelectionSort implements Sorter {
         }
 
         // Sorting for descending order
-        if(direction == "desc") {
+        if(direction.equals("desc")) {
             for (int i = 0; i < input.length - 1; i++) {
                 min_idx = i;
                 for (int j = i + 1; j < input.length; j++)
