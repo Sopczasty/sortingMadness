@@ -1,7 +1,5 @@
 package pl.put.poznan.sorting.logic;
 
-import static java.lang.Math.*;
-
 public class AutoDetector {
     int[] data = null;
     int size;
@@ -12,7 +10,6 @@ public class AutoDetector {
 
     public Sorter detectSorter() {
         float percent = percentSorted();
-        System.out.println(percent);
         if(percent > 0.8 && size < 100) return new BubbleSort();
         if(size < 100) return new SelectionSort();
         if(percent > 0.8) return new InsertionSort();

@@ -30,18 +30,12 @@ public class SortingMadness {
             return;
         }
 
+        //Example setup
         //sorter = wrapper.getSorter("bubble");
         sorter = wrapper.getSorter(input);
         System.out.println(sorter.getName());
 
         logger.info("Selected type: " + sorter.getName());
-
-        // Error handling
-        if (input.length == 0) {
-            logger.debug("Input data is empty. Returning.");
-            System.out.println("Input data is empty.");
-            return;
-        }
 
         System.out.println("Zestaw danych:");
         for (int i : input) {
