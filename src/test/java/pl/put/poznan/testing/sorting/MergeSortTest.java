@@ -100,5 +100,4 @@ class MergeSortTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
-
 }

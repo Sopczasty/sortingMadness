@@ -100,5 +100,4 @@ class QuickSortTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
-
 }

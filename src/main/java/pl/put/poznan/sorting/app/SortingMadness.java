@@ -5,19 +5,11 @@ import pl.put.poznan.sorting.logic.*;
 
 public class SortingMadness {
     private static int [] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
-    private static Sort [] input1 = {new Sort("Bubblesort", 0.087, 7),
-            new Sort("Mergesort", 0.05, 12),
-            new Sort("Insertsort", 0.09, 8),
-            new Sort("Heapsort", 0.06, 15),
-            new Sort("Randomsort", 1.231, 5),
-            new Sort("Selectionsort", 0.1, 6),
-            new Sort("Quicksort", 0.043, 14),
-            new Sort("Bubblesort", 0.075, 4)};
+    //private static Object [] input1 = {};
     private static String direction = "asc";
     private static String parameter = "name";
     private static SortingWrapper wrapper = new SortingWrapper();
     private static Sorter sorter = null;
-    private static ObjectSorter objectSorter = null;
     private static Timer timer = new Timer();
 
     public static void main(String[] args) {
@@ -64,7 +56,7 @@ public class SortingMadness {
             System.out.println("");
             System.out.println("Time elapsed: " + timer.getLastMeasure() + "ms");
         }
-        else{
+       /* else{
             objectSorter = wrapper.getObjectSorter("bubble");
 
             // Error handling
@@ -81,6 +73,7 @@ public class SortingMadness {
 
             /* Handling for sorting without specified order and with specified order
             Error handling for incorrect order */
+        /*
             if(direction == null || direction.equals("")){
                 timer.startMeasure();
                 input1 = objectSorter.sort(input1);
@@ -106,7 +99,7 @@ public class SortingMadness {
             System.out.println("");
             System.out.println("Time elapsed: " + timer.getLastMeasure() + "ms");
 
-        }
+        }*/
 
     }
 }

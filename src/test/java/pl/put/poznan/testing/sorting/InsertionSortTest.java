@@ -100,5 +100,4 @@ class InsertionSortTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
-
 }

@@ -100,5 +100,4 @@ class SelectionSortTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
-
 }

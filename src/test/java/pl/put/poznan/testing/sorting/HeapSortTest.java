@@ -99,5 +99,4 @@ class HeapSortTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
-
 }

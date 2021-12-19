@@ -10,14 +10,4 @@ public class SortingWrapper {
         if (type == "selection") return new SelectionSort();
         return null;
     }
-
-    public ObjectSorter getObjectSorter(String type){
-        if (type == "bubble") return new ObjectBubbleSort();
-        if (type == "heap") return new ObjectHeapSort();
-        if (type == "insertion") return new ObjectInsertionSort();
-        if (type == "merge") return new ObjectMergeSort();
-        if (type == "quick") return new ObjectQuickSort();
-        if (type == "selection") return new ObjectSelectionSort();
-        return null;
-    }
 }

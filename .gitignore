@@ -10,6 +10,9 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+# UML related files
+*.mdj
+
 # Package Files #
 *.jar
 *.war
@@ -29,3 +32,6 @@ target/maven-status/
 target/maven-archiver/
 target/generated-sources/
 target/classes/
+
+# IDE specific files
+.idea/
