@@ -10,4 +10,9 @@ public class SortingWrapper {
         if (type == "selection") return new SelectionSort();
         return null;
     }
+
+    public Sorter getSorter(int[] input) {
+        AutoDetector detector = new AutoDetector(input);
+        return detector.detectSorter();
+    }
 }
