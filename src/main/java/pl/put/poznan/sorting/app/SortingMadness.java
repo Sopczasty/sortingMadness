@@ -1,7 +1,9 @@
+
 package pl.put.poznan.sorting.app;
 
 import pl.put.poznan.sorting.logic.*;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * Main class responsible for sorting objects.
  * Prints out initial data and after sorting
