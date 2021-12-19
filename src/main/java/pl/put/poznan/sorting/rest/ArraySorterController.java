@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.sorting.logic.Sorter;
 import pl.put.poznan.sorting.logic.SortingWrapper;
 import pl.put.poznan.sorting.logic.Timer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import java.security.InvalidParameterException;
@@ -30,6 +32,8 @@ public class ArraySorterController {
     private static SortingWrapper wrapper;
     // Sorting algorithm instance
     private static Sorter sorter;
+    // Logger
+    static Logger logger = LoggerFactory.getLogger(ArraySorterController.class);
 
     /*
     curl
@@ -47,12 +51,19 @@ public class ArraySorterController {
     @RequestMapping(value = "/array", method=RequestMethod.POST)
     public @ResponseBody
     Map<String, Object> getSortedArray(@RequestBody Map<String, Object> payload)
-    throws InvalidParameterException {
+            throws InvalidParameterException {
+        logger.info("Checking if payload is empty.");
         if (!payload.isEmpty()) {
+            logger.info("Payload not empty.");
+            logger.info("Checking for sorting algorithm type.");
             String direction;
-            if(payload.containsKey("sort"))
+            if(payload.containsKey("sort")) {
                 algorithm = payload.get("sort").toString();
+                logger.info("Sorting type: " + algorithm + " sort.");
+            }
             else throw new InvalidParameterException();
+
+            logger.info("Checking for input data.");
             if(payload.containsKey("array")) {
                 input = Arrays.stream(
                         payload.get("array").toString()
@@ -62,6 +73,7 @@ public class ArraySorterController {
                                 .split(",")
                 ).mapToInt(Integer::parseInt).toArray();
             } else throw new InvalidParameterException();
+            logger.info("Checking for order.");
             if(payload.containsKey("order"))
                 direction = payload.get("order").toString();
             else direction = "asc";
@@ -69,6 +81,7 @@ public class ArraySorterController {
             wrapper = new SortingWrapper();
             sorter = wrapper.getSorter(algorithm);
 
+            logger.info("Initializing sorting.");
             timer.startMeasure();
             input = sorter.sort(input, direction);
             timer.stopMeasure();
@@ -88,6 +101,7 @@ public class ArraySorterController {
     @ExceptionHandler({InvalidParameterException.class})
     public ResponseEntity invalidParameterExceptionHandler() {
         Map<String, Object> response = new HashMap<String, Object>();
+        logger.debug("Wrong payload content. Returning response entity.");
         response.put("error", "Wrong payload content");
         return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
     }
