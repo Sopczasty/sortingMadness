@@ -1,32 +1,15 @@
 package pl.put.poznan.sorting.logic;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Objects;
 
-/**
- * Returns data sorted using merge sort algorithm.
- */
 public class MergeSort implements Sorter {
-
-    // Logger
-    static Logger logger = LoggerFactory.getLogger(MergeSort.class);
-
-    /**
-     * Function merging two subarrays in merge sort algorithm.
-     * @param a merged array
-     * @param l first (left) subarray
-     * @param r second (right) subarray
-     * @param left last index of first (left) subarray
-     * @param right last index of second (right) subarray
-     * @param direction direction of the sort (ascending or descending)
-     */
     static void merge(
             int[] a, int[] l, int[] r, int left, int right, String direction) {
 
         int i = 0, j = 0, k = 0;
 
         // Sorting for ascending order
-        if(direction.equals("asc")){
+        if(Objects.equals(direction, "asc")){
             while (i < left && j < right) {
                 if (l[i] <= r[j]) {
                     a[k++] = l[i++];
@@ -44,7 +27,7 @@ public class MergeSort implements Sorter {
         }
 
         // Sorting for descending order
-        if(direction.equals("desc")){
+        if(Objects.equals(direction, "desc")){
 
             while (i < left && j < right) {
                 if (l[i] >= r[j]) {
@@ -63,12 +46,29 @@ public class MergeSort implements Sorter {
         }
     }
 
-    /**
-     * Main sorting algorithm sorting using divide and conquer method.
-     * @param a input array to be sorted
-     * @param n size of the array to be sorted
-     * @param direction direction of the sort (ascending or descending)
-     */
+    public static void mergeSort(int[] a, int n, String direction, int iterations) {
+        if (n < 2 || iterations == 0) {
+            return;
+        }
+        int mid = n / 2;
+        int[] l = new int[mid];
+        int[] r = new int[n - mid];
+
+        for (int i = 0; i < mid; i++) {
+            l[i] = a[i];
+        }
+        for (int i = mid; i < n; i++) {
+            r[i - mid] = a[i];
+        }
+
+        mergeSort(l, mid, direction, iterations-1);
+        mergeSort(r, n - mid, direction, iterations-1);
+
+
+
+        merge(a, l, r, mid, n - mid, direction);
+    }
+
     public static void mergeSort(int[] a, int n, String direction) {
         if (n < 2) {
             return;
@@ -89,40 +89,54 @@ public class MergeSort implements Sorter {
         merge(a, l, r, mid, n - mid, direction);
     }
 
-    /**
-     * Function invoking merge sort algorithm.
-     * @param input input array to be sorted
-     * @param direction direction of the sort (ascending or descending)
-     * @return input array sorted using merge sort algorithm
-     */
-    public int[] sort(int input[], String direction) {
+    public int[] sort(int input[], String direction, int iterations) {
 
         // Exception for empty input data
         if(input.length == 0){
-            logger.debug("Input data is empty. Throwing exception.");
             throw new IllegalArgumentException("Input data is empty.");
         }
 
         // Exception for incorrect order
-        if(!direction.equals("asc") && !direction.equals("desc")){
-            logger.debug("Input order is incorrect. Throwing exception.");
+        if(!Objects.equals(direction, "asc") && !Objects.equals(direction, "desc")){
+            throw new IllegalArgumentException("Input order is incorrect.");
+        }
+
+        if( iterations < 0) {
+            throw new IllegalArgumentException("Number of iterations must be a positive number.");
+        }
+
+        if(iterations == 0) {
+            return input;
+        }
+
+        int[] temp_input = input;
+        mergeSort(temp_input, temp_input.length, direction, iterations);
+        return temp_input;
+    }
+
+    public int[] sort(int input[], String direction) {
+
+        // Exception for empty input data
+        if(input.length == 0){
+            throw new IllegalArgumentException("Input data is empty.");
+        }
+
+        // Exception for incorrect order
+        if(!Objects.equals(direction, "asc") && !Objects.equals(direction, "desc")){
             throw new IllegalArgumentException("Input order is incorrect.");
         }
 
         int[] temp_input = input;
-        logger.debug("Sorting for " + direction + "ending order.");
         mergeSort(temp_input, temp_input.length, direction);
         return temp_input;
     }
 
-    /**
-     * Function invoking merge sort algorithm if the user did not
-     * provide sort direction (assuming ascending order).
-     * @param input input array to be sorted
-     * @return input array sorted using merge sort algorithm
-     */
+    public int[] sort(int[] input, int iterations) {
+        input = sort(input, "asc", iterations);
+        return input;
+    }
+
     public int[] sort(int[] input) {
-        logger.info("Direction undefined - assumed ascending.");
         input = sort(input, "asc");
         return input;
     }
