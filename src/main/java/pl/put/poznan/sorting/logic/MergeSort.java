@@ -64,6 +64,16 @@ public class MergeSort implements Sorter {
         }
     }
 
+     /**
+     * Function merging two subarrays of objects in merge sort algorithm.
+     * @param a merged array
+     * @param l first (left) subarray
+     * @param r second (right) subarray
+     * @param left last index of first (left) subarray
+     * @param right last index of second (right) subarray
+     * @param direction direction of the sort (ascending or descending)
+     * @param attribute object attribute to sort by
+     */
     static void merge(
             ArrayList<Object> a, ArrayList<Object> l, ArrayList<Object> r, int left, int right, String direction, String attribute) {
 
@@ -134,6 +144,13 @@ public class MergeSort implements Sorter {
         merge(a, l, r, mid, n - mid, direction);
     }
 
+    /**
+     * Main sorting algorithm sorting objects using divide and conquer method.
+     * @param a input array to be sorted
+     * @param n size of the array to be sorted
+     * @param direction direction of the sort (ascending or descending)
+     * @param object attribute to sort by
+     */
     public static void mergeSort(ArrayList<Object> a, int n, String direction, String attribute) {
         if (n < 2) {
             return;
@@ -195,6 +212,13 @@ public class MergeSort implements Sorter {
     }
 
 
+    /**
+     * Function invoking merge sort algorithm on objects.
+     * @param input input array to be sorted
+     * @param direction direction of the sort (ascending or descending)
+     * @param attribute object attribute to sort by
+     * @return input array sorted using merge sort algorithm
+     */
     public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute) {
         // Exception for empty input data
         if(input.size() == 0){
@@ -211,6 +235,12 @@ public class MergeSort implements Sorter {
         return temp_input;
     }
 
+    /**
+     * Function invoking merge sort algorithm on objects if the user did not
+     * provide sort direction (assuming ascending order).
+     * @param input input array of objects to be sorted
+     * @return input array of objects sorted using merge sort algorithm
+     */
     public ArrayList<Object> sort(ArrayList<Object> input) {
         System.out.println("Direction and parameter undefined - assumed ascending order and average time as parameter.");
         input = sort(input, "asc", "time");
