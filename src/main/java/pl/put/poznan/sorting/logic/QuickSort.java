@@ -1,9 +1,15 @@
 package pl.put.poznan.sorting.logic;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Returns data sorted using quick sort algorithm.
  */
 public class QuickSort implements Sorter {
+
+    // Logger
+    static Logger logger = LoggerFactory.getLogger(QuickSort.class);
 
     /**
      * Helper function swapping two elements in array
@@ -88,14 +94,17 @@ public class QuickSort implements Sorter {
 
         // Exception for empty input data
         if(input.length == 0){
+            logger.debug("Input data is empty. Throwing exception");
             throw new IllegalArgumentException("Input data is empty.");
         }
 
         // Exception for incorrect order
         if(!direction.equals("asc") && !direction.equals("desc")){
+            logger.debug("Input order is incorrect. Throwing exception.");
             throw new IllegalArgumentException("Input order is incorrect.");
         }
 
+        logger.debug("Sorting for " + direction + "ending order.");
         input = quickSort(input, 0, input.length - 1, direction);
         return input;
     }
@@ -107,6 +116,7 @@ public class QuickSort implements Sorter {
      * @return input data sorted using quick sort algorithm
      */
     public int[] sort(int[] input) {
+        logger.info("Direction undefined - assumed ascending");
         input = sort(input, "asc");
         return input;
     }

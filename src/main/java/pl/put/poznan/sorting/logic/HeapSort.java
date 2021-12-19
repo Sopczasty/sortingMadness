@@ -1,9 +1,15 @@
 package pl.put.poznan.sorting.logic;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Returns data sorted using heap sort algorithm.
  */
 public class HeapSort implements Sorter {
+
+    // Logger
+    static Logger logger = LoggerFactory.getLogger(HeapSort.class);
 
     /**
      * Function converting input array into a heap.
@@ -100,14 +106,17 @@ public class HeapSort implements Sorter {
 
         // Exception for empty input data
         if(input.length == 0){
+            logger.debug("Input data is empty. Throwing exception.");
             throw new IllegalArgumentException("Input data is empty.");
         }
 
         // Exception for incorrect order
         if(!direction.equals("asc") && !direction.equals("desc")){
+            logger.debug("Input order is incorrect. Throwing exception.");
             throw new IllegalArgumentException("Input order is incorrect.");
         }
 
+        logger.debug("Sorting for " + direction + "ending order.");
         int[] temp_arr = input;
         heapSort(temp_arr, direction);
         return temp_arr;
@@ -120,6 +129,7 @@ public class HeapSort implements Sorter {
      * @return input array sorted using heap sort algorithm
      */
     public int[] sort(int[] input) {
+        logger.info("Direction undefined - assumed ascending.");
         input = sort(input, "asc");
         return input;
     }

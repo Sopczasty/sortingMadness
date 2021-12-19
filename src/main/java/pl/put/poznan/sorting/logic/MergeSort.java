@@ -1,9 +1,15 @@
 package pl.put.poznan.sorting.logic;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Returns data sorted using merge sort algorithm.
  */
 public class MergeSort implements Sorter {
+
+    // Logger
+    static Logger logger = LoggerFactory.getLogger(MergeSort.class);
 
     /**
      * Function merging two subarrays in merge sort algorithm.
@@ -93,15 +99,18 @@ public class MergeSort implements Sorter {
 
         // Exception for empty input data
         if(input.length == 0){
+            logger.debug("Input data is empty. Throwing exception.");
             throw new IllegalArgumentException("Input data is empty.");
         }
 
         // Exception for incorrect order
         if(!direction.equals("asc") && !direction.equals("desc")){
+            logger.debug("Input order is incorrect. Throwing exception.");
             throw new IllegalArgumentException("Input order is incorrect.");
         }
 
         int[] temp_input = input;
+        logger.debug("Sorting for " + direction + "ending order.");
         mergeSort(temp_input, temp_input.length, direction);
         return temp_input;
     }
@@ -113,6 +122,7 @@ public class MergeSort implements Sorter {
      * @return input array sorted using merge sort algorithm
      */
     public int[] sort(int[] input) {
+        logger.info("Direction undefined - assumed ascending.");
         input = sort(input, "asc");
         return input;
     }
