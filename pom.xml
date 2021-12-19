@@ -13,7 +13,7 @@
 
     <groupId>pl.put.poznan</groupId>
     <artifactId>sorting-madness</artifactId>
-    <version>1.6.0</version>
+    <version>1.8.0</version>
 
 	<properties>
         <java.version>11</java.version>
@@ -61,10 +61,11 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.21</version>
 		</dependency>
 
 	</dependencies>

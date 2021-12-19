@@ -10,6 +10,9 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+# UML related files
+*.mdj
+
 # Package Files #
 *.jar
 *.war
@@ -22,10 +25,7 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
+# IDE specific files
+.idea/
 # Compiled files
-target/*.jar
-target/*.jar.original
-target/maven-status/
-target/maven-archiver/
-target/generated-sources/
-target/classes/
+target/
