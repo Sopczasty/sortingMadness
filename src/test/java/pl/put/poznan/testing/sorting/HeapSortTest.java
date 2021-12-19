@@ -6,7 +6,12 @@ import org.junit.jupiter.api.Test;
 import pl.put.poznan.sorting.logic.HeapSort;
 import pl.put.poznan.sorting.logic.Sorter;
 
+/**
+ * Tests for heap sort.
+ */
 class HeapSortTest {
+
+    // Sorting algorithm instance
     private Sorter sorter;
 
     @BeforeEach
@@ -14,7 +19,9 @@ class HeapSortTest {
         sorter = new HeapSort();
     }
 
-    // Default test for a list in ascending order
+    /**
+     * Test for array in correct form (ascending order).
+     */
     @Test
     public void testAscending(){
         int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
@@ -23,7 +30,9 @@ class HeapSortTest {
         assertArrayEquals(output, sorter.sort(input, direction));
     }
 
-    // Default test for a list in descending order
+    /**
+     * Test for array in correct form (descending order).
+     */
     @Test
     public void testDescending(){
         int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
@@ -32,7 +41,9 @@ class HeapSortTest {
         assertArrayEquals(output, sorter.sort(input, direction));
     }
 
-    // Test for a list with negative values in ascending order
+    /**
+     * Test for array with negative values (ascending order).
+     */
     @Test
     public void testAscendingNegative(){
         int[] input = {32, -43, 12, 53, -3, 9, -1, 0, 10, 4};
@@ -41,7 +52,9 @@ class HeapSortTest {
         assertArrayEquals(output, sorter.sort(input, direction));
     }
 
-    // Test for a list with negative values in descending order
+    /**
+     * Test for array with negative values (descending order).
+     */
     @Test
     public void testDescendingNegative(){
         int[] input = {32, -43, 12, 53, -3, 9, -1, 0, 10, 4};
@@ -50,7 +63,9 @@ class HeapSortTest {
         assertArrayEquals(output, sorter.sort(input, direction));
     }
 
-    // Test for a small list in ascending order
+    /**
+     * Test for small array (ascending order).
+     */
     @Test
     public void testSmall(){
         int[] input = {32, 5};
@@ -59,7 +74,9 @@ class HeapSortTest {
         assertArrayEquals(output, sorter.sort(input, direction));
     }
 
-    // Test for list without specified order
+    /**
+     * Test for array without specified order.
+     */
     @Test
     public void testNullDirection() {
         int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
@@ -68,7 +85,9 @@ class HeapSortTest {
 
     }
 
-    // Test for incorrect input data
+    /**
+     * Test for array in incorrect format.
+     */
     @Test
     public void testIncorrectInput(){
         int[] input = {};
@@ -84,7 +103,9 @@ class HeapSortTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
-    // Test for incorrect input data
+    /**
+     * Test for array with unknown direction order.
+     */
     @Test
     public void testIncorrectDirection(){
         int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};

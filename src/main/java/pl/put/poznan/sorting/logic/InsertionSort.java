@@ -1,6 +1,16 @@
 package pl.put.poznan.sorting.logic;
 
+/**
+ * Returns data sorted using insertion sort algorithm.
+ */
 public class InsertionSort implements Sorter {
+
+    /**
+     * Main insertion sort algorithm.
+     * @param input input data to be sorted
+     * @param direction direction of the sort (descending or ascending)
+     * @return input array sorted using insertion sort
+     */
     public int[] sort(int[] input, String direction) {
 
         // Exception for empty input data
@@ -47,6 +57,12 @@ public class InsertionSort implements Sorter {
         return input;
     }
 
+    /**
+     * Function invoking insertion sort if the user did not provide sort
+     * direction (assuming ascending order).
+     * @param input input array to be sorted
+     * @return input array sorted using insertion sort algorithm
+     */
     public int[] sort(int[] input) {
         input = sort(input, "asc");
         return input;
