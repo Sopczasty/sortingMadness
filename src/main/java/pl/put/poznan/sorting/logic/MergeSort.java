@@ -1,6 +1,19 @@
 package pl.put.poznan.sorting.logic;
 
+/**
+ * Returns data sorted using merge sort algorithm.
+ */
 public class MergeSort implements Sorter {
+
+    /**
+     * Function merging two subarrays in merge sort algorithm.
+     * @param a merged array
+     * @param l first (left) subarray
+     * @param r second (right) subarray
+     * @param left last index of first (left) subarray
+     * @param right last index of second (right) subarray
+     * @param direction direction of the sort (ascending or descending)
+     */
     static void merge(
             int[] a, int[] l, int[] r, int left, int right, String direction) {
 
@@ -44,6 +57,12 @@ public class MergeSort implements Sorter {
         }
     }
 
+    /**
+     * Main sorting algorithm sorting using divide and conquer method.
+     * @param a input array to be sorted
+     * @param n size of the array to be sorted
+     * @param direction direction of the sort (ascending or descending)
+     */
     public static void mergeSort(int[] a, int n, String direction) {
         if (n < 2) {
             return;
@@ -64,6 +83,12 @@ public class MergeSort implements Sorter {
         merge(a, l, r, mid, n - mid, direction);
     }
 
+    /**
+     * Function invoking merge sort algorithm.
+     * @param input input array to be sorted
+     * @param direction direction of the sort (ascending or descending)
+     * @return input array sorted using merge sort algorithm
+     */
     public int[] sort(int input[], String direction) {
 
         // Exception for empty input data
@@ -81,6 +106,12 @@ public class MergeSort implements Sorter {
         return temp_input;
     }
 
+    /**
+     * Function invoking merge sort algorithm if the user did not
+     * provide sort direction (assuming ascending order).
+     * @param input input array to be sorted
+     * @return input array sorted using merge sort algorithm
+     */
     public int[] sort(int[] input) {
         input = sort(input, "asc");
         return input;
