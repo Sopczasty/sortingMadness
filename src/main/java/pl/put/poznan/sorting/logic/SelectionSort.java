@@ -80,6 +80,13 @@ public class SelectionSort implements Sorter {
         return input;
     }
 
+    /**
+     * Function sorting input array of objects using selection sort algorithm.
+     * @param input input array of objects to be sorted
+     * @param direction direction of the sort (ascending or descending)
+     * @param object attribute to sort by
+     * @return input array sorted using selection sort algorithm
+     */
     public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute) {
         // Exception for empty input data
         if (input.size() == 0) {
@@ -123,6 +130,12 @@ public class SelectionSort implements Sorter {
         return input;
     }
 
+    /**
+     * Function invoking selection sort algorithm if the user did not
+     * provide sort direction (assuming ascending).
+     * @param input input data of objects to be sorted
+     * @return input data sorted using selection sort algorithm
+     */
     public ArrayList<Object> sort(ArrayList<Object> input) {
         System.out.println("Direction undefined - assumed ascending order.");
         input = sort(input, "asc", "time");
