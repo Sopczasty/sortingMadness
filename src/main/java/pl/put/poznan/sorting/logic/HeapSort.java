@@ -1,8 +1,17 @@
 package pl.put.poznan.sorting.logic;
 
+/**
+ * Returns data sorted using heap sort algorithm.
+ */
 public class HeapSort implements Sorter {
-    // To heapify a subtree rooted with node i which is
-    // an index in arr[]. n is size of heap
+
+    /**
+     * Function converting input array into a heap.
+     * @param arr input array to be converted into a heap
+     * @param n size of the heap
+     * @param i root of the heap
+     * @param direction direction of the heap (descending or ascending)
+     */
     void heapify(int arr[], int n, int i, String direction)
     {
         // Sorting for ascending order
@@ -56,6 +65,11 @@ public class HeapSort implements Sorter {
         }
     }
 
+    /**
+     * Main heap sort sorting function.
+     * @param arr input array to be sorted
+     * @param direction direction of the sort (ascending or descending)
+     */
     public void heapSort(int arr[], String direction)
     {
         int n = arr.length;
@@ -76,6 +90,12 @@ public class HeapSort implements Sorter {
         }
     }
 
+    /**
+     * Function invoking heap sort.
+     * @param input input array to be sorted
+     * @param direction direction of the sort (ascending or descending)
+     * @return input array sorted using heap sort
+     */
     public int[] sort(int[] input, String direction) {
 
         // Exception for empty input data
@@ -93,6 +113,12 @@ public class HeapSort implements Sorter {
         return temp_arr;
     }
 
+    /**
+     * Function invoking heap sort if the user did not provide sort direction
+     * (assuming ascending order).
+     * @param input input array to be sorted
+     * @return input array sorted using heap sort algorithm
+     */
     public int[] sort(int[] input) {
         input = sort(input, "asc");
         return input;
