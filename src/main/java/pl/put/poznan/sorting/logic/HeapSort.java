@@ -72,6 +72,14 @@ public class HeapSort implements Sorter {
         }
     }
 
+    /**
+     * Function converting input array of objects into a heap.
+     * @param arr input array to be converted into a heap
+     * @param n size of the heap
+     * @param i root of the heap
+     * @param direction direction of the heap (descending or ascending)
+     * @param attribute object attribute to sort by
+     */
     void heapify(ArrayList<Object> temp_arr, int n, int i, String direction, String attribute)
     {
         ObjectComparator objectComparator = new ObjectComparator(attribute);
@@ -152,6 +160,12 @@ public class HeapSort implements Sorter {
         }
     }
 
+    /**
+     * Main heap sort sorting function for objects.
+     * @param arr input array of objects to be sorted
+     * @param direction direction of the sort (ascending or descending)
+     * @param attribute object attribute to sort by
+     */
     public void heapSort(ArrayList<Object> temp_arr, String direction, String attribute)
     {
 
@@ -212,6 +226,13 @@ public class HeapSort implements Sorter {
         return input;
     }
 
+    /**
+     * Function invoking heap sort for objects.
+     * @param input input array of objects to be sorted
+     * @param direction direction of the sort (ascending or descending)
+     * @param attribute object attribute to sort by
+     * @return input array of objects sorted using heap sort
+     */
     public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute) {
         // Exception for empty input data
         if(input.size() == 0){
@@ -229,6 +250,12 @@ public class HeapSort implements Sorter {
 
     }
 
+    /**
+     * Function invoking heap sort if the user did not provide sort direction
+     * (assuming ascending order).
+     * @param input input array of objects to be sorted
+     * @return input array of objects sorted using heap sort algorithm
+     */
     public ArrayList<Object> sort(ArrayList<Object> input) {
         System.out.println("Direction undefined - assumed ascending order.");
         input = sort(input, "asc", "time");
