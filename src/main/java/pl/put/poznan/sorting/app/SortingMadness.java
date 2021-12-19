@@ -2,7 +2,11 @@ package pl.put.poznan.sorting.app;
 
 import pl.put.poznan.sorting.logic.*;
 
-
+/**
+ * Main class responsible for sorting objects.
+ * Prints out initial data and after sorting
+ * prints sorted data in specified order.
+ */
 public class SortingMadness {
     private static int [] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
     private static String direction = "asc";
