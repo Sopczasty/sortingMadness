@@ -1,8 +1,8 @@
 package pl.put.poznan.sorting.logic;
 
 public class AutoDetector {
-    int[] data = null;
-    int size;
+    private int[] data = null;
+    private int size;
     public AutoDetector(int[] input) throws NullPointerException {
         data = input;
         size = data.length;
