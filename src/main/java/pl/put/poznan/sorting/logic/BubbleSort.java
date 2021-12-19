@@ -1,9 +1,17 @@
 package pl.put.poznan.sorting.logic;
 
 /**
- * Bubble sorting algorithm
+ * Returns data sorted by bubble sort algorithm.
  */
 public class BubbleSort implements Sorter {
+
+    /**
+     * Main sorting function, returns sorted array using
+     * the algorithm.
+     * @param input Array of elements to be sorted.
+     * @param direction Direction of the sort (descending or ascending)
+     * @return Input array sorted using bubble sort.
+     */
     public int[] sort(int[] input, String direction){
 
         // Exception for empty input data
@@ -46,6 +54,12 @@ public class BubbleSort implements Sorter {
         return input;
     }
 
+    /**
+     * Function invoking bubble sort algorithm if the user did not provide
+     * sorting direction (using ascending by default).
+     * @param input input array to be sorted
+     * @return input array sorted using bubble sort algorithm
+     */
     public int[] sort(int[] input) {
         System.out.println("Direction undefined - assumed ascending order.");
         input = sort(input, "asc");
