@@ -1,6 +1,16 @@
 package pl.put.poznan.sorting.logic;
 
+/**
+ * Returns data sorted using selection sort algorithm.
+ */
 public class SelectionSort implements Sorter {
+
+    /**
+     * Function sorting input array using selection sort algorithm.
+     * @param input input array to be sorted
+     * @param direction direction of the sort (ascending or descending)
+     * @return input array sorted using selection sort algorithm
+     */
     public int[] sort(int[] input, String direction) {
 
         // Exception for empty input data
@@ -47,6 +57,12 @@ public class SelectionSort implements Sorter {
         return input;
     }
 
+    /**
+     * Function invoking selection sort algorithm if the user did not
+     * provide sort direction (assuming ascending).
+     * @param input input data to be sorted
+     * @return input data sorted using selection sort algorithm
+     */
     public int[] sort(int[] input) {
         input = sort(input, "asc");
         return input;
