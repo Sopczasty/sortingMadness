@@ -16,5 +16,12 @@ jobs:
       - name: Upload jar
         uses: actions/upload-artifact@v2
         with:
-          name: SortingMadness
+          name: App
           path: target/*.jar
+          if-no-files-found: error
+      - name: Upload javadoc
+        uses: actions/upload-artifact@v2
+        with:
+          name: Documentation
+          path: target/site/
+          if-no-files-found: error
