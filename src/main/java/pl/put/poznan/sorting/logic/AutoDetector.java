@@ -21,25 +21,16 @@ public class AutoDetector {
         return new HeapSort();
     }
 
-    private int standardDeviation() {
-        float mean = 0, sd = 0;
-        for (int i : data) mean += i;
-        mean = mean/data.length;
-        for (int i : data) sd += pow((mean - i), 2);
-        return (int) round(sqrt(sd/data.length));
-
-    }
-
     public float percentSorted() {
         int sortedElements = 0;
-        int lastSortedIdx = 0;
-        for(int i = 1; i < data.length; i++) {
-            if(data[i] > data[lastSortedIdx] /*&& data[i] - standardDeviation() < data[lastSortedIdx]*/ ) {
+        for(int i = 1; i < size; i+=2) {
+            if(data[i] > data[i-1]) {
                 sortedElements++;
-                lastSortedIdx = i;
+                if(i == (int) size/2 + 1)
+                    if((float) sortedElements/i < 0.5) return (float) sortedElements/i;
             }
         }
         System.out.println(sortedElements);
-        return (float) sortedElements/data.length;
+        return (float) sortedElements/size;
     }
 }
