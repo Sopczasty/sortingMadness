@@ -1,20 +1,43 @@
 package pl.put.poznan.sorting.logic;
 
 import java.util.ArrayList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class QuickSort implements Sorter {
+
+    // Logger
+    static Logger logger = LoggerFactory.getLogger(QuickSort.class);
+
+    /**
+     * Helper function swapping two elements in array
+     * @param arr input array to swap elements in
+     * @param i index of first element to swap
+     * @param j index of second element to swap
+     */
+    static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+  
     static void swap(ArrayList<Object> arr, int i, int j) {
         Object temp = arr.get(i);
         arr.set(i, arr.get(j));
         arr.set(j, temp);
     }
 
-    static void swap(int[] arr, int i, int j) {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-
+    /**
+     * Function sorting the input subarray starting from
+     * start index up to end index
+     * based on pivot and returning a new pivot.
+     * @param arr input subarray
+     * @param low start index of the sort
+     * @param high end index of the sort
+     * @param direction direction of the sort (ascending or descending)
+     * @return new pivot
+     */
     static int partition(int[] arr, int low, int high, String direction) {
         int pivot = arr[high];
         int i = (low - 1);
@@ -80,6 +103,15 @@ public class QuickSort implements Sorter {
         return (i + 1);
     }
 
+    /**
+     * Main quick sort function sorting input array starting from
+     * start index up to end index.
+     * @param input input array to be sorted
+     * @param low start index to sort starting from
+     * @param high end index to sort up to
+     * @param direction direction of the sort (ascending or descending)
+     * @return input subarray sorted using quick sort algorithm
+     */
     static int[] quickSort(int[] input, int low, int high, String direction) {
         int pi;
         if (low < high) {
@@ -100,23 +132,39 @@ public class QuickSort implements Sorter {
         return input;
     }
 
+    /**
+     * Function invoking quick sort algorithm.
+     * @param input input array to be sorted
+     * @param direction direction of the sort (ascending or descending)
+     * @return input array sorted using quick sort algorithm
+     */
     public int[] sort(int[] input, String direction) {
 
         // Exception for empty input data
         if(input.length == 0){
+            logger.debug("Input data is empty. Throwing exception");
             throw new IllegalArgumentException("Input data is empty.");
         }
 
         // Exception for incorrect order
         if(!direction.equals("asc") && !direction.equals("desc")){
+            logger.debug("Input order is incorrect. Throwing exception.");
             throw new IllegalArgumentException("Input order is incorrect.");
         }
 
+        logger.debug("Sorting for " + direction + "ending order.");
         input = quickSort(input, 0, input.length - 1, direction);
         return input;
     }
 
+    /**
+     * Function invoking quick sort algorithm if the user did not
+     * provide sort direction (assuming ascending order).
+     * @param input input data to be sorted
+     * @return input data sorted using quick sort algorithm
+     */
     public int[] sort(int[] input) {
+        logger.info("Direction undefined - assumed ascending");
         input = sort(input, "asc");
         return input;
     }
@@ -139,5 +187,9 @@ public class QuickSort implements Sorter {
         System.out.println("Direction and parameter undefined - assumed ascending order and average time as parameter.");
         input = sort(input, "asc", "time");
         return input;
+    }
+  
+    public String getName() {
+        return "QuickSort";
     }
 }

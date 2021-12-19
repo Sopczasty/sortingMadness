@@ -35,3 +35,4 @@ target/classes/
 
 # IDE specific files
 .idea/
+target/
