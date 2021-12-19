@@ -63,7 +63,9 @@ public class ArraySorterController {
 
     @ExceptionHandler({InvalidParameterException.class})
     public ResponseEntity invalidParameterExceptionHandler() {
-        return new ResponseEntity<>("Wrong payload content\n", HttpStatus.EXPECTATION_FAILED);
+        Map<String, Object> response = new HashMap<String, Object>();
+        response.put("error", "Wrong payload content");
+        return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
     }
 }
 

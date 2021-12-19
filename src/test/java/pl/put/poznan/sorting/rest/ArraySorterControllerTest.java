@@ -16,6 +16,7 @@ import pl.put.poznan.sorting.logic.SortingWrapper;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,15 +52,16 @@ class ArraySorterControllerTest {
         request = new HttpEntity<Map<String, Object>>(payload, headers);
         payload.put("array", data);
         payload.put("sort", "quick");
-        Map<String, Object> result = restTemplate.postForObject(
+        ResponseEntity<Map> response = restTemplate.postForEntity(
                 uri,
                 request,
                 Map.class
         );
-        assertNotNull(result.get("array"));
+        assertTrue(response.hasBody());
+        assertNotNull(response.getBody().get("array"));
         assertArrayEquals(
                 Arrays.stream(
-                        result.get("array").toString()
+                        response.getBody().get("array").toString()
                                 .replace("[", "")
                                 .replace("]", "")
                                 .replace(" ", "")
@@ -67,5 +69,21 @@ class ArraySorterControllerTest {
                 ).mapToInt(Integer::parseInt).toArray(),
                 new SortingWrapper().getSorter("quick").sort(data)
         );
+    }
+
+    @Test
+    public void restArraySortedException() {
+        Map<String, Object> payload = new HashMap<String, Object>();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        payload.put("array", data);
+        request = new HttpEntity<Map<String, Object>>(payload, headers);
+        ResponseEntity<Map> response = restTemplate.postForEntity(
+                uri,
+                request,
+                Map.class
+        );
+        assertTrue(response.hasBody());
+        assertTrue(response.getBody().get("error").toString().contains("Wrong payload content"));
     }
 }
