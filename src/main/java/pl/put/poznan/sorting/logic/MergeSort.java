@@ -149,7 +149,7 @@ public class MergeSort implements Sorter {
      * @param a input array to be sorted
      * @param n size of the array to be sorted
      * @param direction direction of the sort (ascending or descending)
-     * @param object attribute to sort by
+     * @param attribute object attribute to sort by
      */
     public static void mergeSort(ArrayList<Object> a, int n, String direction, String attribute) {
         if (n < 2) {
