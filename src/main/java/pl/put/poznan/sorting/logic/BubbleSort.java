@@ -75,4 +75,8 @@ public class BubbleSort implements Sorter {
         input = sort(input, "asc");
         return input;
     }
+
+    public String getName() {
+        return "BubbleSort";
+    }
 }

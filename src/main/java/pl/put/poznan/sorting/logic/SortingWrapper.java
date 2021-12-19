@@ -27,4 +27,11 @@ public class SortingWrapper {
         System.out.println("Returning NULL");
         return null;
     }
+
+    public Sorter getSorter(int[] input) {
+        if (input.length == 0)
+            throw new NullPointerException("Input array is empty");
+        AutoDetector detector = new AutoDetector(input);
+        return detector.detectSorter();
+    }
 }

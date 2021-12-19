@@ -133,4 +133,8 @@ public class HeapSort implements Sorter {
         input = sort(input, "asc");
         return input;
     }
+
+    public String getName() {
+        return "HeapSort";
+    }
 }
