@@ -80,6 +80,13 @@ public class InsertionSort implements Sorter {
         return input;
     }
 
+    /**
+     * Main insertion sort algorithm on objects.
+     * @param input input data of objects to be sorted
+     * @param direction direction of the sort (descending or ascending)
+     * @param attribute object attribute to sort by
+     * @return input array of objects sorted using insertion sort
+     */
     public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute) {
         // Exception for empty input data
         if(input.size() == 0){
@@ -126,6 +133,12 @@ public class InsertionSort implements Sorter {
         return input;
     }
 
+    /**
+     * Function invoking insertion sort if the user did not provide sort
+     * direction (assuming ascending order).
+     * @param input input array of objects to be sorted
+     * @return input array of objects sorted using insertion sort algorithm
+     */
     public ArrayList<Object> sort(ArrayList<Object> input) {
         System.out.println("Direction undefined - assumed ascending order.");
         input = sort(input, "asc", "time");
