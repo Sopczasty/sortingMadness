@@ -12,14 +12,14 @@ public class BubbleSort implements Sorter {
         }
 
         // Exception for incorrect order
-        if(direction != "asc" && direction != "desc"){
+        if(!direction.equals("asc") && !direction.equals("desc")){
             throw new IllegalArgumentException("Input order is incorrect.");
         }
 
         int temp;
 
         //Sorting for ascending order
-        if(direction == "asc"){
+        if(direction.equals("asc")){
             for (int i = 0; i < input.length - 1; i++) {
                 for (int j = 0; j < input.length - i - 1; j++) {
                     if (input[j] > input[j+1]) {
@@ -32,7 +32,7 @@ public class BubbleSort implements Sorter {
         }
 
         //Sorting for descending order
-        if(direction == "desc"){
+        if(direction.equals("desc")){
             for (int i = 0; i < input.length - 1; i++) {
                 for (int j = 0; j < input.length - i - 1; j++) {
                     if (input[j] < input[j+1]) {

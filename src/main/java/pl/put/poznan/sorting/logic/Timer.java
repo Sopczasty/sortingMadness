@@ -14,7 +14,7 @@ public class Timer {
     }
 
     public long getLastMeasure() {
-        timeElapsed = start - finish;
+        timeElapsed = finish - start;
         return timeElapsed;
     }
 }

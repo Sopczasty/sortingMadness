@@ -7,7 +7,7 @@ public class MergeSort implements Sorter {
         int i = 0, j = 0, k = 0;
 
         // Sorting for ascending order
-        if(direction == "asc"){
+        if(direction.equals("asc")){
             while (i < left && j < right) {
                 if (l[i] <= r[j]) {
                     a[k++] = l[i++];
@@ -25,7 +25,7 @@ public class MergeSort implements Sorter {
         }
 
         // Sorting for descending order
-        if(direction == "desc"){
+        if(direction.equals("desc")){
 
             while (i < left && j < right) {
                 if (l[i] >= r[j]) {
@@ -72,7 +72,7 @@ public class MergeSort implements Sorter {
         }
 
         // Exception for incorrect order
-        if(direction != "asc" && direction != "desc"){
+        if(!direction.equals("asc") && !direction.equals("desc")){
             throw new IllegalArgumentException("Input order is incorrect.");
         }
 

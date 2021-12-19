@@ -6,7 +6,7 @@ public class HeapSort implements Sorter {
     void heapify(int arr[], int n, int i, String direction)
     {
         // Sorting for ascending order
-        if(direction == "asc"){
+        if(direction.equals("asc")){
             int largest = i; // Initialize largest as root
             int l = 2 * i + 1; // left = 2*i + 1
             int r = 2 * i + 2; // right = 2*i + 2
@@ -31,7 +31,7 @@ public class HeapSort implements Sorter {
         }
 
         // Sorting for descending order
-        if(direction == "desc"){
+        if(direction.equals("desc")){
             int smallest = i; // Initialize smalles as root
             int l = 2 * i + 1; // left = 2*i + 1
             int r = 2 * i + 2; // right = 2*i + 2
@@ -58,7 +58,6 @@ public class HeapSort implements Sorter {
 
     public void heapSort(int arr[], String direction)
     {
-
         int n = arr.length;
 
         // Build heap (rearrange array)
@@ -85,7 +84,7 @@ public class HeapSort implements Sorter {
         }
 
         // Exception for incorrect order
-        if(direction != "asc" && direction != "desc"){
+        if(!direction.equals("asc") && !direction.equals("desc")){
             throw new IllegalArgumentException("Input order is incorrect.");
         }
 
