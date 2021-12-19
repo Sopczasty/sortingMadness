@@ -54,7 +54,7 @@ public class ArraySorterController {
             sorter = wrapper.getSorter(algorithm);
 
             timer.startMeasure();
-            input = sorter.sort(input);
+            input = sorter.sort(input, direction);
             timer.stopMeasure();
 
             output = new HashMap<String, Object>();
