@@ -23,9 +23,4 @@
 hs_err_pid*
 
 # Compiled files
-target/*.jar
-target/*.jar.original
-target/maven-status/
-target/maven-archiver/
-target/generated-sources/
-target/classes/
+target/

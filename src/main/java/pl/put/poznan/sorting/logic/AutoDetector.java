@@ -5,7 +5,7 @@ import static java.lang.Math.*;
 public class AutoDetector {
     int[] data = null;
     int size;
-    public AutoDetector(int[] input) {
+    public AutoDetector(int[] input) throws NullPointerException {
         data = input;
         size = data.length;
     }
@@ -23,7 +23,7 @@ public class AutoDetector {
 
     public float percentSorted() {
         int sortedElements = 0;
-        for(int i = 1; i < size; i+=2) {
+        for(int i = 1; i < size; i++) {
             if(data[i] > data[i-1]) {
                 sortedElements++;
                 if(i == (int) size/2 + 1)
