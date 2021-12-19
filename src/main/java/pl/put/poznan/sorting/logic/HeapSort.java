@@ -1,27 +1,14 @@
 package pl.put.poznan.sorting.logic;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Objects;
 
-/**
- * Returns data sorted using heap sort algorithm.
- */
 public class HeapSort implements Sorter {
-
-    // Logger
-    static Logger logger = LoggerFactory.getLogger(HeapSort.class);
-
-    /**
-     * Function converting input array into a heap.
-     * @param arr input array to be converted into a heap
-     * @param n size of the heap
-     * @param i root of the heap
-     * @param direction direction of the heap (descending or ascending)
-     */
+    // To heapify a subtree rooted with node i which is
+    // an index in arr[]. n is size of heap
     void heapify(int arr[], int n, int i, String direction)
     {
         // Sorting for ascending order
-        if(direction.equals("asc")){
+        if(Objects.equals(direction, "asc")){
             int largest = i; // Initialize largest as root
             int l = 2 * i + 1; // left = 2*i + 1
             int r = 2 * i + 2; // right = 2*i + 2
@@ -46,7 +33,7 @@ public class HeapSort implements Sorter {
         }
 
         // Sorting for descending order
-        if(direction.equals("desc")){
+        if(Objects.equals(direction, "desc")){
             int smallest = i; // Initialize smalles as root
             int l = 2 * i + 1; // left = 2*i + 1
             int r = 2 * i + 2; // right = 2*i + 2
@@ -71,15 +58,33 @@ public class HeapSort implements Sorter {
         }
     }
 
-    /**
-     * Main heap sort sorting function.
-     * @param arr input array to be sorted
-     * @param direction direction of the sort (ascending or descending)
-     */
+    public void heapSort(int arr[], String direction,  int iterations)
+    {
+
+        int n = arr.length;
+        int depth = 0;
+        // Build heap (rearrange array)
+        for (int i = n / 2 - 1; i >= 0; i--)
+            heapify(arr, n, i, direction);
+
+        // One by one extract an element from heap
+        for (int i = n - 1; i > 0; i--) {
+            // Move current root to end
+            int temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+
+            if( ++depth >= iterations) break;
+
+            // call max heapify on the reduced heap
+            heapify(arr, i, 0, direction);
+        }
+    }
+
     public void heapSort(int arr[], String direction)
     {
-        int n = arr.length;
 
+        int n = arr.length;
         // Build heap (rearrange array)
         for (int i = n / 2 - 1; i >= 0; i--)
             heapify(arr, n, i, direction);
@@ -96,40 +101,54 @@ public class HeapSort implements Sorter {
         }
     }
 
-    /**
-     * Function invoking heap sort.
-     * @param input input array to be sorted
-     * @param direction direction of the sort (ascending or descending)
-     * @return input array sorted using heap sort
-     */
-    public int[] sort(int[] input, String direction) {
+    public int[] sort(int[] input, String direction, int iterations) {
 
         // Exception for empty input data
         if(input.length == 0){
-            logger.debug("Input data is empty. Throwing exception.");
             throw new IllegalArgumentException("Input data is empty.");
         }
 
         // Exception for incorrect order
-        if(!direction.equals("asc") && !direction.equals("desc")){
-            logger.debug("Input order is incorrect. Throwing exception.");
+        if(!Objects.equals(direction, "asc") && !Objects.equals(direction, "desc")){
             throw new IllegalArgumentException("Input order is incorrect.");
         }
 
-        logger.debug("Sorting for " + direction + "ending order.");
+        if( iterations < 0) {
+            throw new IllegalArgumentException("Number of iterations must be a positive number.");
+        }
+
+        if( iterations == 0) {
+            return input;
+        }
+
+        int[] temp_arr = input;
+        heapSort(temp_arr, direction, iterations);
+        return temp_arr;
+    }
+
+    public int[] sort(int[] input, String direction) {
+
+        // Exception for empty input data
+        if(input.length == 0){
+            throw new IllegalArgumentException("Input data is empty.");
+        }
+
+        // Exception for incorrect order
+        if(!Objects.equals(direction, "asc") && !Objects.equals(direction, "desc")){
+            throw new IllegalArgumentException("Input order is incorrect.");
+        }
+
         int[] temp_arr = input;
         heapSort(temp_arr, direction);
         return temp_arr;
     }
 
-    /**
-     * Function invoking heap sort if the user did not provide sort direction
-     * (assuming ascending order).
-     * @param input input array to be sorted
-     * @return input array sorted using heap sort algorithm
-     */
+    public int[] sort(int[] input, int iterations) {
+        input = sort(input, "asc", iterations);
+        return input;
+    }
+
     public int[] sort(int[] input) {
-        logger.info("Direction undefined - assumed ascending.");
         input = sort(input, "asc");
         return input;
     }
