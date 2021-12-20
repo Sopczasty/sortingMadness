@@ -12,11 +12,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import pl.put.poznan.sorting.app.App;
 import pl.put.poznan.sorting.logic.SortingWrapper;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +38,8 @@ class ArraySorterControllerTest {
     private URI uri;
     // Request to test with
     private HttpEntity<Map<String, Object>> request;
+    // App object
+    private App app = new App();
 
     // Port of the API endpoint
     @LocalServerPort
@@ -64,24 +66,24 @@ class ArraySorterControllerTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         request = new HttpEntity<Map<String, Object>>(payload, headers);
-        payload.put("array", data);
-        payload.put("sort", "quick");
+        payload.put("input", data);
+        payload.put("algorithm", "quick");
         ResponseEntity<Map> response = restTemplate.postForEntity(
                 uri,
                 request,
                 Map.class
         );
         assertTrue(response.hasBody());
-        assertNotNull(response.getBody().get("array"));
+        assertNotNull(response.getBody().get("result"));
         assertArrayEquals(
                 Arrays.stream(
-                        response.getBody().get("array").toString()
+                        response.getBody().get("result").toString()
                                 .replace("[", "")
                                 .replace("]", "")
                                 .replace(" ", "")
                                 .split(",")
                 ).mapToInt(Integer::parseInt).toArray(),
-                new SortingWrapper().getSorter("quick").sort(data)
+                new SortingWrapper().getSorter(data, "quick").sort(data, "asc")
         );
     }
 
