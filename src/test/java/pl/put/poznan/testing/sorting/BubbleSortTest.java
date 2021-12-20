@@ -1,23 +1,15 @@
 package pl.put.poznan.testing.sorting;
 
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.put.poznan.sorting.logic.BubbleSort;
-import pl.put.poznan.sorting.logic.Sorter;
+import pl.put.poznan.sorting.app.App;
 
 /**
  * Tests for bubble sort.
  */
 class BubbleSortTest {
 
-    // Sorting algorithm instance
-    private Sorter sorter;
-
-    @BeforeEach
-    public void setUp(){
-        sorter = new BubbleSort();
-    }
+    private App app = new App();
 
     /**
      * Test for array in correct form (ascending order).
@@ -26,8 +18,7 @@ class BubbleSortTest {
     public void testAscending(){
         int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
         int[] output = {0, 1, 3, 4, 9, 10, 12, 32, 43, 53};
-        String direction = "asc";
-        assertArrayEquals(output, sorter.sort(input, direction));
+        assertArrayEquals(output, app.getResult(input, "bubble", "asc"));
     }
 
     /**
@@ -37,8 +28,7 @@ class BubbleSortTest {
     public void testDescending(){
         int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
         int[] output = {53, 43, 32, 12, 10, 9, 4, 3, 1, 0};
-        String direction = "desc";
-        assertArrayEquals(output, sorter.sort(input, direction));
+        assertArrayEquals(output, app.getResult(input, "bubble", "desc"));
     }
 
     /**
@@ -48,8 +38,7 @@ class BubbleSortTest {
     public void testAscendingNegative(){
         int[] input = {32, -43, 12, 53, -3, 9, -1, 0, 10, 4};
         int[] output = {-43, -3, -1, 0, 4, 9, 10, 12, 32, 53};
-        String direction = "asc";
-        assertArrayEquals(output, sorter.sort(input, direction));
+        assertArrayEquals(output, app.getResult(input, "bubble", "asc"));
     }
 
     /**
@@ -59,8 +48,7 @@ class BubbleSortTest {
     public void testDescendingNegative(){
         int[] input = {32, -43, 12, 53, -3, 9, -1, 0, 10, 4};
         int[] output = {53, 32, 12, 10, 9, 4, 0, -1, -3, -43};
-        String direction = "desc";
-        assertArrayEquals(output, sorter.sort(input, direction));
+        assertArrayEquals(output, app.getResult(input, "bubble", "desc"));
     }
 
     /**
@@ -70,8 +58,7 @@ class BubbleSortTest {
     public void testSmall(){
         int[] input = {32, 5};
         int[] output = {5, 32};
-        String direction = "asc";
-        assertArrayEquals(output, sorter.sort(input, direction));
+        assertArrayEquals(output, app.getResult(input, "bubble", "asc"));
     }
 
     /**
@@ -81,8 +68,7 @@ class BubbleSortTest {
     public void testNullDirection() {
         int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
         int[] output = {0, 1, 3, 4, 9, 10, 12, 32, 43, 53};
-        assertArrayEquals(output, sorter.sort(input));
-
+        assertArrayEquals(output, app.getResult(input,"bubble"));
     }
 
     /**
@@ -91,15 +77,13 @@ class BubbleSortTest {
     @Test
     public void testIncorrectInput(){
         int[] input = {};
-        String direction = "asc";
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            sorter.sort(input, direction);
+            app.getResult(input, "bubble", "asc");
         });
 
         String expectedMessage = "Input data is empty.";
         String actualMessage = exception.getMessage();
-
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
@@ -109,15 +93,13 @@ class BubbleSortTest {
     @Test
     public void testIncorrectDirection(){
         int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
-        String direction = "error";
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            sorter.sort(input, direction);
+            app.getResult(input, "bubble", "error");
         });
 
-        String expectedMessage = "Input order is incorrect.";
+        String expectedMessage = "Sorting order is incorrect.";
         String actualMessage = exception.getMessage();
-
         assertTrue(actualMessage.contains(expectedMessage));
     }
 }
