@@ -39,7 +39,7 @@ public class Timer {
      * user started the measure and ended it.
      * @return latest time elapsed between measure start and end
      */
-    public long getLastMeasure() {
+    public long getTimeElapsed() {
         timeElapsed = finish - start;
         return timeElapsed;
     }

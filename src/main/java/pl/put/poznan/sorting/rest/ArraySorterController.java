@@ -3,6 +3,7 @@ package pl.put.poznan.sorting.rest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.put.poznan.sorting.app.App;
 import pl.put.poznan.sorting.logic.Sorter;
 import pl.put.poznan.sorting.logic.SortingWrapper;
 import pl.put.poznan.sorting.logic.Timer;
@@ -20,18 +21,8 @@ import java.util.*;
 @RequestMapping("/api")
 public class ArraySorterController {
 
-    // Algorithm type
-    private static String algorithm;
-    // Timer instance measuring sorting time
-    private static Timer timer;
-    // Input array to be sorted
-    private static int[] input;
-    // Output array
-    private static HashMap<String, Object> output;
-    // Wrapper returning correct sorting algorithm
-    private static SortingWrapper wrapper;
-    // Sorting algorithm instance
-    private static Sorter sorter;
+    // Application object
+    App app = new App();
     // Logger
     static Logger logger = LoggerFactory.getLogger(ArraySorterController.class);
 
@@ -48,50 +39,13 @@ public class ArraySorterController {
      * @return object with sorted array and execution time
      * @throws InvalidParameterException if the input is in incorrect format
      */
-    @RequestMapping(value = "/array", method=RequestMethod.POST)
+    @RequestMapping(value = "/sort", method=RequestMethod.POST)
     public @ResponseBody
     Map<String, Object> getSortedArray(@RequestBody Map<String, Object> payload)
             throws InvalidParameterException {
-        logger.info("Checking if payload is empty.");
-        if (!payload.isEmpty()) {
-            logger.info("Payload not empty.");
-            logger.info("Checking for sorting algorithm type.");
-            String direction;
-            if(payload.containsKey("sort")) {
-                algorithm = payload.get("sort").toString();
-                logger.info("Sorting type: " + algorithm + " sort.");
-            }
-            else throw new InvalidParameterException();
 
-            logger.info("Checking for input data.");
-            if(payload.containsKey("array")) {
-                input = Arrays.stream(
-                        payload.get("array").toString()
-                                .replace("[", "")
-                                .replace("]", "")
-                                .replace(" ", "")
-                                .split(",")
-                ).mapToInt(Integer::parseInt).toArray();
-            } else throw new InvalidParameterException();
-            logger.info("Checking for order.");
-            if(payload.containsKey("order"))
-                direction = payload.get("order").toString();
-            else direction = "asc";
-            timer = new Timer();
-            wrapper = new SortingWrapper();
-            sorter = wrapper.getSorter(algorithm);
-
-            logger.info("Initializing sorting.");
-            timer.startMeasure();
-            input = sorter.sort(input, direction);
-            timer.stopMeasure();
-
-            output = new HashMap<String, Object>();
-            output.put("array", input);
-            output.put("sort", algorithm);
-            output.put("time", timer.getLastMeasure());
-            return output;
-        } else throw new InvalidParameterException();
+        logger.info("Received new request.");
+        return app.getResult(payload);
     }
 
     /**
