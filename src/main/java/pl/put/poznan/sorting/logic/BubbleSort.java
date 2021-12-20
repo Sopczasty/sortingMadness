@@ -38,7 +38,7 @@ public class BubbleSort implements Sorter {
                     input[j+1] = temp;
                 }
             }
-            if (iterations > 0 && (i+1 >= iterations)) break;
+            if (iterations > 0 && (i+1 >= iterations)) return input;
         }
         return input;
     }

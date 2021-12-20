@@ -110,7 +110,7 @@ public class HeapSort implements Sorter {
             input[0] = input[i];
             input[i] = temp;
 
-            if(iterations > 0 && ( ++depth >= iterations)) break;
+            if(iterations > 0 && ( ++depth >= iterations)) return;
 
             // call max heapify on the reduced heap
             heapify(input, i, 0, direction);
@@ -140,7 +140,7 @@ public class HeapSort implements Sorter {
             input.set(0, input.get(i));
             input.set(i, temp);
 
-            if(iterations > 0 && ( ++depth >= iterations)) break;
+            if(iterations > 0 && ( ++depth >= iterations)) return;
 
             // call max heapify on the reduced heap
             heapify(input, i, 0, direction, attribute);
