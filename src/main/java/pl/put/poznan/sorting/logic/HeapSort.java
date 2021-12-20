@@ -95,10 +95,10 @@ public class HeapSort implements Sorter {
      * @param input input array to be sorted
      * @param direction direction of the sort (ascending or descending)
      */
-    public void heapSort(int input[], String direction)
+    public void heapSort(int input[], String direction, int iterations)
     {
         int n = input.length;
-
+        int depth = 0;
         // Build heap (rearrange array)
         for (int i = n / 2 - 1; i >= 0; i--)
             heapify(input, n, i, direction);
@@ -109,6 +109,8 @@ public class HeapSort implements Sorter {
             int temp = input[0];
             input[0] = input[i];
             input[i] = temp;
+
+            if(iterations > 0 && ( ++depth >= iterations)) return;
 
             // call max heapify on the reduced heap
             heapify(input, i, 0, direction);
@@ -121,11 +123,11 @@ public class HeapSort implements Sorter {
      * @param direction direction of the sort (ascending or descending)
      * @param attribute object attribute to sort by
      */
-    public void heapSort(ArrayList<Object> input, String direction, String attribute)
+    public void heapSort(ArrayList<Object> input, String direction, String attribute, int iterations)
     {
 
         int n = input.size();
-
+        int depth = 0;
         // Build heap (rearrange array)
         for (int i = n / 2 - 1; i >= 0; i--)
             heapify(input, n, i, direction, attribute);
@@ -138,6 +140,8 @@ public class HeapSort implements Sorter {
             input.set(0, input.get(i));
             input.set(i, temp);
 
+            if(iterations > 0 && ( ++depth >= iterations)) return;
+
             // call max heapify on the reduced heap
             heapify(input, i, 0, direction, attribute);
         }
@@ -149,9 +153,9 @@ public class HeapSort implements Sorter {
      * @param direction direction of the sort (ascending or descending)
      * @return input array sorted using heap sort
      */
-    public int[] sort(int[] input, String direction) {
+    public int[] sort(int[] input, String direction, int iterations) {
         int[] temp_arr = input;
-        heapSort(temp_arr, direction);
+        heapSort(temp_arr, direction, iterations);
         return temp_arr;
     }
 
@@ -162,9 +166,9 @@ public class HeapSort implements Sorter {
      * @param attribute object attribute to sort by
      * @return input array of objects sorted using heap sort
      */
-    public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute) {
+    public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute, int iterations) {
         ArrayList<Object> temp_arr = input;
-        heapSort(temp_arr, direction, attribute);
+        heapSort(temp_arr, direction, attribute, iterations);
         return temp_arr;
     }
   
