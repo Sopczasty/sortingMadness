@@ -2,6 +2,7 @@ package pl.put.poznan.testing.sorting;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.put.poznan.sorting.app.App;
 import pl.put.poznan.sorting.logic.BubbleSort;
 import pl.put.poznan.sorting.logic.Sorter;
 
@@ -10,12 +11,11 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ObjectBubbleSortTest {
-    private Sorter sorter;
+    private App app = new App();
     private Object s1, s2, s3, s4, s5, s6, s7, s8;
 
     @BeforeEach
     public void setUp(){
-        sorter = new BubbleSort();
         s1 = new Sort("Bubblesort", 0.087, 7);
         s2 = new Sort("Mergesort", 0.05, 12);
         s3 = new Sort("Insertsort", 0.09, 8);
@@ -48,9 +48,7 @@ class ObjectBubbleSortTest {
         output.add(s7);
         output.add(s5);
         output.add(s6);
-        String direction = "asc";
-        String attribute = "name";
-        assertArrayEquals(output.toArray(), sorter.sort(input, direction, attribute).toArray());
+        assertArrayEquals(output.toArray(), app.getResult(input, "bubble", "asc", "name").toArray());
     }
 
 
@@ -79,10 +77,7 @@ class ObjectBubbleSortTest {
         output.add(s8);
 
 
-        String direction = "desc";
-        String attribute = "name";
-
-        assertArrayEquals(output.toArray(), sorter.sort(input, direction, attribute).toArray());
+        assertArrayEquals(output.toArray(), app.getResult(input, "bubble", "desc", "name").toArray());
     }
 
     // Default test for a list in ascending order: ordered by time
@@ -109,9 +104,7 @@ class ObjectBubbleSortTest {
         output.add(s6);
         output.add(s5);
 
-        String direction = "asc";
-        String attribute = "time";
-        assertArrayEquals(output.toArray(), sorter.sort(input, direction, attribute).toArray());
+        assertArrayEquals(output.toArray(), app.getResult(input, "bubble", "asc", "time").toArray());
     }
 
     // Default test for a list in descending order: ordered by time
@@ -138,9 +131,7 @@ class ObjectBubbleSortTest {
         output.add(s2);
         output.add(s7);
 
-        String direction = "desc";
-        String attribute = "time";
-        assertArrayEquals(output.toArray(), sorter.sort(input, direction, attribute).toArray());
+        assertArrayEquals(output.toArray(), app.getResult(input, "bubble", "desc", "time").toArray());
     }
 
     // Default test for a list in ascending order: ordered by optimal sample size
@@ -167,9 +158,7 @@ class ObjectBubbleSortTest {
         output.add(s7);
         output.add(s4);
 
-        String direction = "asc";
-        String attribute = "size";
-        assertArrayEquals(output.toArray(), sorter.sort(input, direction, attribute).toArray());
+        assertArrayEquals(output.toArray(), app.getResult(input, "bubble", "asc", "size").toArray());
     }
 
     // Default test for a list in descending order: ordered by optimal sample size
@@ -196,35 +185,9 @@ class ObjectBubbleSortTest {
         output.add(s5);
         output.add(s8);
 
-        String direction = "desc";
-        String attribute = "size";
-        assertArrayEquals(output.toArray(), sorter.sort(input, direction, attribute).toArray());
+        assertArrayEquals(output.toArray(), app.getResult(input, "bubble", "desc", "size").toArray());
     }
 
-    // Test for list without specified order and sorting parameter
-    @Test
-    public void testOnlyArray(){
-        ArrayList<Object> input = new ArrayList<>();
-        input.add(s1);
-        input.add(s2);
-        input.add(s3);
-        input.add(s4);
-        input.add(s5);
-        input.add(s6);
-        input.add(s7);
-        input.add(s8);
-        ArrayList<Object> output = new ArrayList<>();
-        output.add(s7);
-        output.add(s2);
-        output.add(s4);
-        output.add(s8);
-        output.add(s1);
-        output.add(s3);
-        output.add(s6);
-        output.add(s5);
-
-        assertArrayEquals(output.toArray(), sorter.sort(input).toArray());
-    }
 
     // Test for a small list in ascending order sorted by name
     @Test
@@ -236,9 +199,7 @@ class ObjectBubbleSortTest {
         ArrayList<Object> output = new ArrayList<>();
         output.add(s8);
         output.add(s7);
-        String direction = "asc";
-        String attribute = "name";
-        assertArrayEquals(output.toArray(), sorter.sort(input, direction, attribute).toArray());
+        assertArrayEquals(output.toArray(), app.getResult(input, "bubble", "asc", "name").toArray());
 
     }
 
@@ -246,16 +207,13 @@ class ObjectBubbleSortTest {
     @Test
     public void testIncorrectInput(){
         ArrayList<Object> input = new ArrayList<>();
-        String direction = "asc";
-        String parameter = "name";
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            ArrayList<Object> sort = sorter.sort(input, direction, parameter);
+            app.getResult(input, "bubble", "asc", "name").toArray();
         });
 
         String expectedMessage = "Input data is empty.";
         String actualMessage = exception.getMessage();
-
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
@@ -272,16 +230,12 @@ class ObjectBubbleSortTest {
         input.add(s7);
         input.add(s8);
 
-        String direction = "error";
-        String parameter = "name";
-
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            ArrayList<Object> sort = sorter.sort(input, direction, parameter);
+            app.getResult(input, "bubble", "error", "name").toArray();
         });
 
-        String expectedMessage = "Input order is incorrect.";
+        String expectedMessage = "Sorting order is incorrect.";
         String actualMessage = exception.getMessage();
-
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
@@ -297,10 +251,8 @@ class ObjectBubbleSortTest {
         input.add(s6);
         input.add(s7);
         input.add(s8);
-        String direction = "asc";
-        String parameter = "price";
 
-        Exception exception = assertThrows(RuntimeException.class, () -> sorter.sort(input, direction, parameter));
+        Exception exception = assertThrows(RuntimeException.class, () -> app.getResult(input, "bubble", "asc", "price").toArray());
 
         String expectedMessage = "Cannot compare objects - getter do not exist";
         String actualMessage = exception.getMessage();
