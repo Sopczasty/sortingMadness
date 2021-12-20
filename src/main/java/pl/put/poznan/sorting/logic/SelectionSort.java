@@ -18,10 +18,10 @@ public class SelectionSort implements Sorter {
      * @param direction direction of the sort (ascending or descending)
      * @return input array sorted using selection sort algorithm
      */
-    public int[] sort(int[] input, String direction, int iterations) {
+    public int[] sort(int[] input, String direction) {
         int min_idx;
         int temp;
-        int ctr = 0;
+
         for (int i = 0; i < input.length - 1; i++) {
             min_idx = i;
             for (int j = i + 1; j < input.length; j++) {
@@ -32,7 +32,6 @@ public class SelectionSort implements Sorter {
             temp = input[min_idx];
             input[min_idx] = input[i];
             input[i] = temp;
-            if(iterations > 0 && (++ctr >= iterations)) break;
         }
         return input;
     }
@@ -44,11 +43,11 @@ public class SelectionSort implements Sorter {
      * @param attribute object attribute to sort by
      * @return input array sorted using selection sort algorithm
      */
-    public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute, int iterations) {
+    public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute) {
         int min_idx;
         Object temp;
         ObjectComparator objectComparator = new ObjectComparator(attribute);
-        int ctr = 0;
+
         for (int i = 0; i < input.size() - 1; i++) {
             min_idx = i;
             for (int j = i + 1; j < input.size(); j++) {
@@ -63,7 +62,6 @@ public class SelectionSort implements Sorter {
             temp = input.get(min_idx);
             input.set(min_idx, input.get(i));
             input.set(i, temp);
-            if(iterations > 0 && (++ctr >= iterations)) break;
         }
         return input;
     }

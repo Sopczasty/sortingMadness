@@ -74,30 +74,6 @@ class HeapSortTest {
         assertArrayEquals(output, app.getResult(input, "heap"));
     }
 
-    //Test for 1 iteration in ascending mode
-    @Test
-    public void testOneIterationAsc() {
-        int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
-        int[] output = {3, 43, 12, 32, 4, 9, 1, 0, 10, 53};
-        assertArrayEquals(output, app.getResult(input,"heap", 1));
-    }
-
-    //Test for 1 iteration in descending mode
-    @Test
-    public void testOneIterationDesc() {
-        int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
-        int[] output = {32, 3, 1, 10, 4, 9, 12, 53, 43, 0};
-        assertArrayEquals(output, app.getResult(input, "heap", "desc", 1));
-    }
-
-    //Test for given limit of iterations greater than actual algorithm iterations
-    @Test
-    public void testTooFar(){
-        int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
-        int[] output = {0, 1, 3, 4, 9, 10, 12, 32, 43, 53};
-        assertArrayEquals(output, app.getResult(input, "heap", 1000000000));
-    }
-
     /**
      * Test for array in incorrect format.
      */

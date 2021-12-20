@@ -81,8 +81,8 @@ public class MergeSort implements Sorter {
      * @param size size of the array to be sorted
      * @param direction direction of the sort (ascending or descending)
      */
-    public static void mergeSort(int[] input, int size, String direction, int iterations) {
-        if (size < 2 || iterations == 0) {
+    public static void mergeSort(int[] input, int size, String direction) {
+        if (size < 2) {
             return;
         }
         int mid = size / 2;
@@ -95,8 +95,8 @@ public class MergeSort implements Sorter {
         for (int i = mid; i < size; i++) {
             r[i - mid] = input[i];
         }
-        mergeSort(l, mid, direction, iterations-1);
-        mergeSort(r, size - mid, direction, iterations-1);
+        mergeSort(l, mid, direction);
+        mergeSort(r, size - mid, direction);
 
         merge(input, l, r, mid, size - mid, direction);
     }
@@ -108,8 +108,8 @@ public class MergeSort implements Sorter {
      * @param direction direction of the sort (ascending or descending)
      * @param attribute object attribute to sort by
      */
-    public static void mergeSort(ArrayList<Object> input, int size, String direction, String attribute, int iterations) {
-        if (size < 2 || iterations == 0) {
+    public static void mergeSort(ArrayList<Object> input, int size, String direction, String attribute) {
+        if (size < 2) {
             return;
         }
         int mid = size / 2;
@@ -124,8 +124,8 @@ public class MergeSort implements Sorter {
             r.add(new Object());
             r.set(i - mid, input.get(i));
         }
-        mergeSort(l, mid, direction, attribute, iterations-1 );
-        mergeSort(r, size - mid, direction, attribute, iterations -1);
+        mergeSort(l, mid, direction, attribute);
+        mergeSort(r, size - mid, direction, attribute);
 
         merge(input, l, r, mid, size - mid, direction, attribute);
     }
@@ -136,10 +136,9 @@ public class MergeSort implements Sorter {
      * @param direction direction of the sort (ascending or descending)
      * @return input array sorted using merge sort algorithm
      */
-    public int[] sort(int input[], String direction, int iterations) {
-        int i = ((iterations == 0) ? -1 : iterations);
+    public int[] sort(int input[], String direction) {
         int[] temp_input = input;
-        mergeSort(temp_input, temp_input.length, direction, i);
+        mergeSort(temp_input, temp_input.length, direction);
         return temp_input;
     }
 
@@ -150,10 +149,9 @@ public class MergeSort implements Sorter {
      * @param attribute object attribute to sort by
      * @return input array sorted using merge sort algorithm
      */
-    public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute, int iterations) {
-        int i = ((iterations == 0) ? -1 : iterations);
+    public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute) {
         ArrayList<Object> temp_input = input;
-        mergeSort(temp_input, temp_input.size(), direction, attribute, i);
+        mergeSort(temp_input, temp_input.size(), direction, attribute);
         return temp_input;
     }
     
@@ -161,4 +159,3 @@ public class MergeSort implements Sorter {
         return "MergeSort";
     }
 }
-

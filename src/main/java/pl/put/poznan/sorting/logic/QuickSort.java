@@ -105,12 +105,12 @@ public class QuickSort implements Sorter {
      * @param direction direction of the sort (ascending or descending)
      * @return input subarray sorted using quick sort algorithm
      */
-    static int[] quickSort(int[] input, int low, int high, String direction, int iterations) {
+    static int[] quickSort(int[] input, int low, int high, String direction) {
         int pi;
-        if (low < high && (iterations != 0)) {
+        if (low < high) {
             pi = partition(input, low, high, direction);
-            quickSort(input, low, pi - 1, direction, iterations-1);
-            quickSort(input, pi + 1, high, direction, iterations-1);
+            quickSort(input, low, pi - 1, direction);
+            quickSort(input, pi + 1, high, direction);
         }
         return input;
     }
@@ -125,12 +125,12 @@ public class QuickSort implements Sorter {
      * @param attribute object attribute to sort by
      * @return input subarray sorted using quick sort algorithm
      */
-    static ArrayList<Object> quickSort(ArrayList<Object> input, int low, int high, String direction, String attribute, int iterations) {
+    static ArrayList<Object> quickSort(ArrayList<Object> input, int low, int high, String direction, String attribute) {
         int pi;
-        if (low < high && (iterations != 0)) {
+        if (low < high) {
             pi = partition(input, low, high, direction, attribute);
-            quickSort(input, low, pi - 1, direction, attribute, iterations-1);
-            quickSort(input, pi + 1, high, direction, attribute, iterations-1);
+            quickSort(input, low, pi - 1, direction, attribute);
+            quickSort(input, pi + 1, high, direction, attribute);
         }
         return input;
     }
@@ -141,9 +141,8 @@ public class QuickSort implements Sorter {
      * @param direction direction of the sort (ascending or descending)
      * @return input array sorted using quick sort algorithm
      */
-    public int[] sort(int[] input, String direction, int iterations) {
-        int i = ((iterations == 0) ? -1 : iterations);
-        return quickSort(input, 0, input.length - 1, direction, i);
+    public int[] sort(int[] input, String direction) {
+        return quickSort(input, 0, input.length - 1, direction);
     }
 
     /**
@@ -153,9 +152,8 @@ public class QuickSort implements Sorter {
      * @param attribute object attribute to sort by
      * @return input array sorted using quick sort algorithm
      */
-    public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute, int iterations) {
-        int i = ((iterations == 0) ? -1 : iterations);
-        return quickSort(input, 0, input.size() - 1, direction, attribute, i);
+    public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute) {
+        return quickSort(input, 0, input.size() - 1, direction, attribute);
     }
 
     public String getName() {

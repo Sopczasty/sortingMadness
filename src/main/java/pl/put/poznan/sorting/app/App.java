@@ -86,7 +86,7 @@ public class App {
      * @param algorithm algorithm name to use
      * @return sorted data
      */
-    public int[] getResult(int[] input, String algorithm, String direction, int iterations) {
+    public int[] getResult(int[] input, String algorithm, String direction) {
         sanityCheck(input, direction);
         logger.debug("Initializing sorter.");
         sorter = wrapper.getSorter(input, algorithm);
@@ -100,7 +100,7 @@ public class App {
 
         logger.debug("Starting sorting.");
         timer.startMeasure();
-        input = sorter.sort(input, direction, iterations);
+        input = sorter.sort(input, direction);
         timer.stopMeasure();
         logger.info("Data sorted using" + sorter.getName() + " sorter in " + timer.getTimeElapsed() + " ms.");
 
@@ -113,7 +113,7 @@ public class App {
      * @param algorithm sorting algorithm
      * @return sorted data
      */
-    public int[] getResult(int[] input, String algorithm, int iterations) {
+    public int[] getResult(int[] input, String algorithm) {
         logger.debug("Initializing sorter.");
         sorter = wrapper.getSorter(input, algorithm);
         if (sorter == null) {
@@ -123,7 +123,7 @@ public class App {
         logger.info("Sorting using " + sorter.getName() + " sorter.");
         logger.debug("Starting sorting.");
         timer.startMeasure();
-        input = sorter.sort(input, "asc", iterations);
+        input = sorter.sort(input, "asc");
         timer.stopMeasure();
         logger.info("Data sorted using" + sorter.getName() + " sorter in " + timer.getTimeElapsed() + " ms.");
 
@@ -135,23 +135,9 @@ public class App {
      * @param input input data to sort
      * @return sorted data
      */
-    public int[] getResult(int[] input, int iterations) {
-        logger.debug("Direction and algorithm not provided assuming ascending order. Detecting algorithm automatically.");
-        return getResult(input, "auto", "asc", iterations);
-    }
     public int[] getResult(int[] input) {
-        logger.debug("Direction, algorithm and iterations not provided assuming ascending order. Detecting algorithm automatically.");
-        return getResult(input, "auto", "asc", 0);
-    }
-
-    public int[] getResult(int[] input, String algorithm, String direction) {
-        logger.debug("Iterations not provided running until final result");
-        return getResult(input, algorithm, direction, 0);
-    }
-
-    public int[] getResult(int[] input, String algorithm) {
-        logger.debug("Iterations not provided running until final result");
-        return getResult(input, algorithm,0);
+        logger.debug("Direction and algorithm not provided assuming ascending order. Detecting algorithm automatically.");
+        return getResult(input, "auto", "asc");
     }
 
     /**
@@ -162,7 +148,7 @@ public class App {
      * @param attribute attribute to sort by
      * @return sorted data
      */
-    public ArrayList<Object> getResult(ArrayList<Object> input, String algorithm, String direction, String attribute, int iterations) {
+    public ArrayList<Object> getResult(ArrayList<Object> input, String algorithm, String direction, String attribute) {
         sanityCheck(input, direction);
         logger.debug("Initializing sorter.");
         sorter = wrapper.getSorter(input, algorithm);
@@ -170,7 +156,7 @@ public class App {
 
         logger.debug("Starting sorting.");
         timer.startMeasure();
-        input = sorter.sort(input, direction, attribute, iterations);
+        input = sorter.sort(input, direction, attribute);
         timer.stopMeasure();
         logger.info("Data sorted using" + sorter.getName() + " sorter in " + timer.getTimeElapsed() + " ms.");
 
@@ -188,12 +174,6 @@ public class App {
         logger.debug("Direction not provided assuming ascending order");
         return getResult(input, algorithm, "asc", attribute);
     }
-
-    public ArrayList<Object> getResult(ArrayList<Object> input, String algorithm, String direction, String attribute) {
-        logger.debug("Iterations not provided running until final result");
-        return getResult(input, algorithm, direction, attribute, 0);
-    }
-
 
     /**
      * If no direction and attribute is provided, throw an exception.
@@ -216,6 +196,7 @@ public class App {
         int[] input;
         String order = "asc";
         String algorithm;
+
         input = Arrays.stream(
                 payload.get("input").toString()
                         .replace("[", "")
@@ -238,7 +219,7 @@ public class App {
         logger.info("Sorting using " + sorter.getName() + " sorter.");
         logger.debug("Starting sorting.");
         timer.startMeasure();
-        input = sorter.sort(input, order, 0);
+        input = sorter.sort(input, order);
         timer.stopMeasure();
         logger.info("Data sorted using" + sorter.getName() + " sorter in " + timer.getTimeElapsed() + " ms.");
 

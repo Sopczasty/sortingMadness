@@ -18,7 +18,7 @@ class BubbleSortTest {
     public void testAscending(){
         int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
         int[] output = {0, 1, 3, 4, 9, 10, 12, 32, 43, 53};
-        assertArrayEquals(output, app.getResult(input, "bubble", "asc", 0));
+        assertArrayEquals(output, app.getResult(input, "bubble", "asc"));
     }
 
     /**
@@ -69,29 +69,6 @@ class BubbleSortTest {
         int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
         int[] output = {0, 1, 3, 4, 9, 10, 12, 32, 43, 53};
         assertArrayEquals(output, app.getResult(input,"bubble"));
-    }
-    //Test for 1 iteration in ascending mode
-    @Test
-    public void testOneIterationAsc() {
-        int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
-        int[] output = {32, 12, 43, 3, 9, 1, 0, 10, 4, 53};
-        assertArrayEquals(output, app.getResult(input,"bubble", 1));
-    }
-
-    //Test for 1 iteration in descending mode
-    @Test
-    public void testOneIterationDesc() {
-        int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
-        int[] output = {43, 32, 53, 12, 9, 3, 1, 10, 4, 0};
-        assertArrayEquals(output, app.getResult(input, "bubble", "desc", 1));
-    }
-
-    //Test for given limit of iterations greater than actual algorithm iterations
-    @Test
-    public void testTooFar(){
-        int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
-        int[] output = {0, 1, 3, 4, 9, 10, 12, 32, 43, 53};
-        assertArrayEquals(output, app.getResult(input, "bubble", 1000000000));
     }
 
     /**

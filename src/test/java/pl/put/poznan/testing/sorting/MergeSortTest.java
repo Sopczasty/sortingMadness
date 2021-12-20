@@ -71,30 +71,6 @@ class MergeSortTest {
         assertArrayEquals(output, app.getResult(input, "merge"));
     }
 
-    //Test for 1 iteration in ascending mode
-    @Test
-    public void testOneIterationAsc() {
-        int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
-        int[] output = {9, 1, 0, 10, 4, 32, 43, 12, 53, 3 };
-        assertArrayEquals(output, app.getResult(input,"merge", 1));
-    }
-
-    //Test for 1 iteration in descending mode
-    @Test
-    public void testOneIterationDesc() {
-        int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
-        int[] output = {32, 43, 12, 53, 9, 3, 1, 0, 10, 4};
-        assertArrayEquals(output, app.getResult(input, "merge", "desc", 1));
-    }
-
-    //Test for given limit of iterations greater than actual algorithm iterations
-    @Test
-    public void testTooFar(){
-        int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
-        int[] output = {0, 1, 3, 4, 9, 10, 12, 32, 43, 53};
-        assertArrayEquals(output, app.getResult(input, "merge", 1000000000));
-    }
-
     /**
      * Test for array in incorrect format.
      */
