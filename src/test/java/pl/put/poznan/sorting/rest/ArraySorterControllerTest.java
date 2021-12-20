@@ -52,7 +52,7 @@ class ArraySorterControllerTest {
 
     @BeforeEach
     public void setup() throws URISyntaxException {
-        url = "http://localhost:"+port+"/api/array";
+        url = "http://localhost:"+port+"/api/sort";
         uri = new URI(url);
         data = new int[]{-30, 219, 3, -8, -1, 10, 30, 20, -3, -1231231, 12314, 40, 50, -12, 123, 32, 23};
     }
