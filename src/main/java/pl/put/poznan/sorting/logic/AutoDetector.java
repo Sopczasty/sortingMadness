@@ -8,17 +8,17 @@ public class AutoDetector {
         size = data.length;
     }
 
-    public Sorter detectSorter() {
+    public String getType() {
         float percent = percentSorted();
-        if(percent > 0.8 && size < 100) return new BubbleSort();
-        if(size < 100) return new SelectionSort();
-        if(percent > 0.8) return new InsertionSort();
-        if(size < 500) return new MergeSort();
-        if(percent > 0.5) return new QuickSort();
-        return new HeapSort();
+        if(percent > 0.8 && size < 100) return "bubble";
+        if(size < 100) return "selection";
+        if(percent > 0.8) return "insertion";
+        if(size < 500) return "merge";
+        if(percent > 0.5) return "quick";
+        return "heap";
     }
 
-    public float percentSorted() {
+    private float percentSorted() {
         int sortedElements = 0;
         for(int i = 1; i < size; i++) {
             if(data[i] > data[i-1]) {
@@ -27,7 +27,6 @@ public class AutoDetector {
                     if((float) sortedElements/i < 0.5) return (float) sortedElements/i;
             }
         }
-        System.out.println(sortedElements);
         return (float) sortedElements/size;
     }
 }

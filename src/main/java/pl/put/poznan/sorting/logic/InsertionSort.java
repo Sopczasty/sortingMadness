@@ -19,64 +19,28 @@ public class InsertionSort implements Sorter {
      * @return input array sorted using insertion sort
      */
     public int[] sort(int[] input, String direction) {
-
-        // Exception for empty input data
-        if(input.length == 0){
-            logger.debug("Input data is empty. Throwing exception.");
-            throw new IllegalArgumentException("Input data is empty.");
-        }
-
-        // Exception for incorrect order
-        if(!direction.equals("asc") && !direction.equals("desc")){
-            logger.debug("Input order is incorrect. Throwing exception.");
-            throw new IllegalArgumentException("Input order is incorrect.");
-        }
-
         int temp;
         int j;
 
-        // Sorting for ascending order
-        if(direction.equals("asc")) {
-            logger.debug("Sorting for ascending order.");
-            for (int i = 1; i < input.length; i++) {
-                temp = input[i];
-                j = i - 1;
+        for (int i = 1; i < input.length; i++) {
+            temp = input[i];
+            j = i - 1;
 
+            if (direction.equals("asc")) {
                 while (j >= 0 && input[j] > temp) {
                     input[j + 1] = input[j];
                     j--;
                 }
-                input[j + 1] = temp;
             }
-        }
-
-        // Sorting for descending order
-        if(direction.equals("desc")) {
-            logger.debug("Sorting for descending order.");
-            for (int i = 1; i < input.length; i++) {
-                temp = input[i];
-                j = i - 1;
-
+            else if (direction.equals("desc")) {
                 while (j >= 0 && input[j] < temp) {
                     input[j + 1] = input[j];
                     j--;
                 }
-                input[j + 1] = temp;
             }
+            input[j + 1] = temp;
         }
 
-        return input;
-    }
-
-    /**
-     * Function invoking insertion sort if the user did not provide sort
-     * direction (assuming ascending order).
-     * @param input input array to be sorted
-     * @return input array sorted using insertion sort algorithm
-     */
-    public int[] sort(int[] input) {
-        logger.info("Direction undefined - assumed ascending");
-        input = sort(input, "asc");
         return input;
     }
 
@@ -88,60 +52,29 @@ public class InsertionSort implements Sorter {
      * @return input array of objects sorted using insertion sort
      */
     public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute) {
-        // Exception for empty input data
-        if(input.size() == 0){
-            throw new IllegalArgumentException("Input data is empty.");
-        }
-
-        // Exception for incorrect order
-        if(!direction.equals("asc") && !direction.equals("desc")){
-            throw new IllegalArgumentException("Input order is incorrect.");
-        }
 
         Object temp;
         ObjectComparator objectComparator = new ObjectComparator(attribute);
         int j;
 
-        //Sorting for ascending order
-        if(direction.equals("asc")){
-            for(int i = 1; i < input.size(); i++){
-                temp = input.get(i);
-                j = i - 1;
+        for(int i = 1; i < input.size(); i++){
+            temp = input.get(i);
+            j = i - 1;
 
+            if (direction.equals("asc")) {
                 while (j >= 0 && objectComparator.compare(input.get(j), temp) > 0){
                     input.set(j+1, input.get(j));
                     j--;
                 }
-                input.set(j+1, temp);
             }
-        }
-
-        //Sorting for descending order
-        if(direction.equals("desc")){
-            for(int i = 1; i < input.size(); i++){
-                temp = input.get(i);
-                j = i - 1;
-
+            else if (direction.equals("desc")) {
                 while (j >= 0 && objectComparator.compare(input.get(j), temp) < 0){
                     input.set(j+1, input.get(j));
                     j--;
                 }
-                input.set(j+1, temp);
-
             }
+            input.set(j+1, temp);
         }
-        return input;
-    }
-
-    /**
-     * Function invoking insertion sort if the user did not provide sort
-     * direction (assuming ascending order).
-     * @param input input array of objects to be sorted
-     * @return input array of objects sorted using insertion sort algorithm
-     */
-    public ArrayList<Object> sort(ArrayList<Object> input) {
-        System.out.println("Direction undefined - assumed ascending order.");
-        input = sort(input, "asc", "time");
         return input;
     }
   
