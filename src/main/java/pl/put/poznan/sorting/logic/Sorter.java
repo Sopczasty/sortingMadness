@@ -7,3 +7,4 @@ public interface Sorter {
     public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute, int iterations);
     public String getName();
 }
+

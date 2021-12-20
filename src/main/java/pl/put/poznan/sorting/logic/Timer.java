@@ -20,6 +20,7 @@ public class Timer {
      */
     public long getTimeElapsed() {
         timeElapsed = finish - start;
+
         return timeElapsed;
     }
 }
