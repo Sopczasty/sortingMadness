@@ -52,6 +52,7 @@ public class SortingWrapper {
             return getSorter(input, detector.getType());
         }
         logger.debug("Returning NULL");
+
         return null;
     }
 }

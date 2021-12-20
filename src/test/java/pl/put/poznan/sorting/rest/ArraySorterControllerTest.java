@@ -83,7 +83,7 @@ class ArraySorterControllerTest {
                                 .replace(" ", "")
                                 .split(",")
                 ).mapToInt(Integer::parseInt).toArray(),
-                new SortingWrapper().getSorter(data, "quick").sort(data, "asc")
+                new SortingWrapper().getSorter(data, "quick").sort(data, "asc", 0)
         );
     }
 
