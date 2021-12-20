@@ -105,4 +105,5 @@ class ArraySorterControllerTest {
         assertTrue(response.hasBody());
         assertTrue(response.getBody().get("error").toString().contains("Wrong payload content"));
     }
+
 }

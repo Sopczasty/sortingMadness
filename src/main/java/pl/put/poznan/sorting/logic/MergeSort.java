@@ -137,9 +137,8 @@ public class MergeSort implements Sorter {
      * @return input array sorted using merge sort algorithm
      */
     public int[] sort(int input[], String direction, int iterations) {
-        int i = ((iterations == 0) ? -1 : iterations);
         int[] temp_input = input;
-        mergeSort(temp_input, temp_input.length, direction, i);
+        mergeSort(temp_input, temp_input.length, direction, ((iterations == 0) ? -1 : iterations));
         return temp_input;
     }
 
@@ -151,9 +150,8 @@ public class MergeSort implements Sorter {
      * @return input array sorted using merge sort algorithm
      */
     public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute, int iterations) {
-        int i = ((iterations == 0) ? -1 : iterations);
         ArrayList<Object> temp_input = input;
-        mergeSort(temp_input, temp_input.size(), direction, attribute, i);
+        mergeSort(temp_input, temp_input.size(), direction, attribute, ((iterations == 0) ? -1 : iterations));
         return temp_input;
     }
     

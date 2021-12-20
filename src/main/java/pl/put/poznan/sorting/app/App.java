@@ -181,7 +181,7 @@ public class App {
      * Get sorted array of objects without direction nor type.
      * @param input input data to sort
      * @param algorithm algorithm to use when sorting
-     * @param attribute attribute to sort by
+     * @param attribute attribute to sort
      * @return sorted data
      */
     public ArrayList<Object> getResult(ArrayList<Object> input, String algorithm, String attribute) {
@@ -192,6 +192,11 @@ public class App {
     public ArrayList<Object> getResult(ArrayList<Object> input, String algorithm, String direction, String attribute) {
         logger.debug("Iterations not provided running until final result");
         return getResult(input, algorithm, direction, attribute, 0);
+    }
+
+    public ArrayList<Object> getResult(ArrayList<Object> input, String algorithm, String attribute, int iterations) {
+        logger.debug("Direction not provided assuming ascending order");
+        return getResult(input, algorithm, "asc", attribute, iterations);
     }
 
 

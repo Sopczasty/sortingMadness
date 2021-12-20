@@ -142,8 +142,7 @@ public class QuickSort implements Sorter {
      * @return input array sorted using quick sort algorithm
      */
     public int[] sort(int[] input, String direction, int iterations) {
-        int i = ((iterations == 0) ? -1 : iterations);
-        return quickSort(input, 0, input.length - 1, direction, i);
+        return quickSort(input, 0, input.length - 1, direction, ((iterations == 0) ? -1 : iterations));
     }
 
     /**
@@ -154,8 +153,7 @@ public class QuickSort implements Sorter {
      * @return input array sorted using quick sort algorithm
      */
     public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute, int iterations) {
-        int i = ((iterations == 0) ? -1 : iterations);
-        return quickSort(input, 0, input.size() - 1, direction, attribute, i);
+        return quickSort(input, 0, input.size() - 1, direction, attribute, ((iterations == 0) ? -1 : iterations));
     }
 
     public String getName() {

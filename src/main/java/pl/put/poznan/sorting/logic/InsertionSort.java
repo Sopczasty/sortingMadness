@@ -21,7 +21,6 @@ public class InsertionSort implements Sorter {
     public int[] sort(int[] input, String direction, int iterations) {
         int temp;
         int j;
-        int ctr = 0;
         for (int i = 1; i < input.length; i++) {
             temp = input[i];
             j = i - 1;
@@ -40,8 +39,8 @@ public class InsertionSort implements Sorter {
             }
             input[j + 1] = temp;
 
-            if(iterations > 0 && (++ctr >= iterations)) {
-                break;
+            if(iterations > 0 && (i >= iterations)) {
+                return input;
             }
         }
 
@@ -60,7 +59,7 @@ public class InsertionSort implements Sorter {
         Object temp;
         ObjectComparator objectComparator = new ObjectComparator(attribute);
         int j;
-        int ctr = 0;
+
         for(int i = 1; i < input.size(); i++){
             temp = input.get(i);
             j = i - 1;
@@ -79,8 +78,8 @@ public class InsertionSort implements Sorter {
             }
             input.set(j+1, temp);
 
-            if(iterations > 0 && (++ctr >= iterations)) {
-                break;
+            if(iterations > 0 && (i >= iterations)) {
+                return input;
             }
         }
         return input;
