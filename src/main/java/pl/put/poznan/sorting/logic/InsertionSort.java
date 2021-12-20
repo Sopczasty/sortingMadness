@@ -18,10 +18,9 @@ public class InsertionSort implements Sorter {
      * @param direction direction of the sort (descending or ascending)
      * @return input array sorted using insertion sort
      */
-    public int[] sort(int[] input, String direction) {
+    public int[] sort(int[] input, String direction, int iterations) {
         int temp;
         int j;
-
         for (int i = 1; i < input.length; i++) {
             temp = input[i];
             j = i - 1;
@@ -39,6 +38,10 @@ public class InsertionSort implements Sorter {
                 }
             }
             input[j + 1] = temp;
+
+            if(iterations > 0 && (i >= iterations)) {
+                return input;
+            }
         }
 
         return input;
@@ -51,7 +54,7 @@ public class InsertionSort implements Sorter {
      * @param attribute object attribute to sort by
      * @return input array of objects sorted using insertion sort
      */
-    public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute) {
+    public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute, int iterations) {
 
         Object temp;
         ObjectComparator objectComparator = new ObjectComparator(attribute);
@@ -74,6 +77,10 @@ public class InsertionSort implements Sorter {
                 }
             }
             input.set(j+1, temp);
+
+            if(iterations > 0 && (i >= iterations)) {
+                return input;
+            }
         }
         return input;
     }

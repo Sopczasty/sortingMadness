@@ -83,7 +83,7 @@ class ArraySorterControllerTest {
                                 .replace(" ", "")
                                 .split(",")
                 ).mapToInt(Integer::parseInt).toArray(),
-                new SortingWrapper().getSorter(data, "quick").sort(data, "asc")
+                new SortingWrapper().getSorter(data, "quick").sort(data, "asc", 0)
         );
     }
 
@@ -105,4 +105,5 @@ class ArraySorterControllerTest {
         assertTrue(response.hasBody());
         assertTrue(response.getBody().get("error").toString().contains("Wrong payload content"));
     }
+
 }

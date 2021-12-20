@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 /**
  * Returns data sorted by bubble sort algorithm.
  */
+
 public class BubbleSort implements Sorter {
 
     // Logger
@@ -19,10 +21,9 @@ public class BubbleSort implements Sorter {
      * @param direction direction of the sort (descending or ascending)
      * @return input array sorted using bubble sort.
      */
-    public int[] sort(int[] input, String direction){
+    public int[] sort(int[] input, String direction, int iterations){
 
         int temp;
-
         logger.debug("Sorting in " + direction + " order.");
         for (int i = 0; i < input.length - 1; i++) {
             for (int j = 0; j < input.length - i - 1; j++) {
@@ -37,8 +38,8 @@ public class BubbleSort implements Sorter {
                     input[j+1] = temp;
                 }
             }
+            if (iterations > 0 && (i+1 >= iterations)) return input;
         }
-
         return input;
     }
 
@@ -50,11 +51,10 @@ public class BubbleSort implements Sorter {
      * @param attribute name of object attribute to sort by
      * @return input array sorted using bubble sort.
      */
-    public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute) {
+    public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute, int iterations) {
 
         Object temp;
         ObjectComparator objectComparator = new ObjectComparator(attribute);
-
         for (int i = 0; i < input.size() - 1; i++) {
             for (int j = 0; j < input.size() - i - 1; j++) {
                 if (direction.equals("asc") && (objectComparator.compare(input.get(j), input.get(j + 1)) > 0)) {
@@ -67,11 +67,12 @@ public class BubbleSort implements Sorter {
                     input.set(j + 1, temp);
                 }
             }
+            if (iterations > 0 && (i+1 >= iterations)) return input;
         }
 
         return input;
     }
-  
+
     public String getName() {
         return "BubbleSort";
     }
