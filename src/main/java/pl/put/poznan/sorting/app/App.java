@@ -165,7 +165,7 @@ public class App {
     public ArrayList<Object> getResult(ArrayList<Object> input, String algorithm, String direction, String attribute, int iterations) {
         sanityCheck(input, direction);
         logger.debug("Initializing sorter.");
-        sorter = wrapper.getSorter(input, algorithm);
+        sorter = wrapper.getSorter(input, algorithm, attribute);
         logger.info("Sorting using " + sorter.getName() + " sorter.");
 
         logger.debug("Starting sorting.");

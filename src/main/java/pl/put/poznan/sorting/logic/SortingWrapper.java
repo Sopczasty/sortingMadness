@@ -19,7 +19,7 @@ public class SortingWrapper {
      * @param type type of the algorithm to return
      * @return object of requested sorting algorithm (or null if not found)
      */
-    public Sorter getSorter(ArrayList<Object> input, String type) {
+    public Sorter getSorter(ArrayList<Object> input, String type, String attribute) {
         if (input.size() == 0) throw new NullPointerException("Input array is empty");
         if (type.equals("bubble")) return new BubbleSort();
         if (type.equals("heap")) return new HeapSort();
@@ -27,7 +27,11 @@ public class SortingWrapper {
         if (type.equals("merge")) return new MergeSort();
         if (type.equals("quick")) return new QuickSort();
         if (type.equals("selection")) return new SelectionSort();
-        // TODO : AutoDetector for objects
+        if (type.equals("auto")) {
+            logger.debug("Detecting sorting algorithm automatically.");
+            AutoDetector detector = new AutoDetector(input, attribute);
+            return getSorter(input, detector.getType(), attribute);
+        }
         logger.debug("Returning NULL");
         return null;
     }
