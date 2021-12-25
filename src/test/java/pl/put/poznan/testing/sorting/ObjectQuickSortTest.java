@@ -3,21 +3,21 @@ package pl.put.poznan.testing.sorting;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.put.poznan.sorting.app.App;
+import pl.put.poznan.sorting.app.SortingMadness;
+import pl.put.poznan.sorting.logic.BubbleSort;
 import pl.put.poznan.sorting.logic.Sorter;
-import pl.put.poznan.sorting.logic.QuickSort;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ObjectQuickSortTest {
-
-    private App app = new App();
     private Object s1, s2, s3, s4, s5, s6, s7, s8;
+    private String[] algorithms = {"quick"};
 
     @BeforeEach
-    void setUp() {
-        s1 = new Sort("Bubblesort", 0.087, 7);
+    public void setUp(){
+        s1 = new Sort("Cubblesort", 0.087, 7);
         s2 = new Sort("Mergesort", 0.05, 12);
         s3 = new Sort("Insertsort", 0.09, 8);
         s4 = new Sort("Heapsort", 0.06, 15);
@@ -27,7 +27,9 @@ class ObjectQuickSortTest {
         s8 = new Sort("Bubblesort", 0.075, 4);
     }
 
-    // Default test for a list in ascending order: ordered by name
+    /**
+     * Default test for a list in ascending order: ordered by name.
+     */
     @Test
     public void testAscending1(){
         ArrayList<Object> input = new ArrayList<>();
@@ -49,13 +51,15 @@ class ObjectQuickSortTest {
         output.add(s7);
         output.add(s5);
         output.add(s6);
-        String direction = "asc";
-        String attribute = "name";
-        assertArrayEquals(output.toArray(), app.getResult(input, "quick", "asc", "name").toArray());
+
+        SortingMadness app = new SortingMadness.ObjectBuilder(algorithms, input).direction("asc").attribute("name").build();
+        assertArrayEquals(output.toArray(), app.getObjResult().toArray());
     }
 
 
-    // Default test for a list in descending order: ordered by name
+    /**
+     * Default test for a list in descending order: ordered by name.
+     */
     @Test
     public void testDescending1(){
 
@@ -76,13 +80,17 @@ class ObjectQuickSortTest {
         output.add(s2);
         output.add(s3);
         output.add(s4);
-        output.add(s8);
         output.add(s1);
+        output.add(s8);
 
-        assertArrayEquals(output.toArray(), app.getResult(input, "quick", "desc", "name").toArray());
+
+        SortingMadness app = new SortingMadness.ObjectBuilder(algorithms, input).direction("desc").attribute("name").build();
+        assertArrayEquals(output.toArray(), app.getObjResult().toArray());
     }
 
-    // Default test for a list in ascending order: ordered by time
+    /**
+     * Default test for a list in ascending order: ordered by time.
+     */
     @Test
     public void testAscending2(){
 
@@ -106,10 +114,13 @@ class ObjectQuickSortTest {
         output.add(s6);
         output.add(s5);
 
-        assertArrayEquals(output.toArray(), app.getResult(input, "quick", "asc", "time").toArray());
+        SortingMadness app = new SortingMadness.ObjectBuilder(algorithms, input).direction("asc").attribute("time").build();
+        assertArrayEquals(output.toArray(), app.getObjResult().toArray());
     }
 
-    // Default test for a list in descending order: ordered by time
+    /**
+     * Default test for a list in descending order: ordered by time
+     */
     @Test
     public void testDescending2(){
 
@@ -133,10 +144,13 @@ class ObjectQuickSortTest {
         output.add(s2);
         output.add(s7);
 
-        assertArrayEquals(output.toArray(), app.getResult(input, "quick", "desc", "time").toArray());
+        SortingMadness app = new SortingMadness.ObjectBuilder(algorithms, input).direction("desc").attribute("time").build();
+        assertArrayEquals(output.toArray(), app.getObjResult().toArray());
     }
 
-    // Default test for a list in ascending order: ordered by optimal sample size
+    /**
+     * Default test for a list in ascending order: ordered by optimal sample size.
+     */
     @Test
     public void testAscending3(){
 
@@ -160,10 +174,13 @@ class ObjectQuickSortTest {
         output.add(s7);
         output.add(s4);
 
-        assertArrayEquals(output.toArray(), app.getResult(input, "quick", "asc", "size").toArray());
+        SortingMadness app = new SortingMadness.ObjectBuilder(algorithms, input).direction("asc").attribute("size").build();
+        assertArrayEquals(output.toArray(), app.getObjResult().toArray());
     }
 
-    // Default test for a list in descending order: ordered by optimal sample size
+    /**
+     * Default test for a list in descending order: ordered by optimal sample size.
+     */
     @Test
     public void testDescending3() {
 
@@ -187,10 +204,14 @@ class ObjectQuickSortTest {
         output.add(s5);
         output.add(s8);
 
-        assertArrayEquals(output.toArray(), app.getResult(input, "quick", "desc", "size").toArray());
+        SortingMadness app = new SortingMadness.ObjectBuilder(algorithms, input).direction("desc").attribute("size").build();
+        assertArrayEquals(output.toArray(), app.getObjResult().toArray());
     }
 
-    // Test for a small list in ascending order sorted by name
+
+    /**
+     * Test for a small list in ascending order sorted by name
+     */
     @Test
     public void testSmall(){
         ArrayList<Object> input = new ArrayList<>();
@@ -200,28 +221,31 @@ class ObjectQuickSortTest {
         ArrayList<Object> output = new ArrayList<>();
         output.add(s8);
         output.add(s7);
-        String direction = "asc";
-        String attribute = "name";
-        assertArrayEquals(output.toArray(), app.getResult(input, "quick", "asc", "name").toArray());
+
+        SortingMadness app = new SortingMadness.ObjectBuilder(algorithms, input).direction("asc").attribute("name").build();
+        assertArrayEquals(output.toArray(), app.getObjResult().toArray());
 
     }
 
-    // Test for a incorrect time input
+    /**
+     * Test for an incorrect time input
+     */
     @Test
     public void testIncorrectInput(){
         ArrayList<Object> input = new ArrayList<>();
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            app.getResult(input, "quick", "asc", "name").toArray();
+            SortingMadness app = new SortingMadness.ObjectBuilder(algorithms, input).direction("asc").attribute("name").build();
         });
 
         String expectedMessage = "Input data is empty.";
         String actualMessage = exception.getMessage();
-
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
-    // Test for incorrect input data
+    /**
+     * Test for incorrect input data
+     */
     @Test
     public void testIncorrectDirection(){
         ArrayList<Object> input = new ArrayList<>();
@@ -235,16 +259,17 @@ class ObjectQuickSortTest {
         input.add(s8);
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            app.getResult(input, "quick", "error", "name").toArray();
+            SortingMadness app = new SortingMadness.ObjectBuilder(algorithms, input).direction("error").attribute("name").build();
         });
 
         String expectedMessage = "Sorting order is incorrect.";
         String actualMessage = exception.getMessage();
-
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
-    // Test for incorrect input data
+    /**
+     * Test for incorrect input data
+     */
     @Test
     public void tetsIncorectParammeter(){
         ArrayList<Object> input = new ArrayList<>();
@@ -257,7 +282,8 @@ class ObjectQuickSortTest {
         input.add(s7);
         input.add(s8);
 
-        Exception exception = assertThrows(RuntimeException.class, () -> app.getResult(input, "quick", "asc", "price").toArray());
+        SortingMadness app = new SortingMadness.ObjectBuilder(algorithms, input).direction("desc").attribute("price").build();
+        Exception exception = assertThrows(RuntimeException.class, () -> app.getObjResult());
 
         String expectedMessage = "Cannot compare objects - getter do not exist";
         String actualMessage = exception.getMessage();
