@@ -16,6 +16,7 @@ public class InsertionSort implements Sorter {
      * Main insertion sort algorithm.
      * @param input input data to be sorted
      * @param direction direction of the sort (descending or ascending)
+     * @param iterations how many iterations of the sort to run
      * @return input array sorted using insertion sort
      */
     public int[] sort(int[] input, String direction, int iterations) {
@@ -52,6 +53,7 @@ public class InsertionSort implements Sorter {
      * @param input input data of objects to be sorted
      * @param direction direction of the sort (descending or ascending)
      * @param attribute object attribute to sort by
+     * @param iterations how many iterations of the sort to run
      * @return input array of objects sorted using insertion sort
      */
     public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute, int iterations) {

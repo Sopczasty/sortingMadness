@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.put.poznan.sorting.app.App;
+import pl.put.poznan.sorting.app.SortingMadness;
 import pl.put.poznan.sorting.logic.SortingWrapper;
 
 import java.net.URI;
@@ -38,8 +39,6 @@ class ArraySorterControllerTest {
     private URI uri;
     // Request to test with
     private HttpEntity<Map<String, Object>> request;
-    // App object
-    private App app = new App();
 
     // Port of the API endpoint
     @LocalServerPort
@@ -73,6 +72,11 @@ class ArraySorterControllerTest {
                 request,
                 Map.class
         );
+
+        String[] algorithms = {"quick"};
+        SortingMadness madness = new SortingMadness.PrimitiveBuilder(algorithms, data).build();
+        int[] expected = madness.getResult();
+
         assertTrue(response.hasBody());
         assertNotNull(response.getBody().get("result"));
         assertArrayEquals(
@@ -83,7 +87,7 @@ class ArraySorterControllerTest {
                                 .replace(" ", "")
                                 .split(",")
                 ).mapToInt(Integer::parseInt).toArray(),
-                new SortingWrapper().getSorter(data, "quick").sort(data, "asc", 0)
+                expected
         );
     }
 
@@ -95,7 +99,7 @@ class ArraySorterControllerTest {
         Map<String, Object> payload = new HashMap<String, Object>();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        payload.put("array", data);
+        payload.put("input", data);
         request = new HttpEntity<Map<String, Object>>(payload, headers);
         ResponseEntity<Map> response = restTemplate.postForEntity(
                 uri,

@@ -3,13 +3,14 @@ package pl.put.poznan.testing.sorting;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import pl.put.poznan.sorting.app.App;
+import pl.put.poznan.sorting.app.SortingMadness;
 
 /**
  * Tests for merge sort.
  */
 class MergeSortTest {
 
-    private App app = new App();
+    private String[] algorithms = {"merge"};
 
     /**
      * Test for array in correct form (ascending order).
@@ -18,7 +19,8 @@ class MergeSortTest {
     public void testAscending(){
         int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
         int[] output = {0, 1, 3, 4, 9, 10, 12, 32, 43, 53};
-        assertArrayEquals(output, app.getResult(input, "merge", "asc"));
+        SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).direction("asc").build();
+        assertArrayEquals(output, app.getResult());
     }
 
     /**
@@ -28,7 +30,8 @@ class MergeSortTest {
     public void testDescending(){
         int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
         int[] output = {53, 43, 32, 12, 10, 9, 4, 3, 1, 0};
-        assertArrayEquals(output, app.getResult(input, "merge", "desc"));
+        SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).direction("desc").build();
+        assertArrayEquals(output, app.getResult());
     }
 
     /**
@@ -38,7 +41,8 @@ class MergeSortTest {
     public void testAscendingNegative(){
         int[] input = {32, -43, 12, 53, -3, 9, -1, 0, 10, 4};
         int[] output = {-43, -3, -1, 0, 4, 9, 10, 12, 32, 53};
-        assertArrayEquals(output, app.getResult(input, "merge", "asc"));
+        SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).direction("asc").build();
+        assertArrayEquals(output, app.getResult());
     }
 
     /**
@@ -48,7 +52,8 @@ class MergeSortTest {
     public void testDescendingNegative(){
         int[] input = {32, -43, 12, 53, -3, 9, -1, 0, 10, 4};
         int[] output = {53, 32, 12, 10, 9, 4, 0, -1, -3, -43};
-        assertArrayEquals(output, app.getResult(input, "merge", "desc"));
+        SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).direction("desc").build();
+        assertArrayEquals(output, app.getResult());
     }
 
     /**
@@ -58,7 +63,8 @@ class MergeSortTest {
     public void testSmall(){
         int[] input = {32, 5};
         int[] output = {5, 32};
-        assertArrayEquals(output, app.getResult(input, "merge", "asc"));
+        SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).direction("asc").build();
+        assertArrayEquals(output, app.getResult());
     }
 
     /**
@@ -68,15 +74,19 @@ class MergeSortTest {
     public void testNullDirection() {
         int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
         int[] output = {0, 1, 3, 4, 9, 10, 12, 32, 43, 53};
-        assertArrayEquals(output, app.getResult(input, "merge"));
+        SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).build();
+        assertArrayEquals(output, app.getResult());
     }
 
-    //Test for 1 iteration in ascending mode
+    /**
+     * Test for 1 iteration in ascending mode.
+     */
     @Test
     public void testOneIterationAsc() {
         int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
-        int[] output = {9, 1, 0, 10, 4, 32, 43, 12, 53, 3 };
-        assertArrayEquals(output, app.getResult(input,"merge", 1));
+        int[] output = {9, 1, 0, 10, 4, 32, 43, 12, 53, 3};
+        SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).iterations(1).build();
+        assertArrayEquals(output, app.getResult());
     }
 
     //Test for 1 iteration in descending mode
@@ -84,7 +94,8 @@ class MergeSortTest {
     public void testOneIterationDesc() {
         int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
         int[] output = {32, 43, 12, 53, 9, 3, 1, 0, 10, 4};
-        assertArrayEquals(output, app.getResult(input, "merge", "desc", 1));
+        SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).direction("desc").iterations(1).build();
+        assertArrayEquals(output, app.getResult());
     }
 
     //Test for given limit of iterations greater than actual algorithm iterations
@@ -92,7 +103,8 @@ class MergeSortTest {
     public void testTooFar(){
         int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
         int[] output = {0, 1, 3, 4, 9, 10, 12, 32, 43, 53};
-        assertArrayEquals(output, app.getResult(input, "merge", 1000000000));
+        SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).iterations(1000000000).build();
+        assertArrayEquals(output, app.getResult());
     }
 
     /**
@@ -103,7 +115,7 @@ class MergeSortTest {
         int[] input = {};
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            app.getResult(input, "merge", "asc");
+            SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).build();
         });
 
         String expectedMessage = "Input data is empty.";
@@ -117,16 +129,13 @@ class MergeSortTest {
     @Test
     public void testIncorrectDirection(){
         int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
-        String direction = "error";
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            app.getResult(input, "merge", direction);
+            SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).direction("error").build();
         });
 
         String expectedMessage = "Sorting order is incorrect.";
         String actualMessage = exception.getMessage();
-
         assertTrue(actualMessage.contains(expectedMessage));
     }
-
 }

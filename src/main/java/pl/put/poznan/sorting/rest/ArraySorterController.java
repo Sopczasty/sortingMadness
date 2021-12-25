@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.sorting.app.App;
+import pl.put.poznan.sorting.app.SortingMadness;
 import pl.put.poznan.sorting.logic.Sorter;
 import pl.put.poznan.sorting.logic.SortingWrapper;
 import pl.put.poznan.sorting.logic.Timer;
@@ -21,8 +22,6 @@ import java.util.*;
 @RequestMapping("/api")
 public class ArraySorterController {
 
-    // Application object
-    App app = new App();
     // Logger
     static Logger logger = LoggerFactory.getLogger(ArraySorterController.class);
 
@@ -45,7 +44,37 @@ public class ArraySorterController {
             throws InvalidParameterException {
 
         logger.info("Received new request.");
-        return app.getResult(payload);
+
+        int[] input;
+        String direction = "asc";
+        String algorithm;
+        int iterations = 0;
+
+        input = Arrays.stream(
+                payload.get("input").toString()
+                        .replaceAll("[\\[||\\]|| ]", "")
+                        .split(",")
+        ).mapToInt(Integer::parseInt).toArray();
+
+        logger.debug("Initializing sorter.");
+        if (!payload.containsKey("algorithm")) {
+            logger.error("Sorting algorithm not provided. Quitting.");
+            throw new InvalidParameterException("Sorting algorithm not provided!");
+        }
+        algorithm = payload.get("algorithm").toString();
+        if (payload.containsKey("order")) direction = payload.get("order").toString();
+
+        String[] algorithms = {algorithm};
+        SortingMadness madness = new SortingMadness.PrimitiveBuilder(algorithms, input)
+                .direction(direction)
+                .iterations(iterations)
+                .build();
+        int[] result = madness.getResult();
+
+        HashMap<String, Object> output = new HashMap<String, Object>();
+        output.put("result", result);
+        output.put("algorithm", algorithm);
+        return output;
     }
 
     /**

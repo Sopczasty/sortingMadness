@@ -30,6 +30,7 @@ public class AutoDetector {
 
     /**
      * Method for getting the name of algorithm for array
+     * @param input array of integers
      * @return a type of algorithm dependent on size and percent sorted of array
      */
     public String selectSort(int[] input) {
@@ -43,6 +44,8 @@ public class AutoDetector {
     }
     /**
      * Method for getting the name of algorithm for data structures
+     * @param input array of objects
+     * @param attribute attribute to sort by
      * @return a type of algorithm dependent on size and percent sorted of data structure
      */
     public String selectSort(ArrayList<Object> input, String attribute) {
@@ -57,6 +60,7 @@ public class AutoDetector {
 
     /**
      * Calculate estimate of how sorted is the array
+     * @param array array of integers
      * @return percentage <0..1> of how sorted is the array
      */
     private float percentSorted(int[] array) {
@@ -73,6 +77,8 @@ public class AutoDetector {
 
     /**
      * Calculate estimate of how sorted is the data structure
+     * @param input array of objects
+     * @param attribute attribute to sort by
      * @return percentage <0..1> of how sorted is the data structure
      */
     private float percentSorted(ArrayList<Object> input, String attribute) {

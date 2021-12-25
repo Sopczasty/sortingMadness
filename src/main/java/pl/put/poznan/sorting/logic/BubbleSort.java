@@ -19,6 +19,7 @@ public class BubbleSort implements Sorter {
      * the algorithm.
      * @param input array of elements to be sorted.
      * @param direction direction of the sort (descending or ascending)
+     * @param iterations how many iterations of the sort to run
      * @return input array sorted using bubble sort.
      */
     public int[] sort(int[] input, String direction, int iterations){
@@ -49,6 +50,7 @@ public class BubbleSort implements Sorter {
      * @param input array of objects to be sorted
      * @param direction direction of the sort (descending or ascending)
      * @param attribute name of object attribute to sort by
+     * @param iterations how many iterations of the sort to run
      * @return input array sorted using bubble sort.
      */
     public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute, int iterations) {
