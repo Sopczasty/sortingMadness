@@ -94,6 +94,7 @@ public class HeapSort implements Sorter {
      * Main heap sort sorting function.
      * @param input input array to be sorted
      * @param direction direction of the sort (ascending or descending)
+     * @param iterations how many iterations of the sort to run
      */
     public void heapSort(int input[], String direction, int iterations)
     {
@@ -122,6 +123,7 @@ public class HeapSort implements Sorter {
      * @param input input array of objects to be sorted
      * @param direction direction of the sort (ascending or descending)
      * @param attribute object attribute to sort by
+     * @param iterations how many iterations of the sort to run
      */
     public void heapSort(ArrayList<Object> input, String direction, String attribute, int iterations)
     {
@@ -151,6 +153,7 @@ public class HeapSort implements Sorter {
      * Function invoking heap sort.
      * @param input input array to be sorted
      * @param direction direction of the sort (ascending or descending)
+     * @param iterations how many iterations of the sort to run
      * @return input array sorted using heap sort
      */
     public int[] sort(int[] input, String direction, int iterations) {
@@ -164,6 +167,7 @@ public class HeapSort implements Sorter {
      * @param input input array of objects to be sorted
      * @param direction direction of the sort (ascending or descending)
      * @param attribute object attribute to sort by
+     * @param iterations how many iterations of the sort to run
      * @return input array of objects sorted using heap sort
      */
     public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute, int iterations) {
