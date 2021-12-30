@@ -7,16 +7,249 @@ import java.util.ArrayList;
 
 /**
  * Main class responsible for sorting objects.
- * Prints out initial data and after sorting
- * prints sorted data in specified order.
  */
-
 public class SortingMadness {
     static Logger logger = LoggerFactory.getLogger(SortingMadness.class);
+    // List of sorting algorithms to use
+    private final String[] algorithms;
+    // Input of primitive objects
+    private final int[] input;
+    // Input for complex data structures
+    private final ArrayList<Object> objInput;
+    // Direction of the sorting
+    private String direction;
+    // How many iterations of sorting to run
+    private int iterations;
+    // Attribute to sort by for complex data sorting
+    private String attribute = "";
+    // Sorting wrapper that will get proper sorting algorithm
+    private static SortingWrapper wrapper = new SortingWrapper();
+    // Sorter object
+    private static Sorter sorter = null;
+    // Timer for timing sorts
+    private static Timer timer = new Timer();
 
-    public static void main(String[] args) {
-        logger.info("Application loaded.");
-        App app = new App();
-        // app.getResult(input);
+    /**
+     * Main constructor selecting appropriate methods based on type of data
+     * @param builder primitive objects sorting madness builder
+     */
+    private SortingMadness(PrimitiveBuilder builder) {
+        this.algorithms = builder.algorithms;
+        this.input = builder.input;
+        this.direction = builder.direction;
+        this.iterations = builder.iterations;
+        this.objInput = null;
+    }
+
+    /**
+     * Main constructor selecting appropriate methods based on type of data
+     * @param builder complex objects sorting madness builder
+     */
+    private SortingMadness(ObjectBuilder builder) {
+        this.algorithms = builder.algorithms;
+        this.input = null;
+        this.direction = builder.direction;
+        this.iterations = builder.iterations;
+        this.attribute = builder.attribute;
+        this.objInput = builder.objInput;
+    }
+
+    public String[] getAlgorithms() { return algorithms; }
+    public int[] getInput() { return input; }
+    public ArrayList<Object> getObjInput() { return objInput; }
+    public String getDirection() { return direction; }
+    public int getIterations() { return iterations; }
+
+
+    /**
+     * Builder for primitive data types
+     */
+    public static class PrimitiveBuilder {
+        private final String[] algorithms;
+        private final int[] input;
+        private String direction = "asc";
+        private int iterations = 0;
+
+        /**
+         * Main constructor for primitive data builder
+         * @param algorithms list of algorithms to sort with
+         * @param input primitive data input
+         */
+        public PrimitiveBuilder(String[] algorithms, int[] input) {
+            this.algorithms = algorithms;
+            this.input = input;
+        }
+
+        /**
+         * Direction setter
+         * @param direction direction of the sorting (ascending or descending)
+         * @return edited builder
+         */
+        public PrimitiveBuilder direction(String direction) {
+            this.direction = direction;
+            return this;
+        }
+
+        /**
+         * Iteration setter
+         * @param iterations how many iterations to run program for
+         * @return edited builder
+         */
+        public PrimitiveBuilder iterations(int iterations) {
+            this.iterations = iterations;
+            return this;
+        }
+
+        /**
+         * Main building function
+         * @return fully built sorting madness object
+         */
+        public SortingMadness build() {
+            SortingMadness madness = new SortingMadness(this);
+            validateInput(madness);
+            return madness;
+        }
+
+        /**
+         * Sanity check for data
+         * @param madness fully built sorting madness object
+         */
+        private void validateInput(SortingMadness madness) {
+            if (madness.input.length == 0) {
+                logger.error("Input data is empty. Returning.");
+                throw new IllegalArgumentException("Input data is empty.");
+            }
+            if (!(madness.direction == null) && !(madness.direction.equals("") || madness.direction.equals("asc")
+                    || madness.direction.equals("desc"))) {
+                logger.error("Input order is incorrect. Throwing exception.");
+                throw new IllegalArgumentException("Sorting order is incorrect.");
+            }
+        }
+    }
+
+    /**
+     * Builder for complex data types
+     */
+    public static class ObjectBuilder {
+        private final String[] algorithms;
+        private final ArrayList<Object> objInput;
+        private String direction = "asc";
+        private int iterations = 0;
+        private String attribute;
+
+        /**
+         * Main constructor for primitive data builder
+         * @param algorithms list of algorithms to sort with
+         * @param objInput complex data input
+         */
+        public ObjectBuilder(String[] algorithms, ArrayList<Object> objInput) {
+            this.algorithms = algorithms;
+            this.objInput = objInput;
+        }
+
+        /**
+         * Direction setter
+         * @param direction direction of the sorting (ascending or descending)
+         * @return edited builder
+         */
+        public ObjectBuilder direction(String direction) {
+            this.direction = direction;
+            return this;
+        }
+
+        /**
+         * Iteration setter
+         * @param iterations how many iterations to run program for
+         * @return edited builder
+         */
+        public ObjectBuilder iterations(int iterations) {
+            this.iterations = iterations;
+            return this;
+        }
+
+        /**
+         * Attribute setter
+         * @param attribute which attribute to sort by
+         * @return edited builder
+         */
+        public ObjectBuilder attribute(String attribute) {
+            this.attribute = attribute;
+            return this;
+        }
+
+        /**
+         * Main building function
+         * @return fully built sorting madness object
+         */
+        public SortingMadness build() {
+            SortingMadness madness = new SortingMadness(this);
+            validateInput(madness);
+            return madness;
+        }
+
+        /**
+         * Sanity check for data
+         * @param madness fully built sorting madness object
+         */
+        private void validateInput(SortingMadness madness) {
+            if (madness.objInput.size() == 0) {
+                logger.error("Input data is empty. Returning.");
+                throw new IllegalArgumentException("Input data is empty.");
+            }
+            if (!(madness.direction == null) && !(madness.direction.equals("") || madness.direction.equals("asc")
+                    || madness.direction.equals("desc"))) {
+                logger.error("Input order is incorrect. Throwing exception.");
+                throw new IllegalArgumentException("Sorting order is incorrect.");
+            }
+        }
+    }
+
+    /**
+     * Get sorted data for primitive data input
+     * @return sorted data
+     */
+    public int[] getResult() {
+        logger.debug("Initializing sorter.");
+        // FIXME: support array of algorithms
+        sorter = wrapper.getSorter(input, algorithms[0]);
+
+        if (sorter == null) {
+            logger.error("Incorrect sorting algorithm");
+            throw new IllegalArgumentException("Incorrect sorting algorithm!");
+        }
+
+        logger.info("Sorting using " + sorter.getName() + " sorter with " + iterations + " iterations.");
+
+        logger.debug("Starting sorting.");
+        timer.startMeasure();
+        int[] result = sorter.sort(input, direction, iterations);
+        timer.stopMeasure();
+        logger.info("Data sorted using" + sorter.getName() + " sorter in " + timer.getTimeElapsed() + " ms.");
+
+        return result;
+    }
+
+    /**
+     * Get sorted data for complex data input
+     * @return sorted data
+     */
+    public ArrayList<Object> getObjResult() {
+        if (this.attribute == null || this.attribute.equals("")) {
+            logger.error("No sorting attribute provided. Quitting.");
+            throw new IllegalArgumentException("Object attribute to sort by not provided!");
+        }
+
+        logger.debug("Initializing sorter.");
+        // FIXME: support array of algorithms
+        sorter = wrapper.getSorter(objInput, algorithms[0], attribute);
+        logger.info("Sorting using " + sorter.getName() + " sorter with " + iterations + " iterations.");
+
+        logger.debug("Starting sorting.");
+        timer.startMeasure();
+        ArrayList<Object> result = sorter.sort(objInput, direction, attribute, iterations);
+        timer.stopMeasure();
+        logger.info("Data sorted using" + sorter.getName() + " sorter in " + timer.getTimeElapsed() + " ms.");
+
+        return result;
     }
 }

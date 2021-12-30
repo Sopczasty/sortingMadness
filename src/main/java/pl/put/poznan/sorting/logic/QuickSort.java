@@ -103,6 +103,7 @@ public class QuickSort implements Sorter {
      * @param low start index to sort starting from
      * @param high end index to sort up to
      * @param direction direction of the sort (ascending or descending)
+     * @param iterations how many iterations of the sort to run
      * @return input subarray sorted using quick sort algorithm
      */
     static int[] quickSort(int[] input, int low, int high, String direction, int iterations) {
@@ -123,6 +124,7 @@ public class QuickSort implements Sorter {
      * @param high end index to sort up to
      * @param direction direction of the sort (ascending or descending)
      * @param attribute object attribute to sort by
+     * @param iterations how many iterations of the sort to run
      * @return input subarray sorted using quick sort algorithm
      */
     static ArrayList<Object> quickSort(ArrayList<Object> input, int low, int high, String direction, String attribute, int iterations) {
@@ -139,6 +141,7 @@ public class QuickSort implements Sorter {
      * Function invoking quick sort algorithm.
      * @param input input array to be sorted
      * @param direction direction of the sort (ascending or descending)
+     * @param iterations how many iterations of the sort to run
      * @return input array sorted using quick sort algorithm
      */
     public int[] sort(int[] input, String direction, int iterations) {
@@ -150,6 +153,7 @@ public class QuickSort implements Sorter {
      * @param input input array of objects to be sorted
      * @param direction direction of the sort (ascending or descending)
      * @param attribute object attribute to sort by
+     * @param iterations how many iterations of the sort to run
      * @return input array sorted using quick sort algorithm
      */
     public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute, int iterations) {

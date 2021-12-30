@@ -16,6 +16,7 @@ public class SelectionSort implements Sorter {
      * Function sorting input array using selection sort algorithm.
      * @param input input array to be sorted
      * @param direction direction of the sort (ascending or descending)
+     * @param iterations how many iterations of the sort to run
      * @return input array sorted using selection sort algorithm
      */
     public int[] sort(int[] input, String direction, int iterations) {
@@ -42,6 +43,7 @@ public class SelectionSort implements Sorter {
      * @param input input array of objects to be sorted
      * @param direction direction of the sort (ascending or descending)
      * @param attribute object attribute to sort by
+     * @param iterations how many iterations of the sort to run
      * @return input array sorted using selection sort algorithm
      */
     public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute, int iterations) {

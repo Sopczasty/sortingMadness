@@ -80,6 +80,7 @@ public class MergeSort implements Sorter {
      * @param input input array to be sorted
      * @param size size of the array to be sorted
      * @param direction direction of the sort (ascending or descending)
+     * @param iterations how many iterations of the sort to run
      */
     public static void mergeSort(int[] input, int size, String direction, int iterations) {
         if (size < 2 || iterations == 0) {
@@ -107,6 +108,7 @@ public class MergeSort implements Sorter {
      * @param size size of the array to be sorted
      * @param direction direction of the sort (ascending or descending)
      * @param attribute object attribute to sort by
+     * @param iterations how many iterations of the sort to run
      */
     public static void mergeSort(ArrayList<Object> input, int size, String direction, String attribute, int iterations) {
         if (size < 2 || iterations == 0) {
@@ -134,6 +136,7 @@ public class MergeSort implements Sorter {
      * Function invoking merge sort algorithm.
      * @param input input array to be sorted
      * @param direction direction of the sort (ascending or descending)
+     * @param iterations how many iterations of the sort to run
      * @return input array sorted using merge sort algorithm
      */
     public int[] sort(int input[], String direction, int iterations) {
@@ -147,6 +150,7 @@ public class MergeSort implements Sorter {
      * @param input input array to be sorted
      * @param direction direction of the sort (ascending or descending)
      * @param attribute object attribute to sort by
+     * @param iterations how many iterations of the sort to run
      * @return input array sorted using merge sort algorithm
      */
     public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute, int iterations) {
@@ -159,4 +163,3 @@ public class MergeSort implements Sorter {
         return "MergeSort";
     }
 }
-
