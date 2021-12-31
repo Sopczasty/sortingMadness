@@ -24,7 +24,7 @@ public class Statistics {
      * Class constructor with input data validation
      * @param input array containing data sorted by numeric values
      */
-    Statistics(int[] input){
+    public Statistics(int[] input){
         this.result = 0;
         if (input.length == 0 || input == null){
             logger.error("Input data is empty. Returning.");
