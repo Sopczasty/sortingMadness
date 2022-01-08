@@ -5,15 +5,13 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * Main application class with GUI.
@@ -37,7 +35,7 @@ public class App extends JFrame implements ActionListener {
     private final JCheckBox mergeBox = new JCheckBox("Merge Sort");
     private final JCheckBox autoBox = new JCheckBox("Automatic Sort");
     private final JTextField inputArea = new JTextField(5);
-    private final ResultDialog resultDialog = new ResultDialog(this, 300, 200);
+    private final ResultDialog resultDialog = new ResultDialog(this, 300, 400);
 
 
     /**
@@ -116,10 +114,12 @@ public class App extends JFrame implements ActionListener {
      */
     private void invokeSort(String data) {
         String[] input = data.split(delimiter);
-        Dictionary<String, Object> output = new Hashtable<>();
+        Map<String, Object> output = new Hashtable<>();
 
+        // FIXME: This does nothing, implement sorting object arrays and restore functionality
         try {
             int[] in = toInt(input);
+            // This should be moved at the end, after datatype is defined
             madness = new SortingMadness.PrimitiveBuilder(algorithms.toArray(new String[0]),
                     in).direction("asc").build();
         } catch (NumberFormatException e) {
@@ -131,7 +131,7 @@ public class App extends JFrame implements ActionListener {
         }
 
         int[] out = madness.getResult();
-        resultDialog.setResult(out);
+        resultDialog.setResult(out, madness.getMeasurements());
         resultDialog.setVisible(true);
     }
 
