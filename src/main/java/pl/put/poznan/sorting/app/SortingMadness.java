@@ -230,6 +230,14 @@ public class SortingMadness {
     }
 
     /**
+     * Get timer for elapsed time
+     * @return timer
+     */
+    public static Timer getTimer() {
+        return timer;
+    }
+
+    /**
      * Get sorted data for complex data input
      * @return sorted data
      */
