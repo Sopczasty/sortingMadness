@@ -9,7 +9,6 @@ import static org.mockito.Mockito.*;
 /**
  * Tests for collecting statistics
  */
-
 class StatisticsTest {
 
     /**
