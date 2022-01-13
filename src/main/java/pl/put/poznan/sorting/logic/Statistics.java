@@ -9,7 +9,6 @@ import pl.put.poznan.sorting.app.SortingMadness;
  * Class responsible for collecting sorted array statistics:
  * median, arithmetic mean, square mean, geometric mean, harmonic mean
  */
-
 public class Statistics {
 
     static Logger logger = LoggerFactory.getLogger(Statistics.class);
@@ -26,7 +25,7 @@ public class Statistics {
      */
     public Statistics(int[] input){
         this.result = 0;
-        if (input.length == 0 || input == null){
+        if ( input == null || input.length == 0 ){
             logger.error("Input data is empty. Returning.");
             throw new IllegalArgumentException("Input data is empty.");
         }
