@@ -1,5 +1,6 @@
 package pl.put.poznan.sorting.logic;
 
+import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,86 +14,138 @@ public class HeapSort implements Sorter {
 
     /**
      * Function converting input array into a heap.
-     * @param arr input array to be converted into a heap
-     * @param n size of the heap
-     * @param i root of the heap
+     * @param input input array to be converted into a heap
+     * @param size size of the heap
+     * @param root root of the heap
      * @param direction direction of the heap (descending or ascending)
      */
-    void heapify(int arr[], int n, int i, String direction)
+    private void heapify(int input[], int size, int root, String direction)
     {
-        // Sorting for ascending order
-        if(direction.equals("asc")){
-            int largest = i; // Initialize largest as root
-            int l = 2 * i + 1; // left = 2*i + 1
-            int r = 2 * i + 2; // right = 2*i + 2
+        int main = root; // Initialize largest as root
+        int left = 2 * root + 1; // left = 2*i + 1
+        int right = 2 * root + 2; // right = 2*i + 2
 
+        if (direction.equals("asc")) {
             // If left child is larger than root
-            if (l < n && arr[l] > arr[largest])
-                largest = l;
-
+            if (left < size && input[left] > input[main]) main = left;
             // If right child is larger than largest so far
-            if (r < n && arr[r] > arr[largest])
-                largest = r;
-
-            // If largest is not root
-            if (largest != i) {
-                int swap = arr[i];
-                arr[i] = arr[largest];
-                arr[largest] = swap;
-
-                // Recursively heapify the affected sub-tree
-                heapify(arr, n, largest, direction);
-            }
+            if (right < size && input[right] > input[main]) main = right;
         }
 
-        // Sorting for descending order
-        if(direction.equals("desc")){
-            int smallest = i; // Initialize smalles as root
-            int l = 2 * i + 1; // left = 2*i + 1
-            int r = 2 * i + 2; // right = 2*i + 2
-
+        else if (direction.equals("desc")) {
             // If left child is smaller than root
-            if (l < n && arr[l] < arr[smallest])
-                smallest = l;
-
+            if (left < size && input[left] < input[main]) main = left;
             // If right child is smaller than smallest so far
-            if (r < n && arr[r] < arr[smallest])
-                smallest = r;
+            if (right < size && input[right] < input[main]) main = right;
+        }
 
-            // If smallest is not root
-            if (smallest != i) {
-                int temp = arr[i];
-                arr[i] = arr[smallest];
-                arr[smallest] = temp;
+        // If main is not root
+        if (main != root) {
+            int swap = input[root];
+            input[root] = input[main];
+            input[main] = swap;
 
-                // Recursively heapify the affected sub-tree
-                heapify(arr, n, smallest, direction);
-            }
+            // Recursively heapify the affected sub-tree
+            heapify(input, size, main, direction);
+        }
+    }
+
+    /**
+     * Function converting input array of objects into a heap.
+     * @param input input array to be converted into a heap
+     * @param size size of the heap
+     * @param root root of the heap
+     * @param direction direction of the heap (descending or ascending)
+     * @param attribute object attribute to sort by
+     */
+    void heapify(ArrayList<Object> input, int size, int root, String direction, String attribute)
+    {
+        ObjectComparator objectComparator = new ObjectComparator(attribute);
+
+        int main = root; // Initialize largest as root
+        int left = 2 * root + 1; // left = 2*i + 1
+        int right = 2 * root + 2; // right = 2*i + 2
+
+        if (direction.equals("asc")) {
+            // If left child is larger than root
+            if (left < size && objectComparator.compare(input.get(left), input.get(main)) > 0) main = left;
+            // If right child is larger than largest so far
+            if (right < size && objectComparator.compare(input.get(right), input.get(main)) > 0) main = right;
+        }
+        else if (direction.equals("desc")) {
+            // If left child is smaller than root
+            if (left < size && objectComparator.compare(input.get(left), input.get(main)) < 0) main = left;
+            // If right child is smaller than largest so far
+            if (right < size && objectComparator.compare(input.get(right), input.get(main)) < 0) main = right;
+        }
+
+        // If largest is not root
+        if (main != root) {
+            Object temp = input.get(root);
+            input.set(root, input.get(main));
+            input.set(main, temp);
+
+            // Recursively heapify the affected sub-tree
+            heapify(input, size, main, direction, attribute);
         }
     }
 
     /**
      * Main heap sort sorting function.
-     * @param arr input array to be sorted
+     * @param input input array to be sorted
      * @param direction direction of the sort (ascending or descending)
+     * @param iterations how many iterations of the sort to run
      */
-    public void heapSort(int arr[], String direction)
+    public void heapSort(int input[], String direction, int iterations)
     {
-        int n = arr.length;
-
+        int n = input.length;
+        int depth = 0;
         // Build heap (rearrange array)
         for (int i = n / 2 - 1; i >= 0; i--)
-            heapify(arr, n, i, direction);
+            heapify(input, n, i, direction);
 
         // One by one extract an element from heap
         for (int i = n - 1; i > 0; i--) {
             // Move current root to end
-            int temp = arr[0];
-            arr[0] = arr[i];
-            arr[i] = temp;
+            int temp = input[0];
+            input[0] = input[i];
+            input[i] = temp;
+
+            if(iterations > 0 && ( ++depth >= iterations)) return;
 
             // call max heapify on the reduced heap
-            heapify(arr, i, 0, direction);
+            heapify(input, i, 0, direction);
+        }
+    }
+
+    /**
+     * Main heap sort sorting function for objects.
+     * @param input input array of objects to be sorted
+     * @param direction direction of the sort (ascending or descending)
+     * @param attribute object attribute to sort by
+     * @param iterations how many iterations of the sort to run
+     */
+    public void heapSort(ArrayList<Object> input, String direction, String attribute, int iterations)
+    {
+
+        int n = input.size();
+        int depth = 0;
+        // Build heap (rearrange array)
+        for (int i = n / 2 - 1; i >= 0; i--)
+            heapify(input, n, i, direction, attribute);
+
+        Object temp;
+        // One by one extract an element from heap
+        for (int i = n - 1; i > 0; i--) {
+            // Move current root to end
+            temp = input.get(0);
+            input.set(0, input.get(i));
+            input.set(i, temp);
+
+            if(iterations > 0 && ( ++depth >= iterations)) return;
+
+            // call max heapify on the reduced heap
+            heapify(input, i, 0, direction, attribute);
         }
     }
 
@@ -100,37 +153,30 @@ public class HeapSort implements Sorter {
      * Function invoking heap sort.
      * @param input input array to be sorted
      * @param direction direction of the sort (ascending or descending)
+     * @param iterations how many iterations of the sort to run
      * @return input array sorted using heap sort
      */
-    public int[] sort(int[] input, String direction) {
-
-        // Exception for empty input data
-        if(input.length == 0){
-            logger.debug("Input data is empty. Throwing exception.");
-            throw new IllegalArgumentException("Input data is empty.");
-        }
-
-        // Exception for incorrect order
-        if(!direction.equals("asc") && !direction.equals("desc")){
-            logger.debug("Input order is incorrect. Throwing exception.");
-            throw new IllegalArgumentException("Input order is incorrect.");
-        }
-
-        logger.debug("Sorting for " + direction + "ending order.");
+    public int[] sort(int[] input, String direction, int iterations) {
         int[] temp_arr = input;
-        heapSort(temp_arr, direction);
+        heapSort(temp_arr, direction, iterations);
         return temp_arr;
     }
 
     /**
-     * Function invoking heap sort if the user did not provide sort direction
-     * (assuming ascending order).
-     * @param input input array to be sorted
-     * @return input array sorted using heap sort algorithm
+     * Function invoking heap sort for objects.
+     * @param input input array of objects to be sorted
+     * @param direction direction of the sort (ascending or descending)
+     * @param attribute object attribute to sort by
+     * @param iterations how many iterations of the sort to run
+     * @return input array of objects sorted using heap sort
      */
-    public int[] sort(int[] input) {
-        logger.info("Direction undefined - assumed ascending.");
-        input = sort(input, "asc");
-        return input;
+    public ArrayList<Object> sort(ArrayList<Object> input, String direction, String attribute, int iterations) {
+        ArrayList<Object> temp_arr = input;
+        heapSort(temp_arr, direction, attribute, iterations);
+        return temp_arr;
+    }
+  
+    public String getName() {
+        return "HeapSort";
     }
 }

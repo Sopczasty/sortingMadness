@@ -1,23 +1,16 @@
 package pl.put.poznan.testing.sorting;
 
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.put.poznan.sorting.logic.InsertionSort;
-import pl.put.poznan.sorting.logic.Sorter;
+import pl.put.poznan.sorting.app.App;
+import pl.put.poznan.sorting.app.SortingMadness;
 
 /**
  * Tests for insertion sort.
  */
 class InsertionSortTest {
 
-    // Sorting algorithm instance
-    private Sorter sorter;
-
-    @BeforeEach
-    public void setUp(){
-        sorter = new InsertionSort();
-    }
+    private String[] algorithms = {"insertion"};
 
     /**
      * Test for array in correct form (ascending order).
@@ -26,8 +19,8 @@ class InsertionSortTest {
     public void testAscending(){
         int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
         int[] output = {0, 1, 3, 4, 9, 10, 12, 32, 43, 53};
-        String direction = "asc";
-        assertArrayEquals(output, sorter.sort(input, direction));
+        SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).direction("asc").build();
+        assertArrayEquals(output, app.getResult());
     }
 
     /**
@@ -37,8 +30,8 @@ class InsertionSortTest {
     public void testDescending(){
         int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
         int[] output = {53, 43, 32, 12, 10, 9, 4, 3, 1, 0};
-        String direction = "desc";
-        assertArrayEquals(output, sorter.sort(input, direction));
+        SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).direction("desc").build();
+        assertArrayEquals(output, app.getResult());
     }
 
     /**
@@ -48,8 +41,8 @@ class InsertionSortTest {
     public void testAscendingNegative(){
         int[] input = {32, -43, 12, 53, -3, 9, -1, 0, 10, 4};
         int[] output = {-43, -3, -1, 0, 4, 9, 10, 12, 32, 53};
-        String direction = "asc";
-        assertArrayEquals(output, sorter.sort(input, direction));
+        SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).direction("asc").build();
+        assertArrayEquals(output, app.getResult());
     }
 
     /**
@@ -59,8 +52,8 @@ class InsertionSortTest {
     public void testDescendingNegative(){
         int[] input = {32, -43, 12, 53, -3, 9, -1, 0, 10, 4};
         int[] output = {53, 32, 12, 10, 9, 4, 0, -1, -3, -43};
-        String direction = "desc";
-        assertArrayEquals(output, sorter.sort(input, direction));
+        SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).direction("desc").build();
+        assertArrayEquals(output, app.getResult());
     }
 
     /**
@@ -70,8 +63,8 @@ class InsertionSortTest {
     public void testSmall(){
         int[] input = {32, 5};
         int[] output = {5, 32};
-        String direction = "asc";
-        assertArrayEquals(output, sorter.sort(input, direction));
+        SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).direction("asc").build();
+        assertArrayEquals(output, app.getResult());
     }
 
     /**
@@ -81,8 +74,37 @@ class InsertionSortTest {
     public void testNullDirection() {
         int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
         int[] output = {0, 1, 3, 4, 9, 10, 12, 32, 43, 53};
-        assertArrayEquals(output, sorter.sort(input));
+        SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).build();
+        assertArrayEquals(output, app.getResult());
+    }
 
+    /**
+     * Test for 1 iteration in ascending mode.
+     */
+    @Test
+    public void testOneIterationAsc() {
+        int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
+        int[] output = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
+        SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).iterations(1).build();
+        assertArrayEquals(output, app.getResult());
+    }
+
+    //Test for 1 iteration in descending mode
+    @Test
+    public void testOneIterationDesc() {
+        int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
+        int[] output = {43, 32, 12, 53, 3, 9, 1, 0, 10, 4};
+        SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).direction("desc").iterations(1).build();
+        assertArrayEquals(output, app.getResult());
+    }
+
+    //Test for given limit of iterations greater than actual algorithm iterations
+    @Test
+    public void testTooFar(){
+        int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
+        int[] output = {0, 1, 3, 4, 9, 10, 12, 32, 43, 53};
+        SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).iterations(1000000000).build();
+        assertArrayEquals(output, app.getResult());
     }
 
     /**
@@ -91,15 +113,13 @@ class InsertionSortTest {
     @Test
     public void testIncorrectInput(){
         int[] input = {};
-        String direction = "asc";
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            sorter.sort(input, direction);
+            SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).build();
         });
 
         String expectedMessage = "Input data is empty.";
         String actualMessage = exception.getMessage();
-
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
@@ -109,16 +129,13 @@ class InsertionSortTest {
     @Test
     public void testIncorrectDirection(){
         int[] input = {32, 43, 12, 53, 3, 9, 1, 0, 10, 4};
-        String direction = "error";
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            sorter.sort(input, direction);
+            SortingMadness app = new SortingMadness.PrimitiveBuilder(algorithms, input).direction("error").build();
         });
 
-        String expectedMessage = "Input order is incorrect.";
+        String expectedMessage = "Sorting order is incorrect.";
         String actualMessage = exception.getMessage();
-
         assertTrue(actualMessage.contains(expectedMessage));
     }
-
 }

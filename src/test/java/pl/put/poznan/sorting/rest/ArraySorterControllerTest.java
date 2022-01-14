@@ -12,11 +12,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import pl.put.poznan.sorting.app.App;
+import pl.put.poznan.sorting.app.SortingMadness;
 import pl.put.poznan.sorting.logic.SortingWrapper;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +51,7 @@ class ArraySorterControllerTest {
 
     @BeforeEach
     public void setup() throws URISyntaxException {
-        url = "http://localhost:"+port+"/api/array";
+        url = "http://localhost:"+port+"/api/sort";
         uri = new URI(url);
         data = new int[]{-30, 219, 3, -8, -1, 10, 30, 20, -3, -1231231, 12314, 40, 50, -12, 123, 32, 23};
     }
@@ -64,24 +65,29 @@ class ArraySorterControllerTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         request = new HttpEntity<Map<String, Object>>(payload, headers);
-        payload.put("array", data);
-        payload.put("sort", "quick");
+        payload.put("input", data);
+        payload.put("algorithm", "quick");
         ResponseEntity<Map> response = restTemplate.postForEntity(
                 uri,
                 request,
                 Map.class
         );
+
+        String[] algorithms = {"quick"};
+        SortingMadness madness = new SortingMadness.PrimitiveBuilder(algorithms, data).build();
+        int[] expected = madness.getResult();
+
         assertTrue(response.hasBody());
-        assertNotNull(response.getBody().get("array"));
+        assertNotNull(response.getBody().get("result"));
         assertArrayEquals(
                 Arrays.stream(
-                        response.getBody().get("array").toString()
+                        response.getBody().get("result").toString()
                                 .replace("[", "")
                                 .replace("]", "")
                                 .replace(" ", "")
                                 .split(",")
                 ).mapToInt(Integer::parseInt).toArray(),
-                new SortingWrapper().getSorter("quick").sort(data)
+                expected
         );
     }
 
@@ -93,7 +99,7 @@ class ArraySorterControllerTest {
         Map<String, Object> payload = new HashMap<String, Object>();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        payload.put("array", data);
+        payload.put("input", data);
         request = new HttpEntity<Map<String, Object>>(payload, headers);
         ResponseEntity<Map> response = restTemplate.postForEntity(
                 uri,
@@ -103,4 +109,5 @@ class ArraySorterControllerTest {
         assertTrue(response.hasBody());
         assertTrue(response.getBody().get("error").toString().contains("Wrong payload content"));
     }
+
 }
