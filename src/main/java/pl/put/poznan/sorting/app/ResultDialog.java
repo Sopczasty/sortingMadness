@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -61,18 +62,40 @@ public class ResultDialog extends JDialog implements ActionListener {
     }
 
     /**
+     * Converts object from array to variable based on type
+     * @param input Object and type
+     * @return variable of type
+     */
+    private String getType(Object input, String type){
+        String getter = "get" + type.substring(0, 1).toUpperCase() + type.substring(1);;
+        try {
+            if (input != null) {
+                input = input.getClass().getMethod(getter, new Class[0]).invoke(input, new Object[0]);
+            }
+        } catch (Exception e) {
+            // If this exception occurs, then it is usually a fault of the developer.
+            throw new RuntimeException("Cannot compare objects - getter do not exist", e);
+        }
+        return input.toString();
+
+    }
+
+
+    /**
      * Converts integer array to string separated by comma
      * @param input integer array
      * @return string of merged input array
      */
-    private String toString(int[] input) {
-        if (input.length == 0) return "";
+    private String toString(ArrayList<Object> input, String type) {
+        if (input.size() == 0) return "";
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < input.length - 1; i++) {
-            sb.append(input[i]);
+        for (int i = 0; i < input.size() - 1; i++) {
+            String input_string = getType(input.get(i), type);
+            sb.append(input_string);
             sb.append(",");
         }
-        sb.append(input[input.length - 1]);
+        String input_string = getType(input.get(input.size() - 1), type);
+        sb.append(input_string);
         return sb.toString();
     }
 
@@ -81,9 +104,9 @@ public class ResultDialog extends JDialog implements ActionListener {
      * @param result integer array of results
      * @param measurements measurements of algorithms
      */
-    public void setResult(int[] result, Map<String, Long> measurements) {
+    public void setResult(ArrayList<Object> result, Map<String, Long> measurements, String type) {
         // Display the result
-        String text = toString(result);
+        String text = toString(result, type);
         resultArea.setText(text);
 
         // Remove previous labels
