@@ -42,7 +42,7 @@ public class SortingWrapper {
      * @param type type of the algorithm to return
      * @return object of requested sorting algorithm (or null if not found)
      */
-    public Sorter getSorter(int input[], String type) {
+    public Sorter getSorter(Object input[], String type) {
         if (input.length == 0) throw new NullPointerException("Input array is empty");
         if (type.equals("bubble")) return new BubbleSort();
         if (type.equals("heap")) return new HeapSort();
