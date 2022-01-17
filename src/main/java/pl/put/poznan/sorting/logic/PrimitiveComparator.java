@@ -9,7 +9,7 @@ public class PrimitiveComparator {
      * Compare two objects between each other
      * @param o1 first object
      * @param o2 second object
-     * @return <0 if smaller, 0 if equal, >0 if greater
+     * @return less than 0 if smaller, 0 if equal, more than 0 if greater
      */
     public int compare (Object o1, Object o2) {
         if (o1 instanceof String) {
