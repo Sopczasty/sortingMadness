@@ -18,8 +18,8 @@ public class QuickSort implements Sorter {
      * @param i index of first element to swap
      * @param j index of second element to swap
      */
-    static void swap(int[] arr, int i, int j) {
-        int temp = arr[i];
+    static void swap(Object[] arr, int i, int j) {
+        Object temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
     }
@@ -46,16 +46,17 @@ public class QuickSort implements Sorter {
      * @param direction direction of the sort (ascending or descending)
      * @return new pivot
      */
-    static int partition(int[] input, int low, int high, String direction) {
-        int pivot = input[high];
+    static int partition(Object[] input, int low, int high, String direction) {
+        Object pivot = input[high];
+        PrimitiveComparator comp = new PrimitiveComparator();
         int new_pivot = (low - 1);
 
         for(int j = low; j <= high - 1; j++) {
-            if (direction.equals("asc") && (input[j] < pivot)) {
+            if (direction.equals("asc") && (comp.compare(input[j], pivot) < 0 )) {
                 new_pivot++;
                 swap(input, new_pivot, j);
             }
-            else if (direction.equals("desc") && (input[j] > pivot)) {
+            else if (direction.equals("desc") && (comp.compare(input[j], pivot) > 0)) {
                 new_pivot++;
                 swap(input, new_pivot, j);
             }
@@ -106,7 +107,7 @@ public class QuickSort implements Sorter {
      * @param iterations how many iterations of the sort to run
      * @return input subarray sorted using quick sort algorithm
      */
-    static int[] quickSort(int[] input, int low, int high, String direction, int iterations) {
+    static Object[] quickSort(Object[] input, int low, int high, String direction, int iterations) {
         int pi;
         if (low < high && (iterations != 0)) {
             pi = partition(input, low, high, direction);
@@ -144,7 +145,7 @@ public class QuickSort implements Sorter {
      * @param iterations how many iterations of the sort to run
      * @return input array sorted using quick sort algorithm
      */
-    public int[] sort(int[] input, String direction, int iterations) {
+    public Object[] sort(Object[] input, String direction, int iterations) {
         return quickSort(input, 0, input.length - 1, direction, ((iterations == 0) ? -1 : iterations));
     }
 
