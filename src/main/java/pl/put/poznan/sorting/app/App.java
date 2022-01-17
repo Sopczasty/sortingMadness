@@ -10,8 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Map;
 
 /**
  * Main application class with GUI.
@@ -84,25 +82,17 @@ public class App extends JFrame implements ActionListener {
 
 
     /**
-     * Convert input data to array of integers
-     * @param data input data as array strings
-     * @return input data as array of integers
+     * Convert array of objects into string
+     * @param data input array of objects
+     * @return string containing concatenated values separated by comma
      */
-    private int[] toInt(String[] data) {
-        int[] result = new int[data.length];
-        for(int i = 0; i < data.length; i++) result[i] = Integer.parseInt(data[i]);
-        return result;
-    }
-
-
-    /**
-     * Convert input data to array of doubles
-     * @param data input data as array of strings
-     * @return input data as array of doubles
-     */
-    private double[] toDouble(String[] data) {
-        double[] result = new double[data.length];
-        for (int i = 0; i < data.length; i++) result[i] = Double.parseDouble(data[i]);
+    private String toString(Object [] data) {
+        String result = "";
+        for (int i = 0; i < data.length - 1; i++) {
+            result += data[i].toString();
+            result += ", ";
+        }
+        result += data[data.length - 1].toString();
         return result;
     }
 
@@ -114,24 +104,26 @@ public class App extends JFrame implements ActionListener {
      */
     private void invokeSort(String data) {
         String[] input = data.split(delimiter);
-        Map<String, Object> output = new Hashtable<>();
+        Object[] in = new Object[input.length];
 
-        // FIXME: This does nothing, implement sorting object arrays and restore functionality
-        try {
-            int[] in = toInt(input);
-            // This should be moved at the end, after datatype is defined
-            madness = new SortingMadness.PrimitiveBuilder(algorithms.toArray(new String[0]),
-                    in).direction("asc").build();
-        } catch (NumberFormatException e) {
-            try {
-                output.put("input", toDouble(input));
-            } catch (NumberFormatException e2) {
-                output.put("input", input);
-            }
+        // If input is string
+        if (data.matches(".*[a-z|A-Z]+.*")) {
+            in = input;
+        }
+        // If input is Float
+        else if (data.contains(".")) {
+            for (int i = 0; i < input.length; i++) in[i] = Float.parseFloat(input[i]);
+        }
+        // If input is Integer
+        else {
+            for (int i = 0; i < input.length; i++) in[i] = Integer.parseInt(input[i]);
         }
 
-        int[] out = madness.getResult();
-        resultDialog.setResult(out, madness.getMeasurements());
+        madness = new SortingMadness.PrimitiveBuilder(algorithms.toArray(new String[0]),
+                in).direction("asc").build();
+
+        Object [] output = madness.getResult();
+        resultDialog.setResult(toString(output), madness.getMeasurements());
         resultDialog.setVisible(true);
     }
 
@@ -145,7 +137,7 @@ public class App extends JFrame implements ActionListener {
 
         if (source == sortButton && !algorithms.isEmpty()) {
             if (inputArea.getText() != null && inputArea.getText().length() > 0)
-            invokeSort(inputArea.getText());
+                invokeSort(inputArea.getText());
         }
         else if (source == bubbleBox) {
             if (bubbleBox.isSelected()) algorithms.add("bubble");

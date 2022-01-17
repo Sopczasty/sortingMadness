@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -60,31 +61,15 @@ public class ResultDialog extends JDialog implements ActionListener {
         okButton.addActionListener(this);
     }
 
-    /**
-     * Converts integer array to string separated by comma
-     * @param input integer array
-     * @return string of merged input array
-     */
-    private String toString(int[] input) {
-        if (input.length == 0) return "";
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < input.length - 1; i++) {
-            sb.append(input[i]);
-            sb.append(",");
-        }
-        sb.append(input[input.length - 1]);
-        return sb.toString();
-    }
 
     /**
      * Updates the contents of the dialog
      * @param result integer array of results
      * @param measurements measurements of algorithms
      */
-    public void setResult(int[] result, Map<String, Long> measurements) {
+    public void setResult(String result, Map<String, Long> measurements) {
         // Display the result
-        String text = toString(result);
-        resultArea.setText(text);
+        resultArea.setText(result);
 
         // Remove previous labels
         measurementsPanel.removeAll();

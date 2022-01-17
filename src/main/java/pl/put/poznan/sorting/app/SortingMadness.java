@@ -15,7 +15,7 @@ public class SortingMadness {
     // List of sorting algorithms to use
     private final String[] algorithms;
     // Input of primitive objects
-    private final int[] input;
+    private final Object[] input;
     // Input for complex data structures
     private final ArrayList<Object> objInput;
     // Direction of the sorting
@@ -59,7 +59,7 @@ public class SortingMadness {
     }
 
     public String[] getAlgorithms() { return algorithms; }
-    public int[] getInput() { return input; }
+    public Object[] getInput() { return input; }
     public ArrayList<Object> getObjInput() { return objInput; }
     public String getDirection() { return direction; }
     public int getIterations() { return iterations; }
@@ -71,7 +71,7 @@ public class SortingMadness {
      */
     public static class PrimitiveBuilder {
         private final String[] algorithms;
-        private final int[] input;
+        private final Object[] input;
         private String direction = "asc";
         private int iterations = 0;
 
@@ -80,7 +80,7 @@ public class SortingMadness {
          * @param algorithms list of algorithms to sort with
          * @param input primitive data input
          */
-        public PrimitiveBuilder(String[] algorithms, int[] input) {
+        public PrimitiveBuilder(String[] algorithms, Object[] input) {
             this.algorithms = algorithms;
             this.input = input;
         }
@@ -130,6 +130,8 @@ public class SortingMadness {
                 throw new IllegalArgumentException("Sorting order is incorrect.");
             }
         }
+
+
     }
 
     /**
@@ -213,9 +215,9 @@ public class SortingMadness {
      * Get sorted data for primitive data input
      * @return sorted data
      */
-    public int[] getResult() {
+    public Object[] getResult() {
         if (input == null) throw new IllegalArgumentException("No input provided.");
-        int[] result = new int[input.length];
+        Object[] result = new Object[input.length];
         measurements = new Hashtable<>();
 
         for (String algorithm : algorithms) {
