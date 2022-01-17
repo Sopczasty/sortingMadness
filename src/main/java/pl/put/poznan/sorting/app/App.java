@@ -1,7 +1,5 @@
 package pl.put.poznan.sorting.app;
 
-import pl.put.poznan.sorting.logic.SortObject;
-
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -12,9 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
 
 /**
  * Main application class with GUI.
@@ -87,91 +82,18 @@ public class App extends JFrame implements ActionListener {
 
 
     /**
-     * Convert input data to array of objects containing integers
-     * @param data input data as array strings
-     * @return input data as array of objects
+     * Convert array of objects into string
+     * @param data input array of objects
+     * @return string containing concatenated values separated by comma
      */
-    private ArrayList<Object> toIntObject(String[] data) {
-        ArrayList<Object> result = new ArrayList<>();
-        for(int i = 0; i < data.length; i++) {
-            Object variable = new SortObject(Integer.parseInt(data[i]));
-            result.add(variable);
+    private String toString(Object [] data) {
+        String result = "";
+        for (int i = 0; i < data.length - 1; i++) {
+            result += data[i].toString();
+            result += ", ";
         }
+        result += data[data.length - 1].toString();
         return result;
-    }
-
-
-    /**
-     * Convert input data to array of object containing doubles
-     * @param data input data as array of strings
-     * @return input data as array of objects
-     */
-    private ArrayList<Object> toDoubleObject(String[] data) {
-        ArrayList<Object> result = new ArrayList<>();
-        for(int i = 0; i < data.length; i++) {
-            Object variable = new SortObject(Double.parseDouble(data[i]));
-            result.add(variable);
-        }
-        return result;
-    }
-
-    /**
-     * Convert input data to array of object containing strings
-     * @param data input data as array of strings
-     * @return input data as array of objects
-     */
-    private ArrayList<Object> toStringObject(String[] data) {
-        ArrayList<Object> result = new ArrayList<>();
-        for(int i = 0; i < data.length; i++) {
-            Object variable = new SortObject(data[i]);
-            result.add(variable);
-        }
-        return result;
-    }
-
-
-    /**
-     * Check what type of data are variables in input
-     * @param data input data as array of strings
-     * @return type of objects
-     */
-    private String checkType(String[] data) {
-        boolean double_type = false;
-        boolean string_type = false;
-        boolean int_type = false;
-        String type;
-
-        for (int i = 0; i < data.length; i++){
-            if (data[i].matches("[a-zA-Z]+")){
-                string_type = true;
-            }
-            else {
-                if (data[i].matches("[+-]?([0-9]*[.])?[0-9]+")){
-                    if (data[i].contains(".")) {
-                        double_type = true;
-                    }
-                    else{
-                        int_type = true;
-                    }
-                }
-            }
-        }
-
-        if(string_type){
-            type = "stringVariable";
-        }
-        else if(double_type){
-            type = "doubleVariable";
-        }
-        else if(int_type){
-            type = "intVariable";
-        }
-        else {
-            type = "stringVariable";
-        }
-
-
-        return type;
     }
 
 
@@ -182,24 +104,26 @@ public class App extends JFrame implements ActionListener {
      */
     private void invokeSort(String data) {
         String[] input = data.split(delimiter);
-        ArrayList<Object> in = new ArrayList<>();
+        Object[] in = new Object[input.length];
 
-        String type = checkType(input);
-        if(type.equals("stringVariable")){
-            in = toStringObject(input);
+        // If input is string
+        if (data.matches(".*[a-z|A-Z]+.*")) {
+            in = input;
         }
-        else if(type.equals("doubleVariable")){
-            in = toDoubleObject(input);
+        // If input is Float
+        else if (data.contains(".")) {
+            for (int i = 0; i < input.length; i++) in[i] = Float.parseFloat(input[i]);
         }
-        else if(type.equals("intVariable")){
-            in = toIntObject(input);
+        // If input is Integer
+        else {
+            for (int i = 0; i < input.length; i++) in[i] = Integer.parseInt(input[i]);
         }
-        madness = new SortingMadness.ObjectBuilder(algorithms.toArray(new String[0]),
-                in).direction("asc").attribute(type).build();
 
+        madness = new SortingMadness.PrimitiveBuilder(algorithms.toArray(new String[0]),
+                in).direction("asc").build();
 
-        ArrayList<Object> out = madness.getObjResult();
-        resultDialog.setResult(out, madness.getMeasurements(), type);
+        Object [] output = madness.getResult();
+        resultDialog.setResult(toString(output), madness.getMeasurements());
         resultDialog.setVisible(true);
     }
 
