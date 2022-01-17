@@ -17,6 +17,7 @@ public class SortingWrapper {
      * Instantiate requested sorting algorithm and return it.
      * @param input input data
      * @param type type of the algorithm to return
+     * @param attribute attribute to sort by
      * @return object of requested sorting algorithm (or null if not found)
      */
     public Sorter getSorter(ArrayList<Object> input, String type, String attribute) {
