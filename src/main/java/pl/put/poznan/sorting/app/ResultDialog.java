@@ -61,53 +61,15 @@ public class ResultDialog extends JDialog implements ActionListener {
         okButton.addActionListener(this);
     }
 
-    /**
-     * Converts object from array to variable based on type
-     * @param input Object and type
-     * @return variable of type
-     */
-    private String getType(Object input, String type){
-        String getter = "get" + type.substring(0, 1).toUpperCase() + type.substring(1);;
-        try {
-            if (input != null) {
-                input = input.getClass().getMethod(getter, new Class[0]).invoke(input, new Object[0]);
-            }
-        } catch (Exception e) {
-            // If this exception occurs, then it is usually a fault of the developer.
-            throw new RuntimeException("Cannot compare objects - getter do not exist", e);
-        }
-        return input.toString();
-
-    }
-
-
-    /**
-     * Converts integer array to string separated by comma
-     * @param input integer array
-     * @return string of merged input array
-     */
-    private String toString(ArrayList<Object> input, String type) {
-        if (input.size() == 0) return "";
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < input.size() - 1; i++) {
-            String input_string = getType(input.get(i), type);
-            sb.append(input_string);
-            sb.append(",");
-        }
-        String input_string = getType(input.get(input.size() - 1), type);
-        sb.append(input_string);
-        return sb.toString();
-    }
 
     /**
      * Updates the contents of the dialog
      * @param result integer array of results
      * @param measurements measurements of algorithms
      */
-    public void setResult(ArrayList<Object> result, Map<String, Long> measurements, String type) {
+    public void setResult(String result, Map<String, Long> measurements) {
         // Display the result
-        String text = toString(result, type);
-        resultArea.setText(text);
+        resultArea.setText(result);
 
         // Remove previous labels
         measurementsPanel.removeAll();
