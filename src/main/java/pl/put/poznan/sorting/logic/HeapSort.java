@@ -19,29 +19,30 @@ public class HeapSort implements Sorter {
      * @param root root of the heap
      * @param direction direction of the heap (descending or ascending)
      */
-    private void heapify(int input[], int size, int root, String direction)
+    private void heapify(Object [] input, int size, int root, String direction)
     {
+        PrimitiveComparator comp = new PrimitiveComparator();
         int main = root; // Initialize largest as root
         int left = 2 * root + 1; // left = 2*i + 1
         int right = 2 * root + 2; // right = 2*i + 2
 
         if (direction.equals("asc")) {
             // If left child is larger than root
-            if (left < size && input[left] > input[main]) main = left;
+            if (left < size && (comp.compare(input[left], input[main]) >= 0)) main = left;
             // If right child is larger than largest so far
-            if (right < size && input[right] > input[main]) main = right;
+            if (right < size && (comp.compare(input[left], input[main]) >= 0)) main = right;
         }
 
         else if (direction.equals("desc")) {
             // If left child is smaller than root
-            if (left < size && input[left] < input[main]) main = left;
+            if (left < size && (comp.compare(input[left], input[main]) <= 0)) main = left;
             // If right child is smaller than smallest so far
-            if (right < size && input[right] < input[main]) main = right;
+            if (right < size && (comp.compare(input[left], input[main]) <= 0)) main = right;
         }
 
         // If main is not root
         if (main != root) {
-            int swap = input[root];
+            Object swap = input[root];
             input[root] = input[main];
             input[main] = swap;
 
@@ -96,7 +97,7 @@ public class HeapSort implements Sorter {
      * @param direction direction of the sort (ascending or descending)
      * @param iterations how many iterations of the sort to run
      */
-    public void heapSort(int input[], String direction, int iterations)
+    public void heapSort(Object [] input, String direction, int iterations)
     {
         int n = input.length;
         int depth = 0;
@@ -107,7 +108,7 @@ public class HeapSort implements Sorter {
         // One by one extract an element from heap
         for (int i = n - 1; i > 0; i--) {
             // Move current root to end
-            int temp = input[0];
+            Object temp = input[0];
             input[0] = input[i];
             input[i] = temp;
 
@@ -156,8 +157,8 @@ public class HeapSort implements Sorter {
      * @param iterations how many iterations of the sort to run
      * @return input array sorted using heap sort
      */
-    public int[] sort(int[] input, String direction, int iterations) {
-        int[] temp_arr = input;
+    public Object[] sort(Object[] input, String direction, int iterations) {
+        Object[] temp_arr = input;
         heapSort(temp_arr, direction, iterations);
         return temp_arr;
     }
