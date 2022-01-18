@@ -19,15 +19,16 @@ public class SelectionSort implements Sorter {
      * @param iterations how many iterations of the sort to run
      * @return input array sorted using selection sort algorithm
      */
-    public int[] sort(int[] input, String direction, int iterations) {
+    public Object[] sort(Object[] input, String direction, int iterations) {
+        PrimitiveComparator comp = new PrimitiveComparator();
         int min_idx;
-        int temp;
+        Object temp;
 
         for (int i = 0; i < input.length - 1; i++) {
             min_idx = i;
             for (int j = i + 1; j < input.length; j++) {
-                if (direction.equals("asc") && (input[j] < input[min_idx])) min_idx = j;
-                else if (direction.equals("desc") && (input[j] > input[min_idx])) min_idx = j;
+                if (direction.equals("asc") && (comp.compare(input[j], input[min_idx]) < 0)) min_idx = j;
+                else if (direction.equals("desc") && (comp.compare(input[j], input[min_idx]) > 0)) min_idx = j;
             }
 
             temp = input[min_idx];

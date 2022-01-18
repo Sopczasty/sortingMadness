@@ -42,16 +42,12 @@ public class ArraySorterController {
 
         logger.info("Received new request.");
 
-        int[] input;
+        Object[] input;
         String direction = "asc";
         String algorithm;
         int iterations = 0;
 
-        input = Arrays.stream(
-                payload.get("data").toString()
-                        .replaceAll("[\\[||\\]|| ]", "")
-                        .split(",")
-        ).mapToInt(Integer::parseInt).toArray();
+        input = detectType(payload.get("data").toString().replaceAll("[\\[||\\]|| ]", ""));
 
         logger.debug("Initializing sorter.");
         if (!payload.containsKey("algorithm")) {
@@ -66,13 +62,37 @@ public class ArraySorterController {
                 .direction(direction)
                 .iterations(iterations)
                 .build();
-        int[] result = madness.getResult();
+        Object[] result = madness.getResult();
 
         HashMap<String, Object> output = new HashMap<String, Object>();
         output.put("result", result);
         output.put("algorithm", algorithm);
         output.put("elapsed", madness.getTimer().getTimeElapsed());
         return output;
+    }
+
+    /**
+     * Detects type of data provided in String
+     * @param data; String of data delimited by ','
+     * @return Object[] array of the given type
+     */
+    private Object[] detectType(String data) {
+        String[] input = data.split(",");
+        Object[] in = new Object[input.length];
+
+        // If input is string
+        if (data.matches(".*[a-z|A-Z]+.*")) {
+            in = input;
+        }
+        // If input is Float
+        else if (data.contains(".")) {
+            for (int i = 0; i < input.length; i++) in[i] = Float.parseFloat(input[i]);
+        }
+        // If input is Integer
+        else {
+            for (int i = 0; i < input.length; i++) in[i] = Integer.parseInt(input[i]);
+        }
+        return in;
     }
 
     /**

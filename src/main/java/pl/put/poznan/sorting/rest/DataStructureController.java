@@ -30,8 +30,9 @@ import java.util.stream.Stream;
 public class DataStructureController {
 
     // Logger
-    private ArrayList<Object> ds;
     static Logger logger = LoggerFactory.getLogger(DataStructureController.class);
+    // Data Structure object
+    private ArrayList<Object> ds;
 
     /*
         curl localhost:8080/api/datastructure/sort -X POST -d '{"algorithm": "merge","direction": "asc","iterations": 0,"key":"n3","data": [{"some_name": "va","name2": "123","n3": "13.3"},{"some_name": "val2","name2": "123","n3": "12.3"}]}' -H "Content-type: application/json"
@@ -91,20 +92,14 @@ public class DataStructureController {
                 types.add(detectType(j.get(key)));
         }
 
-        if (Collections.frequency(types, "String") > 0) {
-            ds = createDataStructure(data, key, "String");
-            attribute = "Data_string";
-        } else if (Collections.frequency(types, "Float") > 0) {
-            ds = createDataStructure(data, key, "Float");
-            attribute ="Data_float";
-        } else {
-            ds = createDataStructure(data, key, "Integer");
-            attribute = "Data_int";
-        }
+        if (Collections.frequency(types, "String") > 0) ds = createDataStructure(data, key, "String");
+        else if (Collections.frequency(types, "Float") > 0) ds = createDataStructure(data, key, "Float");
+        else ds = createDataStructure(data, key, "Integer");
+
         SortingMadness madness = new SortingMadness.ObjectBuilder(new String[]{algorithm}, (ArrayList<Object>) ds)
                 .direction(direction)
                 .iterations(iterations)
-                .attribute(attribute)
+                .attribute("Object")
                 .build();
 
         ArrayList<Object> result = madness.getObjResult();
@@ -220,13 +215,13 @@ public class DataStructureController {
             ds_element.setData(json);
             switch(type) {
                 case "Integer":
-                    ds_element.setData_int(Integer.parseInt(json.get(key).toString()));
+                    ds_element.setObject(Integer.parseInt(json.get(key).toString()));
                     break;
                 case "Float":
-                    ds_element.setData_float(Float.parseFloat(json.get(key).toString()));
+                    ds_element.setObject(Float.parseFloat(json.get(key).toString()));
                     break;
                 case "String":
-                    ds_element.setData_string(json.get(key).toString());
+                    ds_element.setObject(json.get(key).toString());
                     break;
             }
             ds.add(ds_element);

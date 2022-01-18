@@ -4,6 +4,8 @@ import pl.put.poznan.sorting.logic.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * Main class responsible for sorting objects.
@@ -13,21 +15,23 @@ public class SortingMadness {
     // List of sorting algorithms to use
     private final String[] algorithms;
     // Input of primitive objects
-    private final int[] input;
+    private final Object[] input;
     // Input for complex data structures
     private final ArrayList<Object> objInput;
     // Direction of the sorting
-    private String direction;
+    private final String direction;
     // How many iterations of sorting to run
-    private int iterations;
+    private final int iterations;
     // Attribute to sort by for complex data sorting
     private String attribute = "";
     // Sorting wrapper that will get proper sorting algorithm
-    private static SortingWrapper wrapper = new SortingWrapper();
+    private final static SortingWrapper wrapper = new SortingWrapper();
     // Sorter object
     private static Sorter sorter = null;
     // Timer for timing sorts
-    private static Timer timer = new Timer();
+    private final static Timer timer = new Timer();
+    // Measurements for all selected sorting algorithms
+    private Map<String, Long> measurements;
 
     /**
      * Main constructor selecting appropriate methods based on type of data
@@ -55,10 +59,11 @@ public class SortingMadness {
     }
 
     public String[] getAlgorithms() { return algorithms; }
-    public int[] getInput() { return input; }
+    public Object[] getInput() { return input; }
     public ArrayList<Object> getObjInput() { return objInput; }
     public String getDirection() { return direction; }
     public int getIterations() { return iterations; }
+    public Map<String, Long> getMeasurements() { return measurements; }
 
 
     /**
@@ -66,7 +71,7 @@ public class SortingMadness {
      */
     public static class PrimitiveBuilder {
         private final String[] algorithms;
-        private final int[] input;
+        private final Object[] input;
         private String direction = "asc";
         private int iterations = 0;
 
@@ -75,7 +80,7 @@ public class SortingMadness {
          * @param algorithms list of algorithms to sort with
          * @param input primitive data input
          */
-        public PrimitiveBuilder(String[] algorithms, int[] input) {
+        public PrimitiveBuilder(String[] algorithms, Object[] input) {
             this.algorithms = algorithms;
             this.input = input;
         }
@@ -115,7 +120,7 @@ public class SortingMadness {
          * @param madness fully built sorting madness object
          */
         private void validateInput(SortingMadness madness) {
-            if (madness.input.length == 0) {
+            if (madness.input == null || madness.input.length == 0) {
                 logger.error("Input data is empty. Returning.");
                 throw new IllegalArgumentException("Input data is empty.");
             }
@@ -125,6 +130,8 @@ public class SortingMadness {
                 throw new IllegalArgumentException("Sorting order is incorrect.");
             }
         }
+
+
     }
 
     /**
@@ -192,7 +199,7 @@ public class SortingMadness {
          * @param madness fully built sorting madness object
          */
         private void validateInput(SortingMadness madness) {
-            if (madness.objInput.size() == 0) {
+            if (madness.objInput == null || madness.objInput.size() == 0) {
                 logger.error("Input data is empty. Returning.");
                 throw new IllegalArgumentException("Input data is empty.");
             }
@@ -208,24 +215,25 @@ public class SortingMadness {
      * Get sorted data for primitive data input
      * @return sorted data
      */
-    public int[] getResult() {
-        logger.debug("Initializing sorter.");
-        // FIXME: support array of algorithms
-        sorter = wrapper.getSorter(input, algorithms[0]);
+    public Object[] getResult() {
+        if (input == null) throw new IllegalArgumentException("No input provided.");
+        Object[] result = new Object[input.length];
+        measurements = new Hashtable<>();
 
-        if (sorter == null) {
-            logger.error("Incorrect sorting algorithm");
-            throw new IllegalArgumentException("Incorrect sorting algorithm!");
+        for (String algorithm : algorithms) {
+            sorter = wrapper.getSorter(input, algorithm);
+            if (sorter == null) {
+                logger.error("Incorrect sorting algorithm, skipping...");
+                continue;
+            }
+            logger.info("Sorting using " + sorter.getName() + " sorter with " + iterations + " iterations.");
+            logger.debug("Starting sorting.");
+            timer.startMeasure();
+            result = sorter.sort(input, direction, iterations);
+            timer.stopMeasure();
+            logger.info("Data sorted using" + sorter.getName() + " sorter.");
+            measurements.put(sorter.getName(), timer.getTimeElapsed());
         }
-
-        logger.info("Sorting using " + sorter.getName() + " sorter with " + iterations + " iterations.");
-
-        logger.debug("Starting sorting.");
-        timer.startMeasure();
-        int[] result = sorter.sort(input, direction, iterations);
-        timer.stopMeasure();
-        logger.info("Data sorted using" + sorter.getName() + " sorter in " + timer.getTimeElapsed() + " ms.");
-
         return result;
     }
 
@@ -242,21 +250,29 @@ public class SortingMadness {
      * @return sorted data
      */
     public ArrayList<Object> getObjResult() {
+        if (objInput == null) throw new IllegalArgumentException("No input provided.");
         if (this.attribute == null || this.attribute.equals("")) {
             logger.error("No sorting attribute provided. Quitting.");
             throw new IllegalArgumentException("Object attribute to sort by not provided!");
         }
 
-        logger.debug("Initializing sorter.");
-        // FIXME: support array of algorithms
-        sorter = wrapper.getSorter(objInput, algorithms[0], attribute);
-        logger.info("Sorting using " + sorter.getName() + " sorter with " + iterations + " iterations.");
+        ArrayList<Object> result = new ArrayList<>();
+        measurements = new Hashtable<>();
 
-        logger.debug("Starting sorting.");
-        timer.startMeasure();
-        ArrayList<Object> result = sorter.sort(objInput, direction, attribute, iterations);
-        timer.stopMeasure();
-        logger.info("Data sorted using" + sorter.getName() + " sorter in " + timer.getTimeElapsed() + " ms.");
+        for (String algorithm : algorithms) {
+            sorter = wrapper.getSorter(objInput, algorithm, this.attribute);
+            if (sorter == null) {
+                logger.error("Incorrect sorting algorithm, skipping...");
+                continue;
+            }
+            logger.info("Sorting using " + sorter.getName() + " sorter with " + iterations + " iterations.");
+            logger.debug("Starting sorting.");
+            timer.startMeasure();
+            result = sorter.sort(objInput, direction, attribute, iterations);
+            timer.stopMeasure();
+            logger.info("Data sorted using" + sorter.getName() + " sorter.");
+            measurements.put(sorter.getName(), timer.getTimeElapsed());
+        }
 
         return result;
     }

@@ -32,7 +32,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class ArraySorterControllerTest {
 
     // Data to be sorted
-    private int[] data;
+    private Object[] data;
+    // Data as int
+    private int[] data_int;
     // URL of the API endpoint
     private String url;
     // URI of the API endpoint
@@ -53,7 +55,10 @@ class ArraySorterControllerTest {
     public void setup() throws URISyntaxException {
         url = "http://localhost:"+port+"/api/array/sort";
         uri = new URI(url);
-        data = new int[]{-30, 219, 3, -8, -1, 10, 30, 20, -3, -1231231, 12314, 40, 50, -12, 123, 32, 23};
+        data_int = new int[]{-30, 219, 3, -8, -1, 10, 30, 20, -3, -1231231, 12314, 40, 50, -12, 123, 32, 23};
+        data = new Object[data_int.length];
+        for(int i = 0; i < data_int.length; i++)
+            data[i] = data_int[i];
     }
 
     /**
@@ -75,19 +80,18 @@ class ArraySorterControllerTest {
 
         String[] algorithms = {"quick"};
         SortingMadness madness = new SortingMadness.PrimitiveBuilder(algorithms, data).build();
-        int[] expected = madness.getResult();
-
+        Object[] expected = madness.getResult();
+        String[] array = new String[expected.length];
         assertTrue(response.hasBody());
         assertNotNull(response.getBody().get("result"));
-        assertArrayEquals(
-                Arrays.stream(
-                        response.getBody().get("result").toString()
+        System.out.println(response.getBody().get("result").toString());
+        for(int i = 0; i < expected.length; i++)
+            array[i] = expected[i].toString();
+        assertArrayEquals(array, response.getBody().get("result").toString()
                                 .replace("[", "")
                                 .replace("]", "")
                                 .replace(" ", "")
                                 .split(",")
-                ).mapToInt(Integer::parseInt).toArray(),
-                expected
         );
     }
 
