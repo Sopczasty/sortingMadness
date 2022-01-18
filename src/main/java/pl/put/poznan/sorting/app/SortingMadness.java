@@ -71,18 +71,42 @@ public class SortingMadness {
      */
     public static class PrimitiveBuilder {
         private final String[] algorithms;
-        private final Object[] input;
+        private Object[] input;
         private String direction = "asc";
         private int iterations = 0;
 
         /**
          * Main constructor for primitive data builder
          * @param algorithms list of algorithms to sort with
-         * @param input primitive data input
+         * @param data primitive data input
          */
-        public PrimitiveBuilder(String[] algorithms, Object[] input) {
+        public PrimitiveBuilder(String[] algorithms) {
             this.algorithms = algorithms;
+        }
+
+        public PrimitiveBuilder data(Object[] input) {
             this.input = input;
+            return this;
+        }
+
+        public PrimitiveBuilder convertData(String data) {
+            String[] input = data.split(",");
+            Object[] in = new Object[input.length];
+
+            // If input is string
+            if (data.matches(".*[a-z|A-Z]+.*")) {
+                in = input;
+            }
+            // If input is Float
+            else if (data.contains(".")) {
+                for (int i = 0; i < input.length; i++) in[i] = Float.parseFloat(input[i]);
+            }
+            // If input is Integer
+            else {
+                for (int i = 0; i < input.length; i++) in[i] = Integer.parseInt(input[i]);
+            }
+            this.input = in;
+            return this;
         }
 
         /**

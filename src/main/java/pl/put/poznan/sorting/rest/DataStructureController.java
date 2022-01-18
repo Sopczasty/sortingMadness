@@ -35,7 +35,7 @@ public class DataStructureController {
     private ArrayList<Object> ds;
 
     /*
-        curl localhost:8080/api/datastructure/sort -X POST -d '{"algorithm": "merge","direction": "asc","iterations": 0,"key":"n3","data": [{"some_name": "va","name2": "123","n3": "13.3"},{"some_name": "val2","name2": "123","n3": "12.3"}]}' -H "Content-type: application/json"
+        curl localhost:8080/api/datastructure/sort -X POST -d '{"algorithm": ["merge", "heap"],"direction": "asc","iterations": 0,"key":"n3","data": [{"some_name": "va","name2": "123","n3": "13.3"},{"some_name": "val2","name2": "123","n3": "12.3"}]}' -H "Content-type: application/json"
     */
     /**
      * API endpoint returning sorted data structure using specified method in specified order.
@@ -48,7 +48,7 @@ public class DataStructureController {
     public Map<String, Object> getSortedDataStructure(@RequestBody Map<String, Object> payload)
             throws InvalidParameterException, JsonProcessingException {
         String direction = "asc";
-        String algorithm;
+        String[] algorithms;
         String key;
         String attribute;
         int iterations = 0;
@@ -64,7 +64,9 @@ public class DataStructureController {
             throw new InvalidParameterException("Key not provided!");
         }
 
-        algorithm = payload.get("algorithm").toString();
+        algorithms = payload.get("algorithm").toString()
+                .replaceAll("[\\[||\\]|| ]", "")
+                .split(",");
         key = payload.get("key").toString();
         if (payload.containsKey("direction")) direction = payload.get("direction").toString();
         if (payload.containsKey("iterations")) iterations = (Integer) payload.get("iterations");
@@ -96,7 +98,7 @@ public class DataStructureController {
         else if (Collections.frequency(types, "Float") > 0) ds = createDataStructure(data, key, "Float");
         else ds = createDataStructure(data, key, "Integer");
 
-        SortingMadness madness = new SortingMadness.ObjectBuilder(new String[]{algorithm}, (ArrayList<Object>) ds)
+        SortingMadness madness = new SortingMadness.ObjectBuilder(algorithms, (ArrayList<Object>) ds)
                 .direction(direction)
                 .iterations(iterations)
                 .attribute("Object")
@@ -110,8 +112,7 @@ public class DataStructureController {
 
         HashMap<String, Object> output = new HashMap<>();
         output.put("result", stringify(processed));
-        output.put("algorithm", algorithm);
-        output.put("elapsed", madness.getTimer().getTimeElapsed());
+        output.put("elapsed", madness.getMeasurements());
 
         return output;
     }

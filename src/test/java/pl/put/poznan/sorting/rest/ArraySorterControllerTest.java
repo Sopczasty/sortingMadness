@@ -77,20 +77,18 @@ class ArraySorterControllerTest {
                 request,
                 Map.class
         );
+        System.out.println(Arrays.toString(data).replaceAll("[\\[||\\]|| ]", ""));
 
         String[] algorithms = {"quick"};
-        SortingMadness madness = new SortingMadness.PrimitiveBuilder(algorithms, data).build();
+        SortingMadness madness = new SortingMadness.PrimitiveBuilder(algorithms).data(data).build();
         Object[] expected = madness.getResult();
         String[] array = new String[expected.length];
         assertTrue(response.hasBody());
         assertNotNull(response.getBody().get("result"));
-        System.out.println(response.getBody().get("result").toString());
         for(int i = 0; i < expected.length; i++)
             array[i] = expected[i].toString();
         assertArrayEquals(array, response.getBody().get("result").toString()
-                                .replace("[", "")
-                                .replace("]", "")
-                                .replace(" ", "")
+                                .replaceAll("[\\[||\\]|| ]", "")
                                 .split(",")
         );
     }
