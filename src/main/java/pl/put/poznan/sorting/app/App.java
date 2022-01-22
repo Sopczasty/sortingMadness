@@ -103,26 +103,12 @@ public class App extends JFrame implements ActionListener {
      * @param data input data as string
      */
     private void invokeSort(String data) {
-        String[] input = data.split(delimiter);
-        Object[] in = new Object[input.length];
+        madness = new SortingMadness.PrimitiveBuilder(algorithms.toArray(new String[0]))
+                .convertData(data)
+                .direction("asc")
+                .build();
 
-        // If input is string
-        if (data.matches(".*[a-z|A-Z]+.*")) {
-            in = input;
-        }
-        // If input is Float
-        else if (data.contains(".")) {
-            for (int i = 0; i < input.length; i++) in[i] = Float.parseFloat(input[i]);
-        }
-        // If input is Integer
-        else {
-            for (int i = 0; i < input.length; i++) in[i] = Integer.parseInt(input[i]);
-        }
-
-        madness = new SortingMadness.PrimitiveBuilder(algorithms.toArray(new String[0]),
-                in).direction("asc").build();
-
-        Object [] output = madness.getResult();
+        Object[] output = madness.getResult();
         resultDialog.setResult(toString(output), madness.getMeasurements());
         resultDialog.setVisible(true);
     }
