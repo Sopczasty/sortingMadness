@@ -41,7 +41,8 @@ public class DataStructureController {
      * API endpoint returning sorted data structure using specified method in specified order.
      * @param payload user data
      * @return object with sorted data structure and execution time
-     * @throws InvalidParameterException if the input is in incorrect format
+     * @throws InvalidParameterException if the input data is in incorrect format
+     * @throws JsonProcessingException if the input JSON is in incorrect format
      */
     @PostMapping(path = "/sort", consumes = "application/json", produces = "application/json")
     @ResponseBody
