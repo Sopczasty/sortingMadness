@@ -78,17 +78,27 @@ public class SortingMadness {
         /**
          * Main constructor for primitive data builder
          * @param algorithms list of algorithms to sort with
-         * @param data primitive data input
          */
         public PrimitiveBuilder(String[] algorithms) {
             this.algorithms = algorithms;
         }
 
+        /**
+         * Data setter
+         * @param input object input to sort
+         * @return edited builder
+         */
         public PrimitiveBuilder data(Object[] input) {
             this.input = input;
             return this;
         }
 
+        /**
+         * Converts string data into array of supported values. If string contains
+         * characters it's a string, if it has a dot - it's a float, otherwise int.
+         * @param data input string to convert to primitive type data
+         * @return edited builder
+         */
         public PrimitiveBuilder convertData(String data) {
             String[] input = data.split(",");
             Object[] in = new Object[input.length];
