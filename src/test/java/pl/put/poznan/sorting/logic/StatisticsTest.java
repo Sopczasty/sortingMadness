@@ -1,3 +1,4 @@
+/*
 package pl.put.poznan.sorting.logic;
 
 import org.junit.jupiter.api.Test;
@@ -9,12 +10,13 @@ import static org.mockito.Mockito.*;
 /**
  * Tests for collecting statistics
  */
-
+/*
 class StatisticsTest {
 
     /**
      * Test median for even size input - mean of two middle values
      */
+/*
     @Test
     public void testEvenMedian(){
         int[] input = {0, 1, 3, 4, 9, 10, 12, 32, 43, 53};
@@ -25,6 +27,7 @@ class StatisticsTest {
     /**
      * Test median for even size input - mean of two identical values
      */
+/*
     @Test
     public void testEvenMedianSame(){
         int[] input = {0, 1, 3, 4, 10, 10, 12, 32, 43, 53};
@@ -35,6 +38,7 @@ class StatisticsTest {
     /**
      * Negative test median for even size - only first value of median
      */
+/*
     @Test
     public void testNegativeEvenMedian1(){
         int[] input = {0, 1, 3, 4, 9, 10, 12, 32, 43, 53};
@@ -45,6 +49,7 @@ class StatisticsTest {
     /**
      * Negative test median for even size - only second value of median
      */
+/*
     @Test
     public void testNegativeEvenMedian2(){
         int[] input = {0, 1, 3, 4, 9, 10, 12, 32, 43, 53};
@@ -55,6 +60,7 @@ class StatisticsTest {
     /**
      * Test median for odd size input - middle value
      */
+/*
     @Test
     public void testOddMedian(){
         int[] input = {0, 1, 3, 4, 9, 10, 12, 32, 43};
@@ -64,7 +70,7 @@ class StatisticsTest {
 
     /**
      * Negative test for odd size input - one value before middle
-     */
+     *//*
     @Test
     public void testNegativeOddMedian1(){
         int[] input = {0, 1, 3, 4, 9, 10, 12, 32, 43};
@@ -74,7 +80,7 @@ class StatisticsTest {
 
     /**
      *  Negative test for odd size input - one value after middle
-     */
+     *//*
     @Test
     public void testNegativeOddMedian2(){
         int[] input = {0, 1, 3, 4, 9, 10, 12, 32, 43};
@@ -84,7 +90,7 @@ class StatisticsTest {
 
     /**
      * Test for arithmetic mean value
-     */
+     *//*
     @Test
     public void testMean(){
         int[] input = {0, 1, 3, 4, 9, 10, 12, 32, 43};
@@ -94,7 +100,7 @@ class StatisticsTest {
 
     /**
      *  Test with negative numbers for arithmetic mean value
-     */
+     *//*
     @Test
     public void testNegativeNumbersMean(){
         int[] input = {-11, -4, -1, 1, 3, 4, 10, 10, 12, 32, 43};
@@ -104,7 +110,7 @@ class StatisticsTest {
 
     /**
      * Test for root square mean value
-     */
+     *//*
     @Test
     public void testRootSquareMean(){
         int[] input = {0, 1, 3, 4, 9, 10, 12, 32, 43, 53};
@@ -114,7 +120,7 @@ class StatisticsTest {
 
     /**
      * Test with negative numbers for root square mean value
-     */
+     *//*
     @Test
     public void testNegativeNumbersRootSquareMean(){
         int[] input = {-53, -32, -10, -4, -1, 0, 3, 9, 12, 43};
@@ -124,7 +130,7 @@ class StatisticsTest {
 
     /**
      * Test for geometric mean value
-     */
+     *//*
     @Test
     public void testGeometricMean(){
         int[] input = {1, 2, 3, 4, 9, 10, 12, 32, 43, 53};
@@ -134,7 +140,7 @@ class StatisticsTest {
 
     /**
      * Test for input with odd number of negative values for geometric mean value
-     */
+     *//*
     @Test
     public void testOddNegativeNumbersGeometricMean(){
         int[] input = {-1, 2, 3, 4, 9, 10, 12, 32, 43, 53};
@@ -146,7 +152,7 @@ class StatisticsTest {
 
     /**
      * Test for input with even number of negative values for geometric mean value
-     */
+     *//*
     @Test
     public void testEvenNegativeNumbersGeometricMean(){
         int[] input = {-9, -1, 2, 3, 4, 10, 12, 32, 43, 53};
@@ -156,7 +162,7 @@ class StatisticsTest {
 
     /**
      * Test for harmonic mean value
-     */
+     *//*
     @Test
     public void testHarmonicMean(){
         int[] input = {1, 2, 3, 4, 9, 10, 12, 32, 43};
@@ -166,7 +172,7 @@ class StatisticsTest {
 
     /**
      * Test with negative numbers for harmonic mean value
-     */
+     *//*
     @Test
     public void testNegativeNumbersHarmonicMean(){
         int[] input = {-1, 2, 3, 4, 9, 10, 12, 32, 43};
@@ -176,7 +182,7 @@ class StatisticsTest {
 
     /**
      * Test for empty array
-     */
+     *//*
      @Test
     public void testEmptyInput(){
          int[] input = {};
@@ -187,7 +193,7 @@ class StatisticsTest {
 
     /**
      * Test for median using mock object
-     */
+     */ /*
     @Test
     public void testMedian(){
         int[] data = {1, 10, 42, 3, 51, 217, 123, 54, 2, 11};
@@ -200,7 +206,7 @@ class StatisticsTest {
 
     /**
      * Test for mean using mock object
-     */
+     *//*
     @Test
     public void testMockMean(){
         int[] data = {1, 10, 42, 3, 51, 217, 123, 54, 2, 11};
@@ -213,7 +219,7 @@ class StatisticsTest {
 
     /**
      * Test for root square mean using mock object
-     */
+     *//*
     @Test
     public void testMockRootSquareMean(){
         int[] data = {1, 10, 42, 3, 51, 217, 13, 54, 2, 11};
@@ -226,7 +232,7 @@ class StatisticsTest {
 
     /**
      * Test for root square mean using mock object
-     */
+     *//*
     @Test
     public void testMockGeometricMean(){
         int[] data = {1, 10, 42, 36, 51, 217, 13, 54, 2, 11};
@@ -239,7 +245,7 @@ class StatisticsTest {
 
     /**
      * Test for root square mean using mock object
-     */
+     */ /*
     @Test
     public void testMockHarmonicMean(){
         int[] data = {1, 101, 42, 36, 51, 217, 13, 54, 20, 11};
@@ -250,3 +256,4 @@ class StatisticsTest {
         assertEquals(7.56, statistics.harmonicMean(), 0.01);
     }
 }
+*/

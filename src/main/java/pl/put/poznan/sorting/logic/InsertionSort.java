@@ -19,21 +19,22 @@ public class InsertionSort implements Sorter {
      * @param iterations how many iterations of the sort to run
      * @return input array sorted using insertion sort
      */
-    public int[] sort(int[] input, String direction, int iterations) {
-        int temp;
+    public Object[] sort(Object[] input, String direction, int iterations) {
+        Object temp;
+        PrimitiveComparator comp = new PrimitiveComparator();
         int j;
         for (int i = 1; i < input.length; i++) {
             temp = input[i];
             j = i - 1;
 
             if (direction.equals("asc")) {
-                while (j >= 0 && input[j] > temp) {
+                while (j >= 0 && (comp.compare(input[j], temp) >= 0)) {
                     input[j + 1] = input[j];
                     j--;
                 }
             }
             else if (direction.equals("desc")) {
-                while (j >= 0 && input[j] < temp) {
+                while (j >= 0 && (comp.compare(input[j], temp) <= 0)) {
                     input[j + 1] = input[j];
                     j--;
                 }

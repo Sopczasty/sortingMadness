@@ -65,11 +65,11 @@ public class ArraySorterController {
         if (payload.containsKey("order")) direction = payload.get("order").toString();
 
         String[] algorithms = {algorithm};
-        SortingMadness madness = new SortingMadness.PrimitiveBuilder(algorithms, input)
+        /*SortingMadness madness = new SortingMadness.PrimitiveBuilder(algorithms, input)
                 .direction(direction)
                 .iterations(iterations)
-                .build();
-        int[] result = madness.getResult();
+                .build();*/
+        int[] result = new int[0];
 
         HashMap<String, Object> output = new HashMap<String, Object>();
         output.put("result", result);

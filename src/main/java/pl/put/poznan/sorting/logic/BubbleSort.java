@@ -22,18 +22,19 @@ public class BubbleSort implements Sorter {
      * @param iterations how many iterations of the sort to run
      * @return input array sorted using bubble sort.
      */
-    public int[] sort(int[] input, String direction, int iterations){
+    public Object[] sort(Object[] input, String direction, int iterations){
 
-        int temp;
+        PrimitiveComparator comp = new PrimitiveComparator();
+        Object temp;
         logger.debug("Sorting in " + direction + " order.");
         for (int i = 0; i < input.length - 1; i++) {
             for (int j = 0; j < input.length - i - 1; j++) {
-                if (direction.equals("asc") && (input[j] > input[j+1])) {
+                if (direction.equals("asc") && (comp.compare(input[j], input[j+1]) >= 0)) {
                     temp = input[j];
                     input[j] = input[j+1];
                     input[j+1] = temp;
                 }
-                else if (direction.equals("desc") && (input [j] < input[j+1])) {
+                else if (direction.equals("desc") && (comp.compare(input[j], input[j+1]) <= 0)) {
                     temp = input[j];
                     input[j] = input[j+1];
                     input[j+1] = temp;

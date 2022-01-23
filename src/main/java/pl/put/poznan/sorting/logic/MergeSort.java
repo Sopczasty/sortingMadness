@@ -21,17 +21,19 @@ public class MergeSort implements Sorter {
      * @param right last index of second (right) subarray
      * @param direction direction of the sort (ascending or descending)
      */
-    static void merge(int[] input, int[] l_arr, int[] r_arr, int left, int right, String direction) {
+    static void merge(Object[] input, Object[] l_arr, Object[] r_arr, int left, int right, String direction) {
 
         int i = 0, j = 0, k = 0;
 
+        PrimitiveComparator comp = new PrimitiveComparator();
+
         while (i < left && j < right) {
             if (direction.equals("asc")) {
-                if (l_arr[i] <= r_arr[j]) input[k++] = l_arr[i++];
+                if (comp.compare(l_arr[i], r_arr[j]) <= 0) input[k++] = l_arr[i++];
                 else input[k++] = r_arr[j++];
             }
             else if (direction.equals("desc")) {
-                if (l_arr[i] >= r_arr[j]) input[k++] = l_arr[i++];
+                if (comp.compare(l_arr[i], r_arr[j]) >= 0) input[k++] = l_arr[i++];
                 else input[k++] = r_arr[j++];
             }
         }
@@ -82,13 +84,13 @@ public class MergeSort implements Sorter {
      * @param direction direction of the sort (ascending or descending)
      * @param iterations how many iterations of the sort to run
      */
-    public static void mergeSort(int[] input, int size, String direction, int iterations) {
+    public static void mergeSort(Object[] input, int size, String direction, int iterations) {
         if (size < 2 || iterations == 0) {
             return;
         }
         int mid = size / 2;
-        int[] l = new int[mid];
-        int[] r = new int[size - mid];
+        Object[] l = new Object[mid];
+        Object[] r = new Object[size - mid];
 
         for (int i = 0; i < mid; i++) {
             l[i] = input[i];
@@ -139,8 +141,8 @@ public class MergeSort implements Sorter {
      * @param iterations how many iterations of the sort to run
      * @return input array sorted using merge sort algorithm
      */
-    public int[] sort(int input[], String direction, int iterations) {
-        int[] temp_input = input;
+    public Object[] sort(Object input[], String direction, int iterations) {
+        Object[] temp_input = input;
         mergeSort(temp_input, temp_input.length, direction, ((iterations == 0) ? -1 : iterations));
         return temp_input;
     }
