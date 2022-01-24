@@ -82,6 +82,7 @@ class ArraySorterControllerTest {
         String[] algorithms = {"quick"};
         SortingMadness madness = new SortingMadness.PrimitiveBuilder(algorithms).data(data).build();
         Object[] expected = madness.getResult();
+        System.out.println(response.getBody().toString());
         String[] array = new String[expected.length];
         assertTrue(response.hasBody());
         assertNotNull(response.getBody().get("result"));

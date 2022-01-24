@@ -33,7 +33,7 @@ public class App extends JFrame implements ActionListener {
     private final JCheckBox mergeBox = new JCheckBox("Merge Sort");
     private final JCheckBox autoBox = new JCheckBox("Automatic Sort");
     private final JTextField inputArea = new JTextField(5);
-    private final ResultDialog resultDialog = new ResultDialog(this, 300, 400);
+    private final ResultDialog resultDialog = new ResultDialog(this, 400, 600);
 
 
     /**
@@ -80,7 +80,6 @@ public class App extends JFrame implements ActionListener {
         autoBox.addActionListener(this);
     }
 
-
     /**
      * Convert array of objects into string
      * @param data input array of objects
@@ -96,7 +95,6 @@ public class App extends JFrame implements ActionListener {
         return result;
     }
 
-
     /**
      * Split input data into array of strings, sort them, fetch
      * execution times and display a modal with result.
@@ -109,7 +107,7 @@ public class App extends JFrame implements ActionListener {
                 .build();
 
         Object[] output = madness.getResult();
-        resultDialog.setResult(toString(output), madness.getMeasurements());
+        resultDialog.setResult(toString(output), madness.getMeasurements(), madness.getStatistics());
         resultDialog.setVisible(true);
     }
 
