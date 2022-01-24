@@ -19,7 +19,7 @@ public class HeapSort implements Sorter {
      * @param root root of the heap
      * @param direction direction of the heap (descending or ascending)
      */
-    private void heapify(Object [] input, int size, int root, String direction)
+    private Object[] heapify(Object [] input, int size, int root, String direction)
     {
         PrimitiveComparator comp = new PrimitiveComparator();
         int main = root; // Initialize largest as root
@@ -49,6 +49,7 @@ public class HeapSort implements Sorter {
             // Recursively heapify the affected sub-tree
             heapify(input, size, main, direction);
         }
+        return input;
     }
 
     /**
@@ -103,7 +104,7 @@ public class HeapSort implements Sorter {
         int depth = 0;
         // Build heap (rearrange array)
         for (int i = n / 2 - 1; i >= 0; i--)
-            heapify(input, n, i, direction);
+            input = heapify(input, n, i, direction);
 
         // One by one extract an element from heap
         for (int i = n - 1; i > 0; i--) {
