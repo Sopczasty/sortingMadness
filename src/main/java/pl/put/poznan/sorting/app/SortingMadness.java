@@ -3,6 +3,8 @@ package pl.put.poznan.sorting.app;
 import pl.put.poznan.sorting.logic.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
@@ -32,6 +34,10 @@ public class SortingMadness {
     private final static Timer timer = new Timer();
     // Measurements for all selected sorting algorithms
     private Map<String, Long> measurements;
+    // Statistics class
+    private static Statistics statistics = new Statistics();
+    // Statistics for input array
+    private Map<String, Object> means;
 
     /**
      * Main constructor selecting appropriate methods based on type of data
@@ -64,6 +70,7 @@ public class SortingMadness {
     public String getDirection() { return direction; }
     public int getIterations() { return iterations; }
     public Map<String, Long> getMeasurements() { return measurements; }
+    public Map<String, Object> getStatistics() {return means; }
 
 
     /**
@@ -253,6 +260,7 @@ public class SortingMadness {
         if (input == null) throw new IllegalArgumentException("No input provided.");
         Object[] result = new Object[input.length];
         measurements = new Hashtable<>();
+        means = new Hashtable<>();
 
         for (String algorithm : algorithms) {
             sorter = wrapper.getSorter(input, algorithm);
@@ -265,8 +273,13 @@ public class SortingMadness {
             timer.startMeasure();
             result = sorter.sort(input, direction, iterations);
             timer.stopMeasure();
-            logger.info("Data sorted using" + sorter.getName() + " sorter.");
+            logger.info("Data sorted using " + sorter.getName() + " sorter.");
             measurements.put(sorter.getName(), timer.getTimeElapsed());
+        }
+
+        if (statistics.validateForStatistics(result)) {
+            statistics.calculateStatistics();
+            means = statistics.getStatistics();
         }
         return result;
     }

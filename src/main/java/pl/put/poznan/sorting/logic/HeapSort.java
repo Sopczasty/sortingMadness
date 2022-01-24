@@ -30,14 +30,14 @@ public class HeapSort implements Sorter {
             // If left child is larger than root
             if (left < size && (comp.compare(input[left], input[main]) >= 0)) main = left;
             // If right child is larger than largest so far
-            if (right < size && (comp.compare(input[left], input[main]) >= 0)) main = right;
+            if (right < size && (comp.compare(input[right], input[main]) >= 0)) main = right;
         }
 
         else if (direction.equals("desc")) {
             // If left child is smaller than root
             if (left < size && (comp.compare(input[left], input[main]) <= 0)) main = left;
             // If right child is smaller than smallest so far
-            if (right < size && (comp.compare(input[left], input[main]) <= 0)) main = right;
+            if (right < size && (comp.compare(input[right], input[main]) <= 0)) main = right;
         }
 
         // If main is not root

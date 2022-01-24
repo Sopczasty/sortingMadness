@@ -2,13 +2,8 @@ package pl.put.poznan.sorting.rest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import pl.put.poznan.sorting.app.App;
 import pl.put.poznan.sorting.app.SortingMadness;
-import pl.put.poznan.sorting.logic.Sorter;
-import pl.put.poznan.sorting.logic.SortingWrapper;
-import pl.put.poznan.sorting.logic.Timer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,6 +63,9 @@ public class ArraySorterController {
         HashMap<String, Object> output = new HashMap<String, Object>();
         output.put("result", madness.getResult());
         output.put("elapsed", madness.getMeasurements());
+        Map<String, Object> stat = madness.getStatistics();
+        if(stat != null)
+            output.put("statistics", stat);
         return output;
     }
 
