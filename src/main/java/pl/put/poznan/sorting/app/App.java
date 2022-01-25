@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 
 import java.util.ArrayList;
 
+import pl.put.poznan.sorting.rest.SorterAPI;
+
 /**
  * Main application class with GUI.
  */
@@ -162,5 +164,7 @@ public class App extends JFrame implements ActionListener {
         // On close delete GUI instead of minimizing it
         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         app.setVisible(true);
+        SorterAPI rest = new SorterAPI();
+        rest.main(args);
     }
 }
